@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-axios.interceptors.response.use(null, error => {
+interface ResponseError {
+	response: {
+		status: number;
+	};
+}
+
+axios.interceptors.response.use(undefined, (error: ResponseError) => {
 	const expectedError =
 		error.response &&
 		error.response.status >= 400 &&
@@ -9,9 +15,7 @@ axios.interceptors.response.use(null, error => {
 
 	if (!expectedError) {
 		console.log('error is', error);
-		// alert('unexpected error');
 		toast.error('An unexpected error occurred!', {
-			// position: 'bottom-center',
 			autoClose: 10000,
 			className: 'toasty',
 			hideProgressBar: false,
@@ -25,7 +29,7 @@ axios.interceptors.response.use(null, error => {
 	return Promise.reject(error);
 });
 
-function setToken(jwt) {
+function setToken(jwt: string) {
 	axios.defaults.headers.common['authorization'] = jwt;
 }
 
