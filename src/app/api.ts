@@ -3,7 +3,7 @@ import { createAction, Action } from '@reduxjs/toolkit';
 interface RequestObject {
 	method: 'get' | 'post' | 'put' | 'delete';
 	url: string;
-	data: object;
+	data?: object;
 	onSuccess?: string;
 	onError?: string;
 	onStart?: string;

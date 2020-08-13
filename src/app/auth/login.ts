@@ -51,7 +51,11 @@ interface SignInUser {
 	password: string;
 }
 
-export const logInUser = (user: SignInUser, location: string) => {
+interface Location {
+	state: object;
+}
+
+export const logInUser = (user: SignInUser, location: Location) => {
 	const { email, password } = user;
 	return apiCallBegan({
 		method: 'post',
