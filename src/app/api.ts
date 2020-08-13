@@ -1,7 +1,17 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, Action } from '@reduxjs/toolkit';
 
-export const apiCallBegan: (reqObject: object) => void = createAction(
+interface RequestObject {
+	method: 'get' | 'post' | 'put' | 'delete';
+	url: string;
+	data: object;
+	onSuccess?: Action;
+	onError?: Action;
+	onStart?: Action;
+	location?: { state: object };
+}
+
+export const apiCallBegan: (reqData: RequestObject) => Action = createAction(
 	'api/callBegan'
 );
-export const apiCallSuccess = createAction('api/callSuccess');
-export const apiCallFailed = createAction('api/callFailed');
+export const apiCallSuccess: () => Action = createAction('api/callSuccess');
+export const apiCallFailed: () => Action = createAction('api/callFailed');

@@ -1,14 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
+import { SignSlice } from '../models/auth';
 
-interface LoginSlice {
-	error: string;
-	success: string;
-	loading: boolean;
-	passType: 'password' | 'text';
-}
-
-const initialState: LoginSlice = {
+const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
@@ -24,10 +18,10 @@ const slice = createSlice({
 			state.error = action.payload;
 			state.loading = false;
 		},
-		loginInitiated: (state, action) => {
+		loginInitiated: state => {
 			state.loading = true;
 		},
-		loginFulfilled: (state, action) => {},
+		loginFulfilled: () => {},
 		loginFailed: (state, action) => {
 			if (action.payload === 403) state.error = 'Invalid email or password';
 			else state.error = action.payload;
@@ -36,7 +30,7 @@ const slice = createSlice({
 		passTypeUpdated: (state, action) => {
 			state.passType = action.payload;
 		},
-		userLoggedOut: (state, action) => {},
+		userLoggedOut: () => {},
 	},
 });
 
@@ -47,18 +41,19 @@ const {
 	loginInitiated,
 	loginFailed,
 	passTypeUpdated,
+	userLoggedOut,
 } = slice.actions;
 
-export const {
-	loginFulfilled,
-	userLoggedOut, //TODO remove export
-} = slice.actions;
+export const { loginFulfilled } = slice.actions;
 
-export const logInUser = (
-	{ email, password }: { email: string; password: string },
-	location: string
-) =>
-	apiCallBegan({
+interface SignInUser {
+	email: string;
+	password: string;
+}
+
+export const logInUser = (user: SignInUser, location: string) => {
+	const { email, password } = user;
+	return apiCallBegan({
 		method: 'post',
 		url: `users/login`,
 		data: { email, password },
@@ -67,7 +62,8 @@ export const logInUser = (
 		onError: loginFailed.type,
 		location,
 	});
+};
 
 export const updateError = (error: string) => errorUpdated(error);
 export const updatePassType = (type: string) => passTypeUpdated(type);
-export const logOutUser = () => userLoggedOut('');
+export const logOutUser = () => userLoggedOut();

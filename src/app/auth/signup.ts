@@ -1,14 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
+import { SignSlice } from '../models/auth';
 
-interface LoginSlice {
-	error: string;
-	success: string;
-	loading: boolean;
-	passType: 'password' | 'text';
-}
-
-const initialState: LoginSlice = {
+const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
@@ -29,14 +23,14 @@ const slice = createSlice({
 			state.passType = action.payload;
 		},
 
-		signupInitiated: (state, action) => {
+		signupInitiated: state => {
 			state.loading = true;
 		},
 		signupFailed: (state, action) => {
 			if (action.payload === 400) state.error = 'User already registered!';
 			state.loading = false;
 		},
-		signupFulfilled: (state, action) => {
+		signupFulfilled: state => {
 			state.loading = false;
 			state.success = 'Successfully registered!';
 		},
@@ -54,16 +48,15 @@ export const {
 	signupFulfilled,
 } = slice.actions;
 
-export const signUpUser = ({
-	name,
-	email,
-	password,
-}: {
+interface SignUpUser {
 	name: string;
 	email: string;
 	password: string;
-}) =>
-	apiCallBegan({
+}
+
+export const signUpUser = (user: SignUpUser) => {
+	const { name, email, password } = user;
+	return apiCallBegan({
 		method: 'post',
 		url: 'users',
 		onStart: signupInitiated.type,
@@ -71,6 +64,7 @@ export const signUpUser = ({
 		onError: signupFailed.type,
 		data: { name, email, password },
 	});
+};
 
 export const updateError = (error: string) => errorUpdated(error);
 export const updateSuccess = (error: string) => successUpdated(error);
