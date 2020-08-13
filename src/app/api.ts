@@ -4,9 +4,9 @@ interface RequestObject {
 	method: 'get' | 'post' | 'put' | 'delete';
 	url: string;
 	data: object;
-	onSuccess?: Action;
-	onError?: Action;
-	onStart?: Action;
+	onSuccess?: string;
+	onError?: string;
+	onStart?: string;
 	location?: { state: object };
 }
 
