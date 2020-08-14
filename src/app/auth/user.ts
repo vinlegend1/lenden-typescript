@@ -1,8 +1,9 @@
-import { createSlice, Action } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { UserSlice } from '../models/auth';
 import { apiCallBegan } from '../api';
 import { getCurrentUser, getToken } from '../../services/authService';
 import { RootState } from './../models/index';
+import { Dispatch } from 'redux';
 
 interface FetchedAddress {
 	city: string;
@@ -55,7 +56,7 @@ export default slice.reducer;
 
 const { userReceivedFromToken, addressReceived } = slice.actions;
 
-export const getUser = () => (dispatch: (action: Action) => void) => {
+export const getUser = () => (dispatch: Dispatch) => {
 	const token = getToken();
 	if (token) {
 		const user = getCurrentUser();
@@ -73,7 +74,7 @@ export const getUser = () => (dispatch: (action: Action) => void) => {
 };
 
 export const getAddress = () => (
-	dispatch: (action: Action) => void,
+	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
 	const userId = getState().auth.user.userId;
