@@ -6,7 +6,7 @@ const slice = createSlice({
 	name: 'common',
 	initialState: { isMobile: false, loadingPage: false },
 	reducers: {
-		deviceTypeChanged: (state, action) => {
+		deviceTypeChanged: (state, action: { type: string; payload: boolean }) => {
 			state.isMobile = action.payload;
 		},
 	},

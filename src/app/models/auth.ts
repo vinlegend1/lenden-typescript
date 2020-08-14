@@ -1,8 +1,9 @@
+export type PassType = 'password' | 'text';
 export interface SignSlice {
 	error: string;
 	success: string;
 	loading: boolean;
-	passType: 'password' | 'text';
+	passType: PassType;
 }
 
 export interface UserSlice {

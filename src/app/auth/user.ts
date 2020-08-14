@@ -38,15 +38,29 @@ const slice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		userReceivedFromToken: (user: UserSlice, action) => {
+		userReceivedFromToken: (
+			user: UserSlice,
+			action: {
+				type: string;
+				payload: {
+					userId: string;
+					name: string;
+					token: string;
+					email: string;
+				};
+			}
+		) => {
 			const { userId, name, token, email } = action.payload;
 			user.userId = userId;
 			user.email = email;
 			user.name = name;
 			user.token = token;
 		},
-		addressReceived: (user, action) => {
-			const address: FetchedAddress = action.payload.data;
+		addressReceived: (
+			user,
+			action: { type: string; payload: { data: FetchedAddress } }
+		) => {
+			const address = action.payload.data;
 			user.address = mapToViewModel(address);
 		},
 	},

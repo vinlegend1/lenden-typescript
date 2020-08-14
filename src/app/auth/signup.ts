@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { SignSlice } from '../models/auth';
+import { SignSlice, PassType } from '../models/auth';
 
 const initialState: SignSlice = {
 	error: '',
@@ -13,20 +13,20 @@ const slice = createSlice({
 	name: 'signup',
 	initialState,
 	reducers: {
-		errorUpdated: (state, action) => {
+		errorUpdated: (state, action: { type: string; payload: string }) => {
 			state.error = action.payload;
 		},
-		successUpdated: (state, action) => {
+		successUpdated: (state, action: { type: string; payload: string }) => {
 			state.success = action.payload;
 		},
-		passTypeUpdated: (state, action) => {
+		passTypeUpdated: (state, action: { type: string; payload: PassType }) => {
 			state.passType = action.payload;
 		},
 
 		signupInitiated: state => {
 			state.loading = true;
 		},
-		signupFailed: (state, action) => {
+		signupFailed: (state, action: { type: string; payload: number }) => {
 			if (action.payload === 400) state.error = 'User already registered!';
 			state.loading = false;
 		},
@@ -68,4 +68,4 @@ export const signUpUser = (user: SignUpUser) => {
 
 export const updateError = (error: string) => errorUpdated(error);
 export const updateSuccess = (error: string) => successUpdated(error);
-export const updatePassType = (type: string) => passTypeUpdated(type);
+export const updatePassType = (type: PassType) => passTypeUpdated(type);

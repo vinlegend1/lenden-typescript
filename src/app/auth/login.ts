@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { SignSlice } from '../models/auth';
+import { SignSlice, PassType } from '../models/auth';
 
 const initialState: SignSlice = {
 	error: '',
@@ -14,7 +14,7 @@ const slice = createSlice({
 	initialState,
 
 	reducers: {
-		errorUpdated: (state, action) => {
+		errorUpdated: (state, action: { type: string; payload: string }) => {
 			state.error = action.payload;
 			state.loading = false;
 		},
@@ -22,12 +22,17 @@ const slice = createSlice({
 			state.loading = true;
 		},
 		loginFulfilled: () => {},
-		loginFailed: (state, action) => {
-			if (action.payload === 403) state.error = 'Invalid email or password';
-			else state.error = action.payload;
+		loginFailed: (
+			state,
+			action: { type: string; payload: number | string }
+		) => {
+			if (typeof action.payload === 'number' && action.payload === 403) {
+				state.error = 'Invalid email or password';
+			} else if (typeof action.payload === 'string')
+				state.error = action.payload;
 			state.loading = false;
 		},
-		passTypeUpdated: (state, action) => {
+		passTypeUpdated: (state, action: { type: string; payload: PassType }) => {
 			state.passType = action.payload;
 		},
 		userLoggedOut: () => {},
@@ -68,5 +73,5 @@ export const logInUser = (user: SignInUser, location: Location) => {
 };
 
 export const updateError = (error: string) => errorUpdated(error);
-export const updatePassType = (type: string) => passTypeUpdated(type);
+export const updatePassType = (type: PassType) => passTypeUpdated(type);
 // export const logOutUser = () => userLoggedOut();
