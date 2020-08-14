@@ -1,6 +1,6 @@
 import { createSlice, Action } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { RootState } from '../store';
+import RootState from './../models/index';
 import { UserSlice } from '../models/auth';
 import { getCurrentUser, getToken } from '../../services/authService';
 

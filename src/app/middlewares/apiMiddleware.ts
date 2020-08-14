@@ -1,12 +1,12 @@
 import http from '../../services/httpService';
 import { api } from '../../config.json';
 import { apiCallBegan, apiCallFailed, apiCallSuccess } from '../api';
-import { RootState } from '../store';
+import RootState from './../models/index';
 import { Dispatch } from 'redux';
 import { RequestObject } from './../models/api';
 
 interface Store {
-	getState: () => RootState;
+	getState(): RootState;
 	dispatch: Dispatch; //TODO
 }
 
