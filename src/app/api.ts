@@ -1,17 +1,12 @@
 import { createAction, Action } from '@reduxjs/toolkit';
-
-interface RequestObject {
-	method: 'get' | 'post' | 'put' | 'delete';
-	url: string;
-	data?: object;
-	onSuccess?: string;
-	onError?: string;
-	onStart?: string;
-	location?: { state: object };
-}
+import { RequestObject, ResponseObject } from './models/api';
 
 export const apiCallBegan: (reqData: RequestObject) => Action = createAction(
 	'api/callBegan'
 );
-export const apiCallSuccess: () => Action = createAction('api/callSuccess');
-export const apiCallFailed: () => Action = createAction('api/callFailed');
+export const apiCallSuccess: (resData: ResponseObject) => Action = createAction(
+	'api/callSuccess'
+);
+export const apiCallFailed: (err: Error) => Action = createAction(
+	'api/callFailed'
+);

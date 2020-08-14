@@ -1,4 +1,4 @@
-import http from './httpService';
+import * as http from './httpService';
 import JwtDecode from 'jwt-decode';
 
 interface DecodedUser {

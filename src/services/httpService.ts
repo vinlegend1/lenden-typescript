@@ -33,10 +33,6 @@ function setToken(jwt: string) {
 	axios.defaults.headers.common['authorization'] = jwt;
 }
 
-export default {
-	get: axios.get,
-	post: axios.post,
-	put: axios.put,
-	delete: axios.delete,
-	setToken,
-};
+export default axios;
+
+export { setToken };
