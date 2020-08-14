@@ -1,8 +1,8 @@
 import { createSlice, Action } from '@reduxjs/toolkit';
-import { apiCallBegan } from '../api';
-import RootState from './../models/index';
 import { UserSlice } from '../models/auth';
+import { apiCallBegan } from '../api';
 import { getCurrentUser, getToken } from '../../services/authService';
+import { RootState } from './../models/index';
 
 interface FetchedAddress {
 	city: string;

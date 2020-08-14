@@ -1,9 +1,9 @@
-import { UserSlice, SignSlice } from './auth';
+import rootReducer from './../reducer';
+import { Dispatch } from 'redux';
 
-export default interface RootState {
-	auth: {
-		user: UserSlice;
-		signup: SignSlice;
-		login: SignSlice;
-	};
+export type RootState = ReturnType<typeof rootReducer>;
+
+export interface MiddlewareStore {
+	getState(): RootState;
+	dispatch: Dispatch; //TODO
 }

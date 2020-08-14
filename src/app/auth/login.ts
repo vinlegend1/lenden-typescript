@@ -41,10 +41,9 @@ const {
 	loginInitiated,
 	loginFailed,
 	passTypeUpdated,
-	userLoggedOut,
 } = slice.actions;
 
-export const { loginFulfilled } = slice.actions;
+export const { loginFulfilled, userLoggedOut } = slice.actions;
 
 interface SignInUser {
 	email: string;
@@ -70,4 +69,4 @@ export const logInUser = (user: SignInUser, location: Location) => {
 
 export const updateError = (error: string) => errorUpdated(error);
 export const updatePassType = (type: string) => passTypeUpdated(type);
-export const logOutUser = () => userLoggedOut();
+// export const logOutUser = () => userLoggedOut();

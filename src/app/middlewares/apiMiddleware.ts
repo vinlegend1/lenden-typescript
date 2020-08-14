@@ -1,23 +1,16 @@
 import http from '../../services/httpService';
 import { api } from '../../config.json';
 import { apiCallBegan, apiCallFailed, apiCallSuccess } from '../api';
-import RootState from './../models/index';
 import { Dispatch } from 'redux';
 import { RequestObject } from './../models/api';
+import { MiddlewareStore } from './../models/index';
 
-interface Store {
-	getState(): RootState;
-	dispatch: Dispatch; //TODO
-}
-
-const apiMiddleware = (store: Store) => (next: Dispatch) => async (action: {
-	type: string;
-	payload: RequestObject;
-}) => {
-	if (action.type !== apiCallBegan.toString()) return next(action);
+const apiMiddleware = (store: MiddlewareStore) => (
+	next: Dispatch
+) => async (action: { type: string; payload: RequestObject }) => {
+	if (action.type !== apiCallBegan.type) return next(action);
 
 	const userId = store.getState().auth.user.userId;
-
 	const {
 		method = 'get',
 		url,

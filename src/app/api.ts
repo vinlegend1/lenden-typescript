@@ -1,12 +1,21 @@
-import { createAction, Action } from '@reduxjs/toolkit';
+import {
+	createAction,
+	Action,
+	ActionCreator,
+	ActionCreatorWithPayload,
+} from '@reduxjs/toolkit';
 import { RequestObject, ResponseObject } from './models/api';
 
-export const apiCallBegan: (reqData: RequestObject) => Action = createAction(
-	'api/callBegan'
-);
-export const apiCallSuccess: (resData: ResponseObject) => Action = createAction(
-	'api/callSuccess'
-);
-export const apiCallFailed: (err: Error) => Action = createAction(
+export const apiCallBegan: ActionCreatorWithPayload<
+	RequestObject,
+	string
+> = createAction('api/callBegan');
+
+export const apiCallSuccess: ActionCreatorWithPayload<
+	ResponseObject,
+	string
+> = createAction('api/callSuccess');
+
+export const apiCallFailed: ActionCreator<Action> = createAction(
 	'api/callFailed'
 );
