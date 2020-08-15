@@ -10,7 +10,7 @@ export interface Product {
 	canBarter: boolean;
 }
 
-type Category = 'books' | 'gaming' | 'mobile' | '';
+export type Category = 'books' | 'gaming' | 'mobile' | '';
 
 export interface BaseFetchedProduct {
 	productid: string;
@@ -54,5 +54,17 @@ export interface ProductPageSlice {
 		wishlist: boolean;
 		desc: string;
 		canBarter: boolean;
+	};
+}
+
+export interface NewProductSlice {
+	error: string;
+	success: string;
+	loading: boolean;
+	preparing: boolean;
+	category: Category;
+	product?: {
+		id: string;
+		imageLinks: string[];
 	};
 }
