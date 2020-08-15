@@ -1,20 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { ProductsSlice, Product } from './../models/entities';
+import { ProductsSlice, Product, FetchedProduct } from './../models/entities';
 import { RootState, ActionWithPayload } from '../models';
 import { Dispatch } from 'redux';
-
-interface FetchedProduct {
-	productid: string;
-	title: string;
-	producttype: string;
-	description: string;
-	ldc: number;
-	rating: number;
-	image: string;
-	wishlist: boolean;
-	barternow: boolean;
-}
 
 const mapToViewModel = (data: FetchedProduct, userId: string): Product => {
 	return {
