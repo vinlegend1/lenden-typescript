@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
 import { SignSlice, PassType } from '../models/auth';
+import { ActionWithPayload } from './../models';
 
 const initialState: SignSlice = {
 	error: '',
@@ -14,7 +15,7 @@ const slice = createSlice({
 	initialState,
 
 	reducers: {
-		errorUpdated: (state, action: { type: string; payload: string }) => {
+		errorUpdated: (state, action: ActionWithPayload<string>) => {
 			state.error = action.payload;
 			state.loading = false;
 		},
@@ -22,17 +23,14 @@ const slice = createSlice({
 			state.loading = true;
 		},
 		loginFulfilled: () => {},
-		loginFailed: (
-			state,
-			action: { type: string; payload: number | string }
-		) => {
+		loginFailed: (state, action: ActionWithPayload<number | string>) => {
 			if (typeof action.payload === 'number' && action.payload === 403) {
 				state.error = 'Invalid email or password';
 			} else if (typeof action.payload === 'string')
 				state.error = action.payload;
 			state.loading = false;
 		},
-		passTypeUpdated: (state, action: { type: string; payload: PassType }) => {
+		passTypeUpdated: (state, action: ActionWithPayload<PassType>) => {
 			state.passType = action.payload;
 		},
 		userLoggedOut: () => {},

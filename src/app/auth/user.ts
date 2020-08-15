@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserSlice } from '../models/auth';
 import { apiCallBegan } from '../api';
 import { getCurrentUser, getToken } from '../../services/authService';
-import { RootState } from './../models/index';
+import { RootState, ActionWithPayload } from './../models/index';
 import { Dispatch } from 'redux';
 
 interface FetchedAddress {
@@ -40,15 +40,12 @@ const slice = createSlice({
 	reducers: {
 		userReceivedFromToken: (
 			user: UserSlice,
-			action: {
-				type: string;
-				payload: {
-					userId: string;
-					name: string;
-					token: string;
-					email: string;
-				};
-			}
+			action: ActionWithPayload<{
+				userId: string;
+				name: string;
+				token: string;
+				email: string;
+			}>
 		) => {
 			const { userId, name, token, email } = action.payload;
 			user.userId = userId;
@@ -58,7 +55,7 @@ const slice = createSlice({
 		},
 		addressReceived: (
 			user,
-			action: { type: string; payload: { data: FetchedAddress } }
+			action: ActionWithPayload<{ data: FetchedAddress }>
 		) => {
 			const address = action.payload.data;
 			user.address = mapToViewModel(address);

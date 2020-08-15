@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
-import { RootState } from '../models';
+import { RootState, ActionWithPayload } from '../models';
 
 const slice = createSlice({
 	name: 'common',
 	initialState: { isMobile: false, loadingPage: false },
 	reducers: {
-		deviceTypeChanged: (state, action: { type: string; payload: boolean }) => {
+		deviceTypeChanged: (state, action: ActionWithPayload<boolean>) => {
 			state.isMobile = action.payload;
 		},
 	},

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
 import { ProductsSlice, Product } from './../models/entities';
-import { RootState } from '../models';
+import { RootState, ActionWithPayload } from '../models';
 import { Dispatch } from 'redux';
 
 interface FetchedProduct {
@@ -44,10 +44,10 @@ const slice = createSlice({
 	name: 'products',
 	initialState,
 	reducers: {
-		limitChanged: (products, action: { type: string; payload: number }) => {
+		limitChanged: (products, action: ActionWithPayload<number>) => {
 			products.limit = action.payload;
 		},
-		pageChanged: (products, action: { type: string; payload: number }) => {
+		pageChanged: (products, action: ActionWithPayload<number>) => {
 			products.page = action.payload;
 		},
 		productsInitiated: products => {
@@ -58,13 +58,10 @@ const slice = createSlice({
 		},
 		productsReceived: (
 			products,
-			action: {
-				type: string;
-				payload: {
-					data: Array<any>;
-					userId: string;
-				};
-			}
+			action: ActionWithPayload<{
+				data: Array<FetchedProduct>;
+				userId: string;
+			}>
 		) => {
 			products.list = products.list.concat(
 				action.payload.data.map(product =>
@@ -76,16 +73,10 @@ const slice = createSlice({
 				products.showButton = false;
 			else products.showButton = true;
 		},
-		buttonStatusChanged: (
-			products,
-			action: { type: string; payload: boolean }
-		) => {
+		buttonStatusChanged: (products, action: ActionWithPayload<boolean>) => {
 			products.showButton = action.payload;
 		},
-		loadingStatusChanged: (
-			products,
-			action: { type: string; payload: boolean }
-		) => {
+		loadingStatusChanged: (products, action: ActionWithPayload<boolean>) => {
 			products.loading = action.payload;
 			products.loadingPage = action.payload;
 		},
@@ -124,7 +115,6 @@ export const getProducts = () => async (
 			onSuccess: productsReceived.type,
 		})
 	);
-	// setTimeout(() => dispatch(loadingStatusChanged(false)), 0);
 	dispatch(loadingStatusChanged(false));
 };
 
