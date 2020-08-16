@@ -1,0 +1,97 @@
+.desktopProductContainer {
+	width: 280px;
+	height: 420px;
+	margin: 10px;
+
+	.desktopProductImageContainer {
+		position: relative;
+		cursor: pointer;
+
+		.productImage {
+			@extend %defaultProductImage;
+			height: 300px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+		}
+
+		.desktopStarRatingContainer {
+			position: absolute;
+			top: 10px;
+			right: 15px;
+
+			.productStarRating {
+				.dv-star-rating {
+					svg {
+						font-size: 19px;
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+
+		.productLdc {
+			@extend %defaultProductLdc;
+			position: absolute;
+			bottom: 0;
+			padding: 5px 10px;
+			background-color: rgba(color(backgroundSecondary), 0.4);
+			border-top-right-radius: 10px;
+			color: color(white);
+			font-size: 16px;
+
+			svg {
+				color: color(white);
+			}
+		}
+	}
+
+	.desktopProductDetailContainer {
+		cursor: pointer;
+
+		.productName {
+			@extend %defaultProductName;
+			max-width: inherit;
+			margin: 8px 0;
+		}
+		.productDescription {
+			@extend %defaultProductDescription;
+			margin-bottom: 10px;
+		}
+	}
+
+	.desktopProductActions {
+		display: flex;
+
+		.barter {
+			@extend %defaultButton;
+			border-bottom-left-radius: 10px;
+			margin: 0 5px 0 0;
+			padding: 10px;
+			font-size: 18px;
+
+			svg {
+				color: color(secondary);
+				margin-right: 10px;
+				font-size: 18px;
+			}
+		}
+
+		.wishlist {
+			@extend %defaultButton;
+			background-color: rgba(color(primary), 0.1);
+			border-bottom-right-radius: 10px;
+			margin: 0 0 0 5px;
+			padding: 10px;
+			font-size: 18px;
+
+			svg {
+				margin-right: 10px;
+				font-size: 25px;
+			}
+		}
+
+		.disabled {
+			@extend %defaultProductButtonDisabled;
+		}
+	}
+}
