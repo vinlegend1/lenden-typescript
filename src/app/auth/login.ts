@@ -72,4 +72,4 @@ export const logInUser = (user: SignInUser, location: Location) => {
 
 export const updateError = (error: string) => errorUpdated(error);
 export const updatePassType = (type: PassType) => passTypeUpdated(type);
-// export const logOutUser = () => userLoggedOut();
+export const logOutUser = () => userLoggedOut();

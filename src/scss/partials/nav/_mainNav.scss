@@ -5,23 +5,28 @@
 
 	.mainNav {
 		background-color: color(backgroundSecondary);
+		height: 3.5rem;
+		box-shadow: 0px 2px 4px rgba(26, 38, 57, 0.25);
 
-		@media screen and (max-width: breakpoint(mobileXL)) {
-			padding: 0.2rem 1rem;
-		}
+		justify-content: center;
+		align-items: center;
+
+		// @media screen and (max-width: breakpoint(mobileXL)) {
+		// 	padding: 0.2rem 1rem;
+		// }
 
 		#logo {
-			width: 4em;
+			width: 2.5em;
 			margin: auto 1.5rem;
 			cursor: pointer;
 
-			@media screen and (max-width: 870px) {
-				margin: auto 1rem;
-			}
+			// @media screen and (max-width: 870px) {
+			// 	margin: auto 1rem;
+			// }
 
 			@media screen and (max-width: breakpoint(mobileS)) {
 				width: 2em;
-				margin: auto 5px;
+				// margin: auto 5px;
 			}
 		}
 
@@ -118,6 +123,12 @@
 				transition: background-color 5000s ease-in-out 0s;
 			}
 		}
+
+		#mainNavSearchIcon {
+			@media screen and (min-width: breakpoint(mobileXL)) {
+				display: none;
+			}
+		}
 	}
 
 	.nav-link {
@@ -150,21 +161,26 @@
 
 	#mobileSearchBox {
 		background-color: color(backgroundSecondary);
-		padding: 0.2rem 0.6rem 0.6rem 0.6rem;
+		// padding: 0.2rem 0.6rem 0.6rem 0.6rem;
 		display: none;
+		height: 3.5rem;
+		align-items: center;
 
-		@media screen and (max-width: breakpoint(mobileXL)) {
-			display: block;
-			margin-top: -1px;
-		}
+		// @media screen and (max-width: breakpoint(mobileXL)) {
+		// 	display: block;
+		// 	margin-top: -1px;
+		// }
 
 		#mobileSearchBoxItem {
-			background-color: color(secondary) !important;
+			background-color: color(backgroundSecondary) !important;
 			display: flex;
 			width: 93vw;
 			margin: 0 auto;
 			border-radius: 5px;
 			height: fit-content;
+			::placeholder {
+				font-size: 14px;
+			}
 
 			#mobileSearchIcon {
 				margin: auto 2.5vw;
@@ -178,7 +194,7 @@
 			#mobileSearchInput {
 				color: color(text);
 				margin-right: 10px;
-				background-color: color(secondary);
+				background-color: color(backgroundSecondary);
 				border: none;
 				font-size: 16px;
 				box-shadow: none;
@@ -192,7 +208,7 @@
 			#mobileSearchInput:-webkit-autofill:focus,
 			#mobileSearchInput:-webkit-autofill:hover {
 				-webkit-text-fill-color: color(text);
-				-webkit-box-shadow: 0 0 0px 1000px color(secondary) inset;
+				-webkit-box-shadow: 0 0 0px 1000px color(backgroundSecondary) inset;
 				transition: background-color 5000s ease-in-out 0s;
 			}
 		}
@@ -201,4 +217,12 @@
 	#mainNavHeart {
 		color: color(accent);
 	}
+}
+
+.displaySearchBox {
+	display: flex !important;
+}
+
+.hideMainNav {
+	display: none !important;
 }

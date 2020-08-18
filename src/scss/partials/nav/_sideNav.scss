@@ -70,11 +70,12 @@
 	display: inline-block;
 	text-decoration: none !important;
 	outline: none;
-	text-transform: uppercase;
+	padding: 0.8rem;
+	// text-transform: uppercase;
 
 	font-family: font(secondary);
 	font-weight: 500;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .bm-item:hover {
@@ -86,10 +87,10 @@
 }
 
 a.bm-item {
-	padding: 0.5em;
+	padding: 0.8rem;
 	display: block;
 	color: color(text);
-	text-align: center;
+	// text-align: center;
 }
 
 .bm-cross-button > button {
@@ -117,7 +118,7 @@ a.bm-item {
 }
 
 #navAnchor {
-	text-align: center;
+	// text-align: center;
 	margin-top: 2vh;
 
 	// @media screen and (max-width: breakpoint(mobileXL)) {
@@ -126,7 +127,7 @@ a.bm-item {
 }
 
 #homeAnchor {
-	margin-top: 2vh;
+	// margin-top: 2vh;
 }
 
 #signOutNav {
@@ -141,4 +142,9 @@ a.bm-item {
 #sideNavBell {
 	margin-left: 5px;
 	color: color(accent);
+}
+
+.displayDropDown {
+	display: block !important;
+	transition: display 2s;
 }
