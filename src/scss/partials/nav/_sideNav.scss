@@ -53,17 +53,22 @@
 }
 .bm-overlay {
 	min-height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .bm-menu {
 	background: color(backgroundSecondary);
-	padding: 2.5em 1.5em 0;
+	// padding: 2.5em 1.5em 0;
+	padding: 0 1em;
 	font-size: 1.15em;
+	width: 85vw !important;
+	max-width: 300px;
 }
 
 .bm-item-list {
 	color: color(text);
-	padding: 0.8em;
+	height: fit-content !important;
+	// padding: 0.8em;
 }
 
 .bm-item {
@@ -75,7 +80,7 @@
 
 	font-family: font(secondary);
 	font-weight: 500;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .bm-item:hover {
@@ -145,6 +150,24 @@ a.bm-item {
 }
 
 .displayDropDown {
-	display: block !important;
-	transition: display 2s;
+	// display: block !important;
+	max-height: 300px !important;
+}
+
+.active {
+	color: color(accent) !important;
+}
+
+// #categoryDropdown:hover {
+// 	color: color(text) !important;
+// }
+
+.categoryItem:hover {
+	color: rgba(color(accent), 0.8) !important;
+}
+
+#lol {
+	@media screen and (max-width: 390px) {
+		left: 85vw !important;
+	}
 }
