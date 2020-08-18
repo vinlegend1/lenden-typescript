@@ -41,15 +41,15 @@ const MainNav: React.FC<MainNavProps> = () => {
 					id='lala'
 					className='category dropdownCategory'
 					title='Gaming'>
-					{/* <LinkContainer to='/gaming/cd'> */}
-					<NavDropdown.Item>Gaming CDs</NavDropdown.Item>
-					{/* </LinkContainer> */}
-					{/* <LinkContainer to='/gaming/consoles'> */}
-					<NavDropdown.Item>Gaming Consoles</NavDropdown.Item>
-					{/* </LinkContainer> */}
-					{/* <LinkContainer to='/gaming/acce'> */}
-					<NavDropdown.Item>Gaming Accessories</NavDropdown.Item>
-					{/* </LinkContainer> */}
+					<LinkContainer to='/gaming/cd'>
+						<NavDropdown.Item>Gaming CDs</NavDropdown.Item>
+					</LinkContainer>
+					<LinkContainer to='/gaming/consoles'>
+						<NavDropdown.Item>Gaming Consoles</NavDropdown.Item>
+					</LinkContainer>
+					<LinkContainer to='/gaming/acce'>
+						<NavDropdown.Item>Gaming Accessories</NavDropdown.Item>
+					</LinkContainer>
 				</NavDropdown>
 
 				<Nav className='ml-auto'>

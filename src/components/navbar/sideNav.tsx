@@ -54,6 +54,8 @@ const SideNav: React.FC<SideNavProps> = () => {
 			customCrossIcon={false}
 			isOpen={burgerMenu}
 			onStateChange={state => {
+				const dropDown = categoriesItem.current! as HTMLDivElement;
+				dropDown.classList.remove('displayDropdown');
 				if (burgerMenu !== state.isOpen) dispatch(toggleMenu(state.isOpen));
 			}}>
 			{menuState.isOpen && (

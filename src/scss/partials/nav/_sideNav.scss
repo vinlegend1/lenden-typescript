@@ -25,6 +25,7 @@
 .bm-menu-wrap {
 	position: fixed;
 	min-height: 100vh;
+	width: auto !important;
 
 	/* width */
 	::-webkit-scrollbar {
@@ -154,7 +155,7 @@ a.bm-item {
 	border-bottom: 0.5px solid #d2d2d2;
 	display: flex;
 	width: inherit;
-	padding: 1.3rem 0.8rem;
+	padding: 1.3rem 0.2rem;
 	margin-bottom: 0.8rem;
 	align-content: center;
 	align-items: center;
@@ -191,7 +192,7 @@ a.bm-item {
 	#dropdownContainer {
 		overflow-y: hidden;
 		max-height: 0px;
-		transition: max-height 1s ease-in-out;
+		transition: max-height 0.5s ease-in-out;
 
 		#dropdownInnerContainer {
 			padding-top: 20px;
