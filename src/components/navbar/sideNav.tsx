@@ -2,9 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
 import { Image } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { slide as Menu } from 'react-burger-menu';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { logOutUser } from '../../app/auth/login';
 import { RootState } from '../../app/models';
@@ -39,7 +37,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 			list: [
 				{ name: 'Books', to: '/books' },
 				{ name: 'Mobiles', to: '/mobiles' },
-				{ name: "Gaming Cd's", to: '/gaming-cd' },
+				{ name: "Gaming CD's", to: '/gaming-cd' },
 				{ name: 'Accessories', to: '/gaming-accessories' },
 				{ name: 'Gaming Consoles', to: '/gaming-consoles' },
 			],
@@ -60,14 +58,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 			}}>
 			{menuState.isOpen && (
 				<Image
-					id='lol'
-					style={{
-						position: 'absolute',
-						top: '1.7rem',
-						left: '315px',
-						width: '55px',
-						cursor: 'pointer',
-					}}
+					id='closeMenu'
 					src='/icons/cross.svg'
 					alt=''
 					onClick={() => dispatch(toggleMenu(false))}
@@ -76,74 +67,27 @@ const SideNav: React.FC<SideNavProps> = () => {
 
 			{user.userId && (
 				<React.Fragment>
-					<Image
-						src='/icons/edit.svg'
-						style={{
-							position: 'absolute',
-							top: '1rem',
-							right: '1rem',
-							width: '14px',
-							padding: 0,
-							cursor: 'pointer',
-						}}
-					/>
-					<div
-						style={{
-							// height: '10vh',
-							borderBottom: '.5px solid #D2D2D2',
-							display: 'flex',
-							width: 'inherit',
-							padding: '1.3rem 0.8rem',
-							marginBottom: '0.8em',
-							alignItems: 'center',
-							alignContent: 'center',
-						}}>
-						<div style={{ flexBasis: '25%' }}>
+					<Image id='editUser' src='/icons/edit.svg' />
+					<div id='userContainer'>
+						<div id='imageContainer'>
 							<Image
 								src={
 									user
 										? 'https://placekitten.com/g/300/300'
 										: '/images/genericUser.png'
 								}
-								style={{ width: '50px' }}
 								alt=''
 								roundedCircle
 							/>
 						</div>
-						<div
-							style={{
-								flexBasis: '75%',
-							}}>
-							<div
-								style={{
-									fontWeight: 300,
-									fontFamily: 'Cera Pro',
-									fontSize: '11px',
-								}}>
-								Name : {user.name}
-							</div>
-							<div
-								style={{
-									fontWeight: 300,
-									fontFamily: 'Cera Pro',
-									fontSize: '11px',
-								}}>
-								Email : {user.email}
-							</div>
+						<div id='infoContainer'>
+							<div className='userDetails'>Name : {user.name}</div>
+							<div className='userDetails'>Email : {user.email}</div>
 						</div>
 					</div>
 				</React.Fragment>
 			)}
-			{/* <Image
-				id='userImageMain'
-				src={
-					user.user
-						? 'https://placekitten.com/g/300/300'
-						: '/images/genericUser.png'
-				}
-				roundedCircle
-				// onClick={onUserClick}
-			/> */}
+
 			{!user.userId && (
 				<NavLink
 					id='navAnchor'
@@ -182,18 +126,11 @@ const SideNav: React.FC<SideNavProps> = () => {
 
 				return (
 					<div
-						id='categoryDropdown'
+						id='categoryContainer'
 						key={index}
-						style={{
-							cursor: 'pointer',
-							MozUserSelect: 'none',
-							WebkitUserSelect: 'none',
-							msUserSelect: 'none',
-							userSelect: 'none',
-						}}
 						onClick={() => {
 							const dropDown = categoriesItem.current! as HTMLDivElement;
-							dropDown.classList.toggle('displayDropDown');
+							dropDown.classList.toggle('displayDropdown');
 							const dropIcon = dropDownIcon.current! as HTMLImageElement;
 							setTimeout(() => {
 								if (dropIcon.src.includes('up'))
@@ -202,36 +139,15 @@ const SideNav: React.FC<SideNavProps> = () => {
 							}, 500);
 						}}>
 						{navLink.name}
-						<img
-							ref={dropDownIcon}
-							style={{ marginLeft: '15px' }}
-							src='/icons/down.svg'
-							alt=''
-						/>
-						<div
-							ref={categoriesItem}
-							id='dropDownCategories'
-							style={{
-								overflowY: 'hidden',
-								maxHeight: '0px',
-								transition: 'max-height 1s ease',
-							}}>
-							<div style={{ paddingTop: '20px' }}>
+						<img ref={dropDownIcon} src='/icons/down.svg' alt='' />
+						<div ref={categoriesItem} id='dropdownContainer'>
+							<div id='dropdownInnerContainer'>
 								{navLink.list!.map((category, index) => (
 									<NavLink
 										className='categoryItem'
 										key={index}
 										to={category.to}
-										onClick={() => dispatch(toggleMenu(false))}
-										style={{
-											fontWeight: 'normal',
-											fontSize: '14px',
-											display: 'block',
-											paddingLeft: '25px',
-											marginBottom: ' 15px',
-											textDecoration: 'none',
-											color: 'white',
-										}}>
+										onClick={() => dispatch(toggleMenu(false))}>
 										{category.name}
 									</NavLink>
 								))}

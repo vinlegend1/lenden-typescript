@@ -106,35 +106,6 @@ a.bm-item {
 	color: color(accent) !important;
 }
 
-#userImageMain {
-	cursor: pointer;
-	max-width: 180px;
-	margin: 0 auto 1vh auto;
-	text-align: center;
-
-	@media screen and (max-width: breakpoint(mobileXL)) {
-		max-width: 130px;
-	}
-}
-
-#userImageMain:hover {
-	box-shadow: 0 0 20px rgba(color(accent), 0.9);
-	transition: box-shadow 0.3s ease-in-out;
-}
-
-#navAnchor {
-	// text-align: center;
-	margin-top: 2vh;
-
-	// @media screen and (max-width: breakpoint(mobileXL)) {
-	// 	margin-top: 4vh;
-	// }
-}
-
-#homeAnchor {
-	// margin-top: 2vh;
-}
-
 #signOutNav {
 	text-align: center;
 	margin: 2vh 0;
@@ -149,7 +120,7 @@ a.bm-item {
 	color: color(accent);
 }
 
-.displayDropDown {
+.displayDropdown {
 	// display: block !important;
 	max-height: 300px !important;
 }
@@ -158,16 +129,86 @@ a.bm-item {
 	color: color(accent) !important;
 }
 
-// #categoryDropdown:hover {
-// 	color: color(text) !important;
-// }
+#closeMenu {
+	position: absolute;
+	top: 1.7rem;
+	left: 315px;
+	width: 55px;
+	cursor: pointer;
 
-.categoryItem:hover {
-	color: rgba(color(accent), 0.8) !important;
-}
-
-#lol {
 	@media screen and (max-width: 390px) {
 		left: 85vw !important;
+	}
+}
+
+#editUser {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	width: 14px;
+	padding: 0;
+	cursor: pointer;
+}
+
+#userContainer {
+	border-bottom: 0.5px solid #d2d2d2;
+	display: flex;
+	width: inherit;
+	padding: 1.3rem 0.8rem;
+	margin-bottom: 0.8rem;
+	align-content: center;
+	align-items: center;
+	font-family: font(secondary);
+
+	#imageContainer {
+		flex-basis: 25%;
+
+		img {
+			width: 50px;
+		}
+	}
+
+	#infoContainer {
+		flex-basis: 75%;
+
+		.userDetails {
+			font-weight: 300;
+			font-size: 11px;
+		}
+	}
+}
+#categoryContainer {
+	cursor: pointer;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	img {
+		margin-left: 15px;
+	}
+
+	#dropdownContainer {
+		overflow-y: hidden;
+		max-height: 0px;
+		transition: max-height 1s ease-in-out;
+
+		#dropdownInnerContainer {
+			padding-top: 20px;
+
+			.categoryItem {
+				font-weight: normal;
+				font-size: 14px;
+				display: block;
+				padding-left: 25px;
+				margin-bottom: 15px;
+				text-decoration: none;
+				color: white;
+
+				&:hover {
+					color: rgba(color(accent), 0.8) !important;
+				}
+			}
+		}
 	}
 }
