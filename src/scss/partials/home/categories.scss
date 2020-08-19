@@ -1,0 +1,43 @@
+.mainCategoryContainer {
+	display: flex;
+	flex-wrap: nowrap;
+	white-space: nowrap;
+	max-width: fit-content;
+	overflow: scroll;
+	margin: 0 auto;
+
+	.categoryBox {
+		margin: 1rem auto;
+
+		.categoryIconBox {
+			display: flex;
+			width: 70px;
+			height: 70px;
+			padding: 0 1rem;
+			background-color: #eaf5ff;
+			margin: 0 10px;
+			border-radius: 50%;
+			align-items: center;
+
+			img {
+				width: inherit;
+				padding: 0.2rem;
+				max-height: 45px;
+				max-width: 38px;
+			}
+		}
+
+		.categoryName {
+			margin-top: 0.5rem;
+			text-align: center;
+			font-size: 11px;
+			font-family: font(secondary);
+			font-weight: 500;
+		}
+	}
+
+	+ hr {
+		margin: 0;
+		border-top: 1px solid #d2d2d2;
+	}
+}

@@ -13,53 +13,17 @@ const Categories: React.FC<CategoriesProps> = () => {
 
 	return (
 		<React.Fragment>
-			<div
-				style={{
-					display: 'flex',
-					flexWrap: 'nowrap',
-					whiteSpace: 'nowrap',
-					maxWidth: '450px',
-					alignItems: 'center',
-					overflow: 'auto',
-					margin: '0 auto',
-					// borderBottom: '2px solid #D2D2D2',
-				}}>
+			<div className='mainCategoryContainer'>
 				{categoryList.map(category => (
-					<div style={{ padding: '1rem 0 ' }}>
-						<div
-							style={{
-								display: 'flex',
-								width: '70px',
-								height: '70px',
-								padding: '0 1rem',
-								backgroundColor: '#EAF5FF',
-								margin: '10px',
-								borderRadius: '50%',
-								alignItems: 'center',
-							}}>
-							<img
-								src={`/icons/categories/${category.src}.svg`}
-								style={{
-									width: 'inherit',
-									padding: '0.2rem',
-									maxHeight: '45px',
-								}}
-								alt=''
-							/>
+					<div className='categoryBox' style={{ margin: '1rem 0 ' }}>
+						<div className='categoryIconBox'>
+							<img src={`/icons/categories/${category.src}.svg`} alt='' />
 						</div>
-						<div
-							style={{
-								textAlign: 'center',
-								fontSize: '11px',
-								fontFamily: 'Cera Pro',
-								fontWeight: 500,
-							}}>
-							{category.name.toUpperCase()}
-						</div>
+						<div className='categoryName'>{category.name.toUpperCase()}</div>
 					</div>
 				))}
 			</div>
-			<hr style={{ margin: '0', borderTop: '1px solid #D2D2D2' }} />
+			<hr />
 		</React.Fragment>
 	);
 };

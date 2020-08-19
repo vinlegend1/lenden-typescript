@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import InfoBanner from './infoBanner';
 import Categories from './categories';
+import MainBanner from './mainBanner';
 import { RootState } from '../../app/models';
 import { updateDeviceType } from '../../app/entities/common';
 
@@ -25,6 +26,7 @@ const Home: React.FC<HomeProps> = () => {
 		<React.Fragment>
 			<InfoBanner />
 			{isMobile && <Categories />}
+			<MainBanner />
 		</React.Fragment>
 	);
 };

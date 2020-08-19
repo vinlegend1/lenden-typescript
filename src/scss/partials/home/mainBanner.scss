@@ -1,0 +1,28 @@
+#mainBanner {
+	position: relative;
+
+	img {
+		display: block;
+		margin: 0 auto;
+		padding: 1.5rem 0;
+		height: 25vh;
+	}
+
+	#knowMore {
+		position: absolute;
+		bottom: 0.8rem;
+		right: 0.8rem;
+		background-color: color(backgroundSecondary);
+		color: white;
+		font-family: font(secondary);
+		border-radius: 4px;
+		font-size: 11px;
+		padding: 0.5rem 1rem;
+		font-weight: 300;
+	}
+
+	+ hr {
+		margin: 0;
+		border-top: 1px solid #d2d2d2;
+	}
+}
