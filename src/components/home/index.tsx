@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import InfoBanner from './infoBanner';
 import Categories from './categories';
 import MainBanner from './mainBanner';
+import ToggleButton from './toggleButton';
 import { RootState } from '../../app/models';
 import { updateDeviceType } from '../../app/entities/common';
 
@@ -27,6 +28,7 @@ const Home: React.FC<HomeProps> = () => {
 			<InfoBanner />
 			{isMobile && <Categories />}
 			<MainBanner />
+			<ToggleButton />
 		</React.Fragment>
 	);
 };
