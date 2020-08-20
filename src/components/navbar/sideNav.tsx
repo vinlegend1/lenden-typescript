@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
 import { Image } from 'react-bootstrap';
@@ -19,8 +19,9 @@ const SideNav: React.FC<SideNavProps> = () => {
 	const menuState = useSelector(
 		(state: RootState) => state.entities.burgerMenu
 	);
-	const categoriesItem = useRef(null);
-	const dropDownIcon = useRef(null);
+
+	const [categoriesItemClass, setCategoriesItemClass] = useState('');
+	const [dropdownIconSrc, setDropdownIconSrc] = useState('/icons/down.svg');
 
 	const navLinks = [
 		{ to: '/my-products', name: 'My Products' },
@@ -54,8 +55,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 			customCrossIcon={false}
 			isOpen={burgerMenu}
 			onStateChange={state => {
-				const dropDown = categoriesItem.current! as HTMLDivElement;
-				dropDown.classList.remove('displayDropdown');
+				setCategoriesItemClass('');
 				if (burgerMenu !== state.isOpen) dispatch(toggleMenu(state.isOpen));
 			}}>
 			{menuState.isOpen && (
@@ -131,18 +131,18 @@ const SideNav: React.FC<SideNavProps> = () => {
 						id='categoryContainer'
 						key={index}
 						onClick={() => {
-							const dropDown = categoriesItem.current! as HTMLDivElement;
-							dropDown.classList.toggle('displayDropdown');
-							const dropIcon = dropDownIcon.current! as HTMLImageElement;
+							if (categoriesItemClass === '')
+								setCategoriesItemClass('displayDropdown');
+							else setCategoriesItemClass('');
 							setTimeout(() => {
-								if (dropIcon.src.includes('up'))
-									dropIcon.src = '/icons/down.svg';
-								else dropIcon.src = '/icons/up.svg';
-							}, 500);
+								if (dropdownIconSrc.includes('up'))
+									setDropdownIconSrc('/icons/down.svg');
+								else setDropdownIconSrc('/icons/up.svg');
+							}, 300);
 						}}>
 						{navLink.name}
-						<img ref={dropDownIcon} src='/icons/down.svg' alt='' />
-						<div ref={categoriesItem} id='dropdownContainer'>
+						<img src={dropdownIconSrc} alt='' />
+						<div id='dropdownContainer' className={categoriesItemClass}>
 							<div id='dropdownInnerContainer'>
 								{navLink.list!.map((category, index) => (
 									<NavLink

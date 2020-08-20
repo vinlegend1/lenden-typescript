@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -12,12 +12,13 @@ const MainNav: React.FC<MainNavProps> = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.auth.user);
 	const history = useHistory();
-	const mobileSearchBox = useRef(null);
-	const mainNav = useRef(null);
+
+	const [mobileSearchBoxClass, setMobileSearchBoxClass] = useState('');
+	const [mainNavClass, setMainNavClass] = useState('');
 
 	return (
 		<div className='mainNavBarGroup'>
-			<Navbar variant='dark' className='mainNav' ref={mainNav}>
+			<Navbar variant='dark' className={`mainNav ${mainNavClass}`}>
 				<Navbar.Brand
 					onClick={() => dispatch(toggleMenu(true))}
 					style={{ cursor: 'pointer' }}>
@@ -38,7 +39,7 @@ const MainNav: React.FC<MainNavProps> = () => {
 				</NavLink>
 
 				<NavDropdown
-					id='lala'
+					id='mainNavCategoryDropdown'
 					className='category dropdownCategory'
 					title='Gaming'>
 					<LinkContainer to='/gaming/cd'>
@@ -70,11 +71,8 @@ const MainNav: React.FC<MainNavProps> = () => {
 						id='mainNavSearchIcon'
 						className='iconNav'
 						onClick={() => {
-							const searchBox = mobileSearchBox.current! as HTMLDivElement;
-							searchBox.classList.add('displaySearchBox');
-
-							const nav = mainNav.current! as HTMLDivElement;
-							nav.classList.add('hideMainNav');
+							setMobileSearchBoxClass('displaySearchBox');
+							setMainNavClass('hideMainNav');
 						}}>
 						<img
 							className='icon'
@@ -105,17 +103,14 @@ const MainNav: React.FC<MainNavProps> = () => {
 					</Nav.Link>
 				</Nav>
 			</Navbar>
-			<div ref={mobileSearchBox} id='mobileSearchBox'>
+			<div id='mobileSearchBox' className={mobileSearchBoxClass}>
 				<div className='ml-auto' id='mobileSearchBoxItem'>
 					<img
 						className='icon'
 						id='mobileSearchIcon'
 						onClick={() => {
-							const searchBox = mobileSearchBox.current! as HTMLDivElement;
-							searchBox.classList.remove('displaySearchBox');
-
-							const nav = mainNav.current! as HTMLDivElement;
-							nav.classList.remove('hideMainNav');
+							setMobileSearchBoxClass('');
+							setMainNavClass('');
 						}}
 						src='/icons/back2.svg'
 						alt=''
