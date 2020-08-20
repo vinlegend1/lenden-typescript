@@ -1,10 +1,9 @@
 #toggleButton {
 	margin: 0 auto;
 	display: flex;
-	border: 1.5px solid color(backgroundSecondary);
-	border-radius: 4px;
+
 	max-width: fit-content;
-	font-size: 14px;
+	font-size: 13px;
 	font-family: font(secondary);
 	padding: 0;
 
@@ -12,6 +11,21 @@
 		padding: 0.3rem 1.5rem;
 		width: 100px;
 		text-align: center;
+		border: 1px solid color(backgroundSecondary);
+		cursor: pointer;
+	}
+
+	#single {
+		@extend .toggleItem;
+		border-right: none;
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+	}
+	#multiple {
+		@extend .toggleItem;
+		border-left: none;
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px;
 	}
 	.active {
 		background-color: color(backgroundSecondary);
