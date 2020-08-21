@@ -138,7 +138,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 								if (dropdownIconSrc.includes('up'))
 									setDropdownIconSrc('/icons/down.svg');
 								else setDropdownIconSrc('/icons/up.svg');
-							}, 300);
+							}, 200);
 						}}>
 						{navLink.name}
 						<img src={dropdownIconSrc} alt='' />

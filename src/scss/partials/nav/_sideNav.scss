@@ -194,7 +194,7 @@ a.bm-item {
 	#dropdownContainer {
 		overflow-y: hidden;
 		max-height: 0px;
-		transition: max-height 0.5s ease-in-out;
+		transition: max-height 0.3s linear;
 
 		#dropdownInnerContainer {
 			padding-top: 20px;

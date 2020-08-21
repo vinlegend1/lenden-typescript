@@ -2,12 +2,15 @@
 	position: sticky;
 	top: 0;
 	z-index: 100;
+	background-color: color(backgroundSecondary);
+	height: 3.5rem;
 
 	.mainNav {
 		background-color: color(backgroundSecondary);
-		height: 3.5rem;
+		height: inherit;
 		box-shadow: 0px 2px 4px rgba(26, 38, 57, 0.25);
-
+		opacity: 1;
+		transition: opacity linear 0.3s;
 		justify-content: center;
 		align-items: center;
 
@@ -162,9 +165,11 @@
 
 	#mobileSearchBox {
 		background-color: color(backgroundSecondary);
-		// padding: 0.2rem 0.6rem 0.6rem 0.6rem;
-		display: none;
-		height: 3.5rem;
+		display: flex !important;
+		height: 0;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity linear 0.3s;
 		align-items: center;
 
 		// @media screen and (max-width: breakpoint(mobileXL)) {
@@ -221,9 +226,14 @@
 }
 
 .displaySearchBox {
-	display: flex !important;
+	height: inherit !important;
+	visibility: visible !important;
+	opacity: 1 !important;
 }
 
 .hideMainNav {
-	display: none !important;
+	height: 0 !important;
+	visibility: hidden;
+	opacity: 0 !important;
+	padding: 0 !important;
 }
