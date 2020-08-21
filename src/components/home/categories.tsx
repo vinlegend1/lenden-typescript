@@ -20,11 +20,8 @@ const Categories: React.FC<CategoriesProps> = () => {
 		<React.Fragment>
 			<div className='mainCategoryContainer'>
 				{categoryList.map((category, index) => (
-					<Link to={category.to}>
-						<div
-							key={index}
-							className='categoryBox'
-							style={{ margin: '1rem 0 ' }}>
+					<Link key={index} to={category.to}>
+						<div className='categoryBox' style={{ margin: '1rem 0 ' }}>
 							<div className='categoryIconBox'>
 								<img src={`/icons/categories/${category.src}.svg`} alt='' />
 							</div>
