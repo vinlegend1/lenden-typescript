@@ -22,6 +22,7 @@ const Main: React.FC = () => {
 				<Route path='/my-products' component={MyProducts} />
 				<ProtectedRoute path='/me' component={Me} /> */}
 				<Route path='/' exact component={Home} />
+				<Redirect from='/categories' exact to='/' />
 				{/* <Redirect to='/not-found' /> */}
 			</Switch>
 		</React.Fragment>
