@@ -14,8 +14,11 @@ const Categories: React.FC<CategoriesProps> = () => {
 	return (
 		<React.Fragment>
 			<div className='mainCategoryContainer'>
-				{categoryList.map(category => (
-					<div className='categoryBox' style={{ margin: '1rem 0 ' }}>
+				{categoryList.map((category, index) => (
+					<div
+						key={index}
+						className='categoryBox'
+						style={{ margin: '1rem 0 ' }}>
 						<div className='categoryIconBox'>
 							<img src={`/icons/categories/${category.src}.svg`} alt='' />
 						</div>
