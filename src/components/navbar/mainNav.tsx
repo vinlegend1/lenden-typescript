@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -30,11 +30,11 @@ const MainNav: React.FC<MainNavProps> = () => {
 					src='/icons/navLogo.svg'
 				/>
 
-				<NavLink className='nav-link category' to='/books'>
+				<NavLink className='nav-link category' to='/categories/books'>
 					Books
 				</NavLink>
 
-				<NavLink className='nav-link category' to='/mobiles'>
+				<NavLink className='nav-link category' to='/categories/mobiles'>
 					Mobiles
 				</NavLink>
 
@@ -42,13 +42,13 @@ const MainNav: React.FC<MainNavProps> = () => {
 					id='mainNavCategoryDropdown'
 					className='category dropdownCategory'
 					title='Gaming'>
-					<LinkContainer to='/gaming/cd'>
+					<LinkContainer to='/categories/gaming-cd'>
 						<NavDropdown.Item>Gaming CDs</NavDropdown.Item>
 					</LinkContainer>
-					<LinkContainer to='/gaming/consoles'>
+					<LinkContainer to='/categories/gaming-consoles'>
 						<NavDropdown.Item>Gaming Consoles</NavDropdown.Item>
 					</LinkContainer>
-					<LinkContainer to='/gaming/acce'>
+					<LinkContainer to='/categories/gaming-accessories'>
 						<NavDropdown.Item>Gaming Accessories</NavDropdown.Item>
 					</LinkContainer>
 				</NavDropdown>
