@@ -7,16 +7,19 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 interface ErrorContainer {
 	[key: string]: string;
 }
+
+export type PassType = 'password' | 'text';
 interface FormState {
 	data: {
 		[key: string]: string;
 	};
 	errors: ErrorContainer;
-	passType?: 'password' | 'text';
+	passType?: PassType;
 }
 
 abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
-	abstract schema = {};
+	abstract schema: {};
+	abstract doSubmit: () => void;
 
 	handleChange = (event: ChangeEvent) => {
 		const input = event.currentTarget as HTMLInputElement;
@@ -41,18 +44,20 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 		e.preventDefault();
 		const errors = this.validate();
 		if (errors) return this.setState({ errors });
+
+		this.doSubmit();
 	};
 
-	renderInput = (label: string, type: string) => {
+	renderInput = (label: string, name: string, type?: string) => {
 		if (type === 'password') return this.renderPassInput(label);
 		return (
-			<Form.Group controlId={type}>
+			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
 				<Form.Control
 					className='input email'
-					name={type}
-					type={type}
-					value={this.state.data[type]}
+					name={name}
+					type={type || name}
+					value={this.state.data[name]}
 					onChange={this.handleChange}
 				/>
 			</Form.Group>

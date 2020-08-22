@@ -5,24 +5,33 @@ import Joi from 'joi';
 import { getCurrentUser } from './../../services/authService';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 
-export interface LoginProps extends RouteComponentProps {}
-export interface LoginState {
+export interface SignupProps extends RouteComponentProps {}
+
+export interface SignupState {
 	data: {
+		name: string;
 		email: string;
 		password: string;
+		mobileNumber: string;
 	};
 	errors: {};
 	passType: PassType;
 }
 
-class Login extends CommonForm<LoginProps, LoginState> {
+class Signup extends CommonForm<SignupProps, SignupState> {
 	state = {
-		data: { email: '', password: '' },
+		data: {
+			name: '',
+			email: '',
+			password: '',
+			mobileNumber: '',
+		},
 		errors: {},
 		passType: 'password' as PassType,
 	};
 
 	schema = {
+		name: Joi.string().min(3).max(255).required().label('Name'),
 		email: Joi.string()
 			.email({ tlds: { allow: false } })
 			.required()
@@ -39,36 +48,22 @@ class Login extends CommonForm<LoginProps, LoginState> {
 				<SignNav />
 				<div className='mainSignContainer'>
 					<div className='formBox'>
-						<h1>Welcome Back,</h1>
-						<h2>Please login to your Account</h2>
+						<h1>Welcome to Len-Den,</h1>
+						<h2>Please register with us to start your barter journey !</h2>
 
+						{this.renderInput('Name', 'name')}
+						{this.renderInput('Mobile Number', 'mobileNumber', 'number')}
 						{this.renderInput('Email', 'email')}
 						{this.renderInput('Password', 'password')}
 
-						<div className='loginOptions'>
-							<div>
-								<div className='pretty p-image p-curve p-smooth'>
-									<input type='checkbox' />
-									<div className='state'>
-										<img
-											className='image'
-											src='/icons/tick.svg'
-											alt='signed-in'
-										/>
-										<label>Keep me signed in</label>
-									</div>
-								</div>
-							</div>
-
-							<div className='forgotPassword'>Forgot Password?</div>
+						<div style={{ marginTop: '30px' }} className='darkButton'>
+							Continue
 						</div>
-
-						<div className='darkButton'>Login</div>
 						<div className='separator'>or</div>
 						<div
-							onClick={() => this.props.history.push('/signup')}
+							onClick={() => this.props.history.push('/login')}
 							className='lightButton'>
-							Create an account
+							Login
 						</div>
 					</div>
 				</div>
@@ -77,4 +72,4 @@ class Login extends CommonForm<LoginProps, LoginState> {
 	}
 }
 
-export default Login;
+export default Signup;
