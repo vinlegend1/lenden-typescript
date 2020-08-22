@@ -63,7 +63,9 @@ class Login extends CommonForm<LoginProps, LoginState> {
 							<div className='forgotPassword'>Forgot Password?</div>
 						</div>
 
-						<div className='darkButton'>Login</div>
+						<div onClick={this.handleSubmit} className='darkButton'>
+							Login
+						</div>
 						<div className='separator'>or</div>
 						<div
 							onClick={() => this.props.history.push('/signup')}

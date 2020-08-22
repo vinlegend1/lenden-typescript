@@ -56,7 +56,10 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						{this.renderInput('Email', 'email')}
 						{this.renderInput('Password', 'password')}
 
-						<div style={{ marginTop: '30px' }} className='darkButton'>
+						<div
+							onClick={this.handleSubmit}
+							style={{ marginTop: '30px' }}
+							className='darkButton'>
 							Continue
 						</div>
 						<div className='separator'>or</div>

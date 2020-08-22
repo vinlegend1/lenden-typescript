@@ -49,7 +49,7 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 	};
 
 	renderInput = (label: string, name: string, type?: string) => {
-		if (type === 'password') return this.renderPassInput(label);
+		if (name === 'password') return this.renderPassInput(label);
 		return (
 			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
