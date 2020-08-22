@@ -1,0 +1,160 @@
+.mainSignContainer {
+	font-family: font(secondary);
+	display: flex;
+
+	.formBox {
+		background-color: color(white);
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		border-radius: 3px;
+		padding: 50px;
+		width: 90vw;
+		margin: 2rem auto;
+		max-width: 400px;
+		position: relative;
+
+		@media screen and (max-width: 500px) {
+			background-color: transparent;
+			box-shadow: none;
+			position: unset;
+			padding: 5px;
+		}
+
+		h1 {
+			margin-top: 3rem;
+			font-weight: bold;
+			font-size: 28px;
+		}
+
+		h2 {
+			font-size: 20px;
+		}
+
+		.form-group {
+			label {
+				font-family: font(secondary);
+				font-size: 13px;
+				font-weight: 500;
+				color: #b4b4b4;
+				margin-bottom: 0.25rem;
+				margin-left: 1rem;
+			}
+
+			input.email {
+				background: #ffffff;
+
+				border: 0.2px solid #e1e1e1;
+				box-sizing: border-box;
+				box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
+				border-radius: 8px;
+				font-size: 14px;
+				padding: 0.8rem 1rem;
+				height: fit-content;
+			}
+
+			.input-group {
+				box-sizing: border-box;
+				box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
+				border-radius: 8px;
+
+				input {
+					border: none;
+					background: #ffffff;
+					padding: 0.8rem 1rem;
+					height: fit-content;
+					font-size: 14px;
+
+					border-color: #e1e1e1;
+					border-style: solid;
+					border-width: 0.2px 0px 0.2px 0.2px;
+
+					border-top-left-radius: 8px;
+					border-bottom-left-radius: 8px;
+				}
+
+				.input-group-text {
+					border: none;
+					cursor: pointer;
+					background-color: white;
+					border-color: #e1e1e1;
+					border-style: solid;
+					border-width: 0.2px 0.2px 0.2px 0px;
+					border-top-right-radius: 8px;
+					border-bottom-right-radius: 8px;
+
+					svg {
+						color: #1a2639;
+					}
+				}
+			}
+		}
+
+		.loginOptions {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 20px;
+
+			div > .pretty {
+				font-size: 13px;
+				color: #b4b4b4;
+				.state {
+					// height: 20px;
+					label {
+						font-weight: 500;
+					}
+				}
+			}
+
+			.forgotPassword {
+				font-size: 13px;
+				color: #1f74e6;
+			}
+		}
+
+		.signButton {
+			height: 50px;
+			display: flex;
+			border-radius: 4px;
+			justify-content: center;
+			align-items: center;
+			font-size: 14px;
+		}
+
+		.darkButton {
+			@extend .signButton;
+			background: #1a2639;
+			color: white;
+		}
+
+		.lightButton {
+			@extend .signButton;
+			color: #1a2639;
+			border: 1px solid #1a2639;
+		}
+
+		.separator {
+			margin: 18px 0;
+			display: flex;
+			align-items: center;
+			text-align: center;
+
+			font-size: 13px;
+			color: #b4b4b4;
+		}
+
+		.separator::before,
+		.separator::after {
+			content: '';
+			flex: 1;
+			border-bottom: 0.5px solid #a6a6a6;
+		}
+		.separator::before {
+			margin-right: 0.5em;
+			margin-left: 0.8em;
+		}
+		.separator::after {
+			margin-left: 0.5em;
+			margin-right: 0.8em;
+		}
+	}
+}
