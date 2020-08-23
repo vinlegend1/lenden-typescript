@@ -59,6 +59,8 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 		console.log(placeholder);
 		if (name === 'password')
 			return this.renderPassInput(label, errorMessage, placeholder);
+		if (name === 'mobileNumber')
+			return this.renderMobileNumberInput(label, errorMessage);
 		return (
 			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
@@ -88,7 +90,7 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 				<Form.Label>{label}</Form.Label>
 				<InputGroup>
 					<Form.Control
-						className='input'
+						className='input passwordInput'
 						name='password'
 						type={this.state.passType}
 						value={this.state.data.password}
@@ -97,6 +99,7 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 
 					<InputGroup.Append>
 						<InputGroup.Text
+							className='passwordInputText'
 							onClick={() => {
 								if (this.state.passType === 'password')
 									return setTimeout(() => this.setState({ passType: 'text' }));
@@ -134,6 +137,33 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 			</Form.Group>
 		);
 	};
+
+	private renderMobileNumberInput = (label: string, errorMessage?: string) => (
+		<Form.Group controlId='mobileNumber'>
+			<Form.Label>{label}</Form.Label>
+
+			<InputGroup>
+				<InputGroup.Prepend>
+					<InputGroup.Text className='mobileNumberInputText'>
+						+91
+					</InputGroup.Text>
+				</InputGroup.Prepend>
+				<Form.Control
+					className='input mobileNumberInput'
+					name='mobileNumber'
+					type='number'
+					value={this.state.data.mobileNumber}
+					onChange={this.handleChange}
+				/>
+			</InputGroup>
+
+			<Form.Text
+				className={errorMessage ? 'active' : ''}
+				style={{ marginLeft: '1rem' }}>
+				{errorMessage}
+			</Form.Text>
+		</Form.Group>
+	);
 }
 
 export default CommonForm;
