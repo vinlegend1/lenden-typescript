@@ -1,5 +1,5 @@
 import React from 'react';
-import CommonForm, { PassType } from './../common/commonForm';
+import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
 import SignNav from './signNav';
 import Joi from 'joi';
 import { getCurrentUser } from './../../services/authService';
@@ -11,14 +11,14 @@ export interface LoginState {
 		email: string;
 		password: string;
 	};
-	errors: {};
+	errors: ErrorContainer;
 	passType: PassType;
 }
 
 class Login extends CommonForm<LoginProps, LoginState> {
 	state = {
 		data: { email: '', password: '' },
-		errors: {},
+		errors: { email: '', password: '' },
 		passType: 'password' as PassType,
 	};
 
@@ -42,8 +42,12 @@ class Login extends CommonForm<LoginProps, LoginState> {
 						<h1>Welcome Back,</h1>
 						<h2>Please login to your Account</h2>
 
-						{this.renderInput('Email', 'email')}
-						{this.renderInput('Password', 'password')}
+						{this.renderInput('Email', 'email', this.state.errors.email)}
+						{this.renderInput(
+							'Password',
+							'password',
+							this.state.errors.password
+						)}
 
 						<div className='loginOptions'>
 							<div>

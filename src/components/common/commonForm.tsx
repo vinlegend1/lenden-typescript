@@ -4,7 +4,7 @@ import Joi from 'joi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-interface ErrorContainer {
+export interface ErrorContainer {
 	[key: string]: string;
 }
 
@@ -45,11 +45,20 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 		const errors = this.validate();
 		if (errors) return this.setState({ errors });
 
+		this.setState({ errors: {} });
 		this.doSubmit();
 	};
 
-	renderInput = (label: string, name: string, type?: string) => {
-		if (name === 'password') return this.renderPassInput(label);
+	renderInput = (
+		label: string,
+		name: string,
+		errorMessage: string,
+		type?: string,
+		placeholder?: string
+	) => {
+		console.log(placeholder);
+		if (name === 'password')
+			return this.renderPassInput(label, errorMessage, placeholder);
 		return (
 			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
@@ -60,15 +69,24 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 					value={this.state.data[name]}
 					onChange={this.handleChange}
 				/>
+				<Form.Text
+					className={errorMessage ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{errorMessage}
+				</Form.Text>
 			</Form.Group>
 		);
 	};
 
-	private renderPassInput = (label: string) => {
+	private renderPassInput = (
+		label: string,
+		errorMessage?: string,
+		placeholder?: string
+	) => {
 		return (
 			<Form.Group controlId={'password'}>
 				<Form.Label>{label}</Form.Label>
-				<InputGroup className='mb-3'>
+				<InputGroup>
 					<Form.Control
 						className='input'
 						name='password'
@@ -98,6 +116,21 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 						</InputGroup.Text>
 					</InputGroup.Append>
 				</InputGroup>
+				<Form.Text
+					className={errorMessage ? 'active' : ''}
+					style={{
+						opacity: placeholder ? 1 : 0,
+						color: errorMessage ? '' : '#b4b4b4',
+					}}>
+					{errorMessage
+						? errorMessage
+						: Object.keys(this.state.errors).includes('password') && (
+								<React.Fragment>
+									<img src='/icons/info.svg' alt='' />
+									{placeholder}
+								</React.Fragment>
+						  )}
+				</Form.Text>
 			</Form.Group>
 		);
 	};

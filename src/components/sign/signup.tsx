@@ -1,9 +1,10 @@
 import React from 'react';
-import CommonForm, { PassType } from './../common/commonForm';
+import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
 import SignNav from './signNav';
 import Joi from 'joi';
 import { getCurrentUser } from './../../services/authService';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
+Joi.extend(require('joi-phone-number'));
 
 export interface SignupProps extends RouteComponentProps {}
 
@@ -14,7 +15,7 @@ export interface SignupState {
 		password: string;
 		mobileNumber: string;
 	};
-	errors: {};
+	errors: ErrorContainer;
 	passType: PassType;
 }
 
@@ -26,7 +27,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			password: '',
 			mobileNumber: '',
 		},
-		errors: {},
+		errors: { name: '', email: '', password: '', mobileNumber: '' },
 		passType: 'password' as PassType,
 	};
 
@@ -36,7 +37,12 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			.email({ tlds: { allow: false } })
 			.required()
 			.label('Email'),
-		password: Joi.string().required().label('Password'),
+		password: Joi.string().min(6).max(255).required().label('Password'),
+		mobileNumber: Joi.string()
+			.length(10)
+			.pattern(/^[0-9]+$/)
+			.required()
+			.label('Mobile Number'),
 	};
 
 	doSubmit = () => {};
@@ -51,10 +57,21 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						<h1>Welcome to Len-Den,</h1>
 						<h2>Please register with us to start your barter journey !</h2>
 
-						{this.renderInput('Name', 'name')}
-						{this.renderInput('Mobile Number', 'mobileNumber', 'number')}
-						{this.renderInput('Email', 'email')}
-						{this.renderInput('Password', 'password')}
+						{this.renderInput('Name', 'name', this.state.errors.name)}
+						{this.renderInput(
+							'Mobile Number',
+							'mobileNumber',
+							this.state.errors.mobileNumber,
+							'number'
+						)}
+						{this.renderInput('Email', 'email', this.state.errors.email)}
+						{this.renderInput(
+							'Password',
+							'password',
+							this.state.errors.password,
+							'',
+							'Password must be atleast 6 characters'
+						)}
 
 						<div
 							onClick={this.handleSubmit}

@@ -1,6 +1,7 @@
 .mainSignContainer {
 	font-family: font(secondary);
 	display: flex;
+	min-height: fit-content;
 
 	.formBox {
 		background-color: color(white);
@@ -20,7 +21,7 @@
 		}
 
 		h1 {
-			margin-top: 3rem;
+			margin-top: 2rem;
 			font-weight: bold;
 			font-size: 28px;
 		}
@@ -31,6 +32,7 @@
 		}
 
 		.form-group {
+			margin-bottom: 0.8rem;
 			label {
 				font-family: font(secondary);
 				font-size: 13px;
@@ -40,15 +42,34 @@
 				margin-left: 1rem;
 			}
 
-			input.email {
-				background: #ffffff;
+			small {
+				opacity: 0;
+				transition: opacity 0.3s ease;
+				height: 15px;
+				color: #ef5350;
+				font-size: 12px;
+				font-weight: 500;
+				margin-top: 0.6rem;
+				margin-left: 1rem;
 
+				img {
+					height: 13px;
+					margin-right: 0.2rem;
+				}
+			}
+
+			.active {
+				opacity: 1 !important;
+			}
+
+			input {
+				background: #ffffff;
 				border: 0.2px solid #e1e1e1;
 				box-sizing: border-box;
 				box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
 				border-radius: 8px;
 				font-size: 14px;
-				padding: 0.8rem 1rem;
+				padding: 1.2rem 1rem;
 				height: fit-content;
 			}
 
@@ -60,16 +81,15 @@
 				input {
 					border: none;
 					background: #ffffff;
-					padding: 0.8rem 1rem;
+					padding: 1.2rem 1rem;
 					height: fit-content;
 					font-size: 14px;
-
 					border-color: #e1e1e1;
 					border-style: solid;
 					border-width: 0.2px 0px 0.2px 0.2px;
-
 					border-top-left-radius: 8px;
 					border-bottom-left-radius: 8px;
+					box-shadow: none;
 				}
 
 				.input-group-text {
@@ -81,6 +101,7 @@
 					border-width: 0.2px 0.2px 0.2px 0px;
 					border-top-right-radius: 8px;
 					border-bottom-right-radius: 8px;
+					padding-right: 1rem;
 
 					svg {
 						color: #1a2639;
@@ -93,16 +114,20 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin-bottom: 20px;
+			margin: 1.5rem 0 1rem 0;
 
 			div > .pretty {
 				font-size: 13px;
 				color: #b4b4b4;
 				.state {
-					// height: 20px;
 					label {
+						&:after {
+							border: 1.5px solid #b4b4b4;
+						}
+
 						font-weight: 500;
 					}
+
 					img {
 						padding-left: 1.3px;
 					}
@@ -138,7 +163,7 @@
 		}
 
 		.separator {
-			margin: 18px 0;
+			margin: 0.8rem 0;
 			display: flex;
 			align-items: center;
 			text-align: center;
