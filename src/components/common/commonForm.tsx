@@ -56,7 +56,6 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 		type?: string,
 		placeholder?: string
 	) => {
-		console.log(placeholder);
 		if (name === 'password')
 			return this.renderPassInput(label, errorMessage, placeholder);
 		if (name === 'mobileNumber')

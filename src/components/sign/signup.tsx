@@ -41,8 +41,20 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 		mobileNumber: Joi.string()
 			.length(10)
 			.pattern(/^[0-9]+$/)
+			.error(() => 'first message')
 			.required()
-			.label('Mobile Number'),
+			.label('Mobile Number')
+			.error((errors: Object[]): any => {
+				console.log(errors);
+				errors.forEach((err: any) => {
+					switch (err.code) {
+						case 'string.pattern.base':
+							err.message = '"Mobile Number" should be a valid Mobile Number';
+							break;
+					}
+				});
+				return errors;
+			}),
 	};
 
 	doSubmit = () => {};
