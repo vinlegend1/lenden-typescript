@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
 import { Image } from 'react-bootstrap';
 import { slide as Menu } from 'react-burger-menu';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { logOutUser } from '../../app/auth/login';
 import { RootState } from '../../app/models';
 import { Swipeable } from 'react-swipeable';
@@ -12,6 +12,7 @@ export interface SideNavProps {}
 
 const SideNav: React.FC<SideNavProps> = () => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const burgerMenu = useSelector(
 		(state: RootState) => state.entities.burgerMenu.isOpen
@@ -70,23 +71,30 @@ const SideNav: React.FC<SideNavProps> = () => {
 				)}
 
 				{user.userId && (
-					<div id='userContainer'>
-						<div id='imageContainer'>
-							<Image
-								src={
-									user
-										? 'https://placekitten.com/g/300/300'
-										: '/images/genericUser.png'
-								}
-								alt=''
-								roundedCircle
-							/>
+					<React.Fragment>
+						<div
+							id='userContainer'
+							onClick={() => {
+								history.push('/my-account');
+								dispatch(toggleMenu(false));
+							}}>
+							<div id='imageContainer'>
+								<Image
+									src={
+										user
+											? 'https://placekitten.com/g/300/300'
+											: '/images/genericUser.png'
+									}
+									alt=''
+									roundedCircle
+								/>
+							</div>
+							<div id='infoContainer'>
+								<div className='userDetails'>Name : {user.name}</div>
+								<div className='userDetails'>Email : {user.email}</div>
+							</div>
 						</div>
-						<div id='infoContainer'>
-							<div className='userDetails'>Name : {user.name}</div>
-							<div className='userDetails'>Email : {user.email}</div>
-						</div>
-					</div>
+					</React.Fragment>
 				)}
 
 				{!user.userId && (

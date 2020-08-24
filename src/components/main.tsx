@@ -7,6 +7,8 @@ import NavBar from './navbar';
 // import Products from './products/products';
 // import ProductPage from './productPage/productPage';
 import Home from './home';
+import ProtectedRoute from './common/protectedRoute';
+import MyAccount from './myAccount';
 // import MyProducts from './myProducts/myProducts';
 // import Me from './myAccount/me';
 
@@ -19,8 +21,8 @@ const Main: React.FC = () => {
 				<ProtectedRoute path='/new' exact component={NewProduct} />
 				<Route path='/books' exact component={Products} />
 				<Route path='/books/:id' component={ProductPage} />
-				<Route path='/my-products' component={MyProducts} />
-				<ProtectedRoute path='/me' component={Me} /> */}
+				<Route path='/my-products' component={MyProducts} />*/}
+				<ProtectedRoute path='/my-account' component={MyAccount} />
 				<Route path='/' exact component={Home} />
 				<Redirect from='/categories' exact to='/' />
 				{/* <Redirect to='/not-found' /> */}
