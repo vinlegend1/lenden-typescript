@@ -54,6 +54,7 @@
 		"react-scripts": "3.4.3",
 		"react-spinners": "^0.9.0",
 		"react-star-rating-component-new": "^1.0.6",
+		"react-swipeable": "^5.5.1",
 		"react-toastify": "^6.0.8",
 		"redux": "^4.0.5",
 		"redux-burger-menu": "^0.2.8",
