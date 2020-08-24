@@ -209,5 +209,41 @@
 			margin-left: 0.5em;
 			margin-right: 0.8em;
 		}
+
+		.termsConditions {
+			margin: 1rem 0 2rem 0;
+			.pretty {
+				font-size: 13px;
+				color: #b4b4b4;
+				.state {
+					label {
+						&:after {
+							border: 1.5px solid #b4b4b4;
+						}
+
+						font-weight: 500;
+					}
+
+					img {
+						padding-left: 1.3px;
+					}
+				}
+			}
+
+			small {
+				display: block;
+				margin-left: 1rem;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+				// min-height: 15px; //TODO
+				color: #ef5350;
+				font-size: 12px;
+				font-weight: 500;
+				margin-top: 0.6rem;
+			}
+			.active {
+				opacity: 1 !important;
+			}
+		}
 	}
 }

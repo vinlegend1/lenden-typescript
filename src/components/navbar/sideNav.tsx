@@ -32,7 +32,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 			exact: true,
 			id: 'homeAnchor',
 		},
-		{ to: '/wallet-ballance', name: 'Wallet Ballance' },
+		// { to: '/wallet-ballance', name: 'Wallet Ballance' },
 		{
 			name: 'Categories',
 			list: [
@@ -46,7 +46,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 		{ to: '/about', name: 'About Us' },
 		{ to: '/contact', name: 'Contact Us' },
 		{ to: '/faq', name: "FAQ's" },
-		{ to: '/donate', name: 'Donate a Book' },
+		// { to: '/donate', name: 'Donate a Book' },
 	];
 
 	return (

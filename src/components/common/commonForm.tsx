@@ -54,7 +54,7 @@ abstract class CommonForm<
 		return errors;
 	};
 
-	handleSubmit = (e: React.MouseEvent) => {
+	handleSubmit = async (e: React.MouseEvent) => {
 		e.preventDefault();
 
 		if (this.props.updateError) this.props.updateError('');
@@ -63,7 +63,7 @@ abstract class CommonForm<
 		const errors = this.validate();
 		if (errors) return this.setState({ errors });
 
-		this.setState({ errors: {} });
+		await this.setState({ errors: {} });
 		this.doSubmit();
 	};
 

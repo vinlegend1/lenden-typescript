@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form } from 'react-bootstrap';
 import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
 import SignNav from './signNav';
 import Joi from 'joi';
@@ -34,6 +35,7 @@ export interface SignupState {
 	errors: ErrorContainer;
 	success: string;
 	passType: PassType;
+	termsConditions: boolean;
 }
 
 class Signup extends CommonForm<SignupProps, SignupState> {
@@ -44,9 +46,16 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			password: '',
 			mobileNumber: '',
 		},
-		errors: { name: '', email: '', password: '', mobileNumber: '' },
+		errors: {
+			name: '',
+			email: '',
+			password: '',
+			mobileNumber: '',
+			termsConditions: '',
+		},
 		success: '',
 		passType: 'password' as PassType,
+		termsConditions: false,
 	};
 
 	schema = {
@@ -63,7 +72,6 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			.required()
 			.label('Mobile Number')
 			.error((errors: any) => {
-				console.log(errors);
 				errors.forEach((err: any) => {
 					switch (err.code) {
 						case 'string.pattern.base':
@@ -76,6 +84,13 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 	};
 
 	doSubmit = () => {
+		if (!this.state.termsConditions) {
+			const errors = { ...this.state.errors };
+			errors.termsConditions =
+				'You must accept the terms and conditions to proceed';
+
+			return this.setState({ errors });
+		}
 		const { data } = this.state;
 		const { signUpUser } = this.props;
 
@@ -107,7 +122,36 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 							'',
 							'Password must be atleast 6 characters'
 						)}
-						<div style={{ marginTop: '2rem' }}></div>
+
+						<div className='termsConditions'>
+							<div className='pretty p-image p-curve p-smooth'>
+								<input
+									type='checkbox'
+									onChange={(e: React.ChangeEvent) => {
+										const checked = (e.currentTarget as HTMLInputElement)
+											.checked;
+										this.setState({ termsConditions: checked });
+									}}
+									checked={this.state.termsConditions}
+								/>
+								<div className='state'>
+									<img
+										className='image'
+										src='/icons/tick.svg'
+										alt='signed-in'
+									/>
+									<label>
+										I accept the Terms & conditions of Len Den India.
+									</label>
+								</div>
+							</div>
+							<small
+								className={`${
+									this.state.errors.termsConditions ? 'active' : ''
+								}`}>
+								{this.state.errors.termsConditions}
+							</small>
+						</div>
 
 						{this.renderLoader()}
 						{this.renderErrorAlert()}
