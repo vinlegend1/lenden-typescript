@@ -68,26 +68,23 @@ const SideNav: React.FC<SideNavProps> = () => {
 			)}
 
 			{user.userId && (
-				<React.Fragment>
-					<Image id='editUser' src='/icons/edit.svg' />
-					<div id='userContainer'>
-						<div id='imageContainer'>
-							<Image
-								src={
-									user
-										? 'https://placekitten.com/g/300/300'
-										: '/images/genericUser.png'
-								}
-								alt=''
-								roundedCircle
-							/>
-						</div>
-						<div id='infoContainer'>
-							<div className='userDetails'>Name : {user.name}</div>
-							<div className='userDetails'>Email : {user.email}</div>
-						</div>
+				<div id='userContainer'>
+					<div id='imageContainer'>
+						<Image
+							src={
+								user
+									? 'https://placekitten.com/g/300/300'
+									: '/images/genericUser.png'
+							}
+							alt=''
+							roundedCircle
+						/>
 					</div>
-				</React.Fragment>
+					<div id='infoContainer'>
+						<div className='userDetails'>Name : {user.name}</div>
+						<div className='userDetails'>Email : {user.email}</div>
+					</div>
+				</div>
 			)}
 
 			{!user.userId && (

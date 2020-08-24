@@ -144,18 +144,9 @@ a.bm-item {
 	}
 }
 
-#editUser {
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-	width: 14px;
-	padding: 0;
-	cursor: pointer;
-}
-
 #userContainer {
 	border-bottom: 0.5px solid #d2d2d2;
-	display: flex;
+	display: flex !important;
 	width: inherit;
 	padding: 1.3rem 0.2rem;
 	margin-bottom: 0.8rem;
