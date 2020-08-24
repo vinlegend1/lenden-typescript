@@ -107,6 +107,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 							'',
 							'Password must be atleast 6 characters'
 						)}
+						<div style={{ marginTop: '2rem' }}></div>
 
 						{this.renderLoader()}
 						{this.renderErrorAlert()}

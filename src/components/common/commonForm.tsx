@@ -179,14 +179,15 @@ abstract class CommonForm<
 						opacity: placeholder ? 1 : 0,
 						color: errorMessage ? '' : '#b4b4b4',
 					}}>
-					{errorMessage
-						? errorMessage
-						: Object.keys(this.state.errors).includes('password') && (
+					{errorMessage ||
+						(placeholder &&
+							Object.keys(this.state.errors).includes('password') && (
 								<React.Fragment>
 									<img src='/icons/info.svg' alt='' />
 									{placeholder}
 								</React.Fragment>
-						  )}
+							)) ||
+						''}
 				</Form.Text>
 			</Form.Group>
 		);
