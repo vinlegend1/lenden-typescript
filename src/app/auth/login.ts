@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { SignSlice, PassType } from '../models/auth';
+import { SignSlice } from '../models/auth';
 import { ActionWithPayload } from './../models';
 
 const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
-	passType: 'password',
+	// passType: 'password',
 };
 
 const slice = createSlice({
@@ -30,9 +30,9 @@ const slice = createSlice({
 				state.error = action.payload;
 			state.loading = false;
 		},
-		passTypeUpdated: (state, action: ActionWithPayload<PassType>) => {
-			state.passType = action.payload;
-		},
+		// passTypeUpdated: (state, action: ActionWithPayload<PassType>) => {
+		// 	state.passType = action.payload;
+		// },
 		userLoggedOut: () => {},
 	},
 });
@@ -43,18 +43,18 @@ const {
 	errorUpdated,
 	loginInitiated,
 	loginFailed,
-	passTypeUpdated,
+	// passTypeUpdated,
 } = slice.actions;
 
 export const { loginFulfilled, userLoggedOut } = slice.actions;
 
-interface SignInUser {
+export interface SignInUser {
 	email: string;
 	password: string;
 }
 
-interface Location {
-	state: object;
+export interface Location {
+	state?: object;
 }
 
 export const logInUser = (user: SignInUser, location: Location) => {
@@ -71,5 +71,5 @@ export const logInUser = (user: SignInUser, location: Location) => {
 };
 
 export const updateError = (error: string) => errorUpdated(error);
-export const updatePassType = (type: PassType) => passTypeUpdated(type);
+// export const updatePassType = (type: PassType) => passTypeUpdated(type);
 export const logOutUser = () => userLoggedOut();

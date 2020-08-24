@@ -1,7 +1,7 @@
 .error-alert {
-	border-radius: 5px;
-	font-family: font(primary);
-	color: color(secondary);
+	border-radius: 4px;
+	font-family: font(secondary);
+	color: color(textDark);
 	background-color: rgba(color(error), 0.35);
 	font-size: 14px;
 	padding: 0.75rem 1rem;
@@ -9,9 +9,9 @@
 }
 
 .success-alert {
-	border-radius: 5px;
-	font-family: font(primary);
-	color: color(secondary);
+	border-radius: 4px;
+	font-family: font(secondary);
+	color: color(textDark);
 	background-color: rgba(color(success), 0.35);
 	font-size: 14px;
 	border: none;

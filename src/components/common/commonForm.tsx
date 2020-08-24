@@ -1,8 +1,10 @@
 import React, { Component, ChangeEvent } from 'react';
-import { Form, InputGroup } from 'react-bootstrap';
+import { Form, InputGroup, Alert } from 'react-bootstrap';
 import Joi from 'joi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { BarLoader } from 'react-spinners';
+import { Action } from 'redux';
 
 export interface ErrorContainer {
 	[key: string]: string;
@@ -17,7 +19,19 @@ interface FormState {
 	passType?: PassType;
 }
 
-abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
+interface FormProps {
+	loading: boolean;
+	error: string;
+	success?: string;
+
+	updateSuccess?: (success: string) => Action;
+	updateError?: (success: string) => Action;
+}
+
+abstract class CommonForm<
+	T extends FormProps,
+	U extends FormState
+> extends Component<T, U> {
 	abstract schema: {};
 	abstract doSubmit: () => void;
 
@@ -42,11 +56,52 @@ abstract class CommonForm<T, U extends FormState> extends Component<T, U> {
 
 	handleSubmit = (e: React.MouseEvent) => {
 		e.preventDefault();
+
+		if (this.props.updateError) this.props.updateError('');
+		if (this.props.updateSuccess) this.props.updateSuccess('');
+
 		const errors = this.validate();
 		if (errors) return this.setState({ errors });
 
 		this.setState({ errors: {} });
 		this.doSubmit();
+	};
+
+	renderLoader = () => (
+		<BarLoader
+			height={4}
+			css='display:block;margin:2vh auto'
+			color={'#1a2639'}
+			loading={this.props.loading}
+		/>
+	);
+
+	renderErrorAlert = () => {
+		const error = this.props.error;
+		return (
+			error && (
+				<Alert
+					style={{ textAlign: 'center' }}
+					className='error-alert'
+					variant='danger'>
+					{error}
+				</Alert>
+			)
+		);
+	};
+
+	renderSuccessAlert = () => {
+		const success = this.props.success;
+		return (
+			success && (
+				<Alert
+					style={{ textAlign: 'center' }}
+					className='success-alert'
+					variant='primary'>
+					{success}
+				</Alert>
+			)
+		);
 	};
 
 	renderInput = (

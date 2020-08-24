@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { SignSlice, PassType } from '../models/auth';
+import { SignSlice } from '../models/auth';
 import { ActionWithPayload } from './../models';
 
 const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
-	passType: 'password',
 };
 
 const slice = createSlice({
@@ -20,11 +19,13 @@ const slice = createSlice({
 		successUpdated: (state, action: ActionWithPayload<string>) => {
 			state.success = action.payload;
 		},
-		passTypeUpdated: (state, action: ActionWithPayload<PassType>) => {
-			state.passType = action.payload;
-		},
+		// passTypeUpdated: (state, action: ActionWithPayload<PassType>) => {
+		// 	state.passType = action.payload;
+		// },
 
 		signupInitiated: state => {
+			state.error = '';
+			state.success = '';
 			state.loading = true;
 		},
 		signupFailed: (state, action: ActionWithPayload<number>) => {
@@ -33,6 +34,7 @@ const slice = createSlice({
 		},
 		signupFulfilled: state => {
 			state.loading = false;
+			state.error = '';
 			state.success = 'Successfully registered!';
 		},
 	},
@@ -43,19 +45,19 @@ export default slice.reducer;
 export const {
 	errorUpdated,
 	successUpdated,
-	passTypeUpdated,
+	// passTypeUpdated,
 	signupInitiated,
 	signupFailed,
 	signupFulfilled,
 } = slice.actions;
 
-interface SignUpUser {
+export interface SignUpUserModel {
 	name: string;
 	email: string;
 	password: string;
 }
 
-export const signUpUser = (user: SignUpUser) => {
+export const signUpUser = (user: SignUpUserModel) => {
 	const { name, email, password } = user;
 	return apiCallBegan({
 		method: 'post',
@@ -69,4 +71,4 @@ export const signUpUser = (user: SignUpUser) => {
 
 export const updateError = (error: string) => errorUpdated(error);
 export const updateSuccess = (error: string) => successUpdated(error);
-export const updatePassType = (type: PassType) => passTypeUpdated(type);
+// export const updatePassType = (type: PassType) => passTypeUpdated(type);

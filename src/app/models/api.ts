@@ -1,3 +1,7 @@
+export interface Location {
+	state?: object;
+}
+
 export interface RequestObject {
 	method: 'get' | 'post' | 'put' | 'delete';
 	url: string;
@@ -5,12 +9,12 @@ export interface RequestObject {
 	onSuccess?: string;
 	onError?: string;
 	onStart?: string;
-	location?: { state: object };
+	location?: Location;
 }
 
 export interface ResponseObject {
 	data: any;
 	headers: any;
-	location?: { state: object };
+	location?: Location;
 	userId?: string;
 }

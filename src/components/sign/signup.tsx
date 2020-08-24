@@ -4,9 +4,25 @@ import SignNav from './signNav';
 import Joi from 'joi';
 import { getCurrentUser } from './../../services/authService';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-Joi.extend(require('joi-phone-number'));
+import { RootState } from '../../app/models';
+import {
+	signUpUser,
+	updateError,
+	updateSuccess,
+	SignUpUserModel,
+} from '../../app/auth/signup';
 
-export interface SignupProps extends RouteComponentProps {}
+import { Dispatch, Action } from 'redux';
+import { connect } from 'react-redux';
+
+Joi.extend(require('joi-phone-number'));
+export interface SignupProps extends RouteComponentProps {
+	loading: boolean;
+	error: string;
+	signUpUser: (data: SignUpUserModel) => Action;
+	updateError: (error: string) => Action;
+	updateSuccess: (error: string) => Action;
+}
 
 export interface SignupState {
 	data: {
@@ -16,6 +32,7 @@ export interface SignupState {
 		mobileNumber: string;
 	};
 	errors: ErrorContainer;
+	success: string;
 	passType: PassType;
 }
 
@@ -28,6 +45,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			mobileNumber: '',
 		},
 		errors: { name: '', email: '', password: '', mobileNumber: '' },
+		success: '',
 		passType: 'password' as PassType,
 	};
 
@@ -44,7 +62,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			.error(() => 'first message')
 			.required()
 			.label('Mobile Number')
-			.error((errors: Object[]): any => {
+			.error((errors: any) => {
 				console.log(errors);
 				errors.forEach((err: any) => {
 					switch (err.code) {
@@ -57,10 +75,15 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			}),
 	};
 
-	doSubmit = () => {};
+	doSubmit = () => {
+		const { data } = this.state;
+		const { signUpUser } = this.props;
+
+		signUpUser(data);
+	};
 
 	render() {
-		// if (getCurrentUser()) return <Redirect to='/' />; //TODO
+		if (getCurrentUser()) return <Redirect to='/' />; //TODO
 		return (
 			<React.Fragment>
 				<SignNav />
@@ -85,10 +108,11 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 							'Password must be atleast 6 characters'
 						)}
 
-						<div
-							onClick={this.handleSubmit}
-							style={{ marginTop: '30px' }}
-							className='darkButton'>
+						{this.renderLoader()}
+						{this.renderErrorAlert()}
+						{this.renderSuccessAlert()}
+
+						<div onClick={this.handleSubmit} className='darkButton'>
 							Continue
 						</div>
 						<div className='separator'>or</div>
@@ -104,4 +128,19 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 	}
 }
 
-export default Signup;
+const mapStateToProps = (state: RootState) => {
+	const { error, success, loading } = state.auth.signup;
+	return {
+		error,
+		success,
+		loading,
+	};
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	signUpUser: (data: SignUpUserModel) => dispatch(signUpUser(data)),
+	updateError: (error: string) => dispatch(updateError(error)),
+	updateSuccess: (message: string) => dispatch(updateSuccess(message)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
