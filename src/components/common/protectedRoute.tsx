@@ -2,13 +2,15 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { getCurrentUser } from './../../services/authService';
 
-const ProtectedRoute = ({
+interface ProtectedRouteProps {
+	component?: React.ReactType;
+	render?: () => React.ReactType;
+	path?: string;
+}
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 	component: Component,
 	render,
 	...rest
-}: {
-	component: React.ReactType;
-	render: () => React.Component;
 }) => {
 	return (
 		<Route
@@ -23,7 +25,8 @@ const ProtectedRoute = ({
 							}}
 						/>
 					);
-				return Component ? <Component {...props} /> : render();
+				if (Component) return <Component {...props} />;
+				else if (render) return render();
 			}}
 		/>
 	);
