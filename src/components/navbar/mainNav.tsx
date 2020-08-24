@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -12,6 +12,8 @@ const MainNav: React.FC<MainNavProps> = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.auth.user);
 	const history = useHistory();
+
+	const searchBoxInput = useRef(null);
 
 	const [mobileSearchBoxClass, setMobileSearchBoxClass] = useState('');
 	const [mainNavClass, setMainNavClass] = useState('');
@@ -73,6 +75,11 @@ const MainNav: React.FC<MainNavProps> = () => {
 						onClick={() => {
 							setMobileSearchBoxClass('displaySearchBox');
 							setMainNavClass('hideMainNav');
+
+							setTimeout(
+								() => (searchBoxInput.current! as HTMLInputElement).focus(),
+								300
+							);
 						}}>
 						<img
 							className='icon'
@@ -116,6 +123,7 @@ const MainNav: React.FC<MainNavProps> = () => {
 						alt=''
 					/>
 					<Form.Control
+						ref={searchBoxInput}
 						id='mobileSearchInput'
 						type='text'
 						placeholder='Search for brands and products'
