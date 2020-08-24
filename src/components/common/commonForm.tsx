@@ -164,12 +164,13 @@ abstract class CommonForm<
 									);
 							}}
 							onMouseDown={(e: React.MouseEvent) => e.preventDefault()}>
-							{this.state.passType === 'password' && (
-								<FontAwesomeIcon icon={faEye} />
-							)}
-							{this.state.passType === 'text' && (
-								<FontAwesomeIcon icon={faEyeSlash} />
-							)}
+							<div>
+								{this.state.passType === 'password' ? (
+									<FontAwesomeIcon icon={faEye} />
+								) : (
+									<FontAwesomeIcon icon={faEyeSlash} />
+								)}
+							</div>
 						</InputGroup.Text>
 					</InputGroup.Append>
 				</InputGroup>

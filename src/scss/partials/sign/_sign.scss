@@ -119,8 +119,11 @@
 					border-bottom-right-radius: 8px;
 					padding-right: 1rem;
 
-					svg {
-						color: #1a2639;
+					div {
+						width: 2rem;
+						svg {
+							color: #1a2639;
+						}
 					}
 				}
 				.input-group-text.mobileNumberInputText {
