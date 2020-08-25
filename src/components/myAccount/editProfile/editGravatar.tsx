@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
-import { RootState } from '../../../app/models';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 
-export interface EditGravatarProps {}
+export interface EditGravatarProps {
+	gravatar: string;
+	handleGravatarChange: (g: string) => void;
+}
 
-const EditGravatar: React.SFC<EditGravatarProps> = () => {
-	const user = useSelector((state: RootState) => state.auth.user);
-
-	const [gravatar, setGravatar] = useState('user3');
-
-	const availGravatars = ['user1', 'user2', 'user3', 'user4', 'user5'];
+const EditGravatar: React.FC<EditGravatarProps> = props => {
+	const availGravatars = ['1', '2', '3', '4', '5'];
+	const { gravatar, handleGravatarChange } = props;
 
 	return (
 		<div className='editGravatar'>
 			<div className='imageContainer'>
-				<img src={`/icons/gravatar/${gravatar}.svg`} alt='' />
+				<img src={`/icons/gravatar/user${gravatar}.svg`} alt='' />
 			</div>
 
 			<div className='gravatarOptions'>
-				{availGravatars.map(gravatar => (
+				{availGravatars.map((gravatar, index) => (
 					<img
-						src={`/icons/gravatar/${gravatar}.svg`}
+						key={index}
+						src={`/icons/gravatar/user${gravatar}.svg`}
 						alt=''
-						onClick={() => setGravatar(gravatar)}
+						onClick={() => handleGravatarChange(gravatar)}
 					/>
 				))}
 			</div>

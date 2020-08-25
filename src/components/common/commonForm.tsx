@@ -195,7 +195,7 @@ abstract class CommonForm<
 	};
 
 	private renderMobileNumberInput = (label: string, errorMessage?: string) => (
-		<Form.Group controlId='mobileNumber'>
+		<Form.Group controlId='mobileNumber' className='mobileNumberFormGroup'>
 			<Form.Label>{label}</Form.Label>
 
 			<InputGroup>
