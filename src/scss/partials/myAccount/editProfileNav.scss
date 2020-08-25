@@ -1,4 +1,4 @@
-#myAccountNav {
+#editProfileNav {
 	height: 3.5rem;
 	background-color: color(backgroundSecondary);
 	display: flex;
@@ -7,6 +7,10 @@
 	.imgContainer {
 		cursor: pointer;
 		padding: 0 1rem;
+
+		// img {
+		// 	width: 1.1rem;
+		// }
 	}
 	h1 {
 		margin: 0;

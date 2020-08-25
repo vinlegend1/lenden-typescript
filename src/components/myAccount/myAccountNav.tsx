@@ -4,7 +4,7 @@ import { action as toggleMenu } from 'redux-burger-menu';
 
 export interface AccountNavProps {}
 
-const AccountNav: React.SFC<AccountNavProps> = () => {
+const AccountNav: React.FC<AccountNavProps> = () => {
 	const dispatch = useDispatch();
 	return (
 		<div id='myAccountNav'>

@@ -6,6 +6,7 @@ interface ProtectedRouteProps {
 	component?: React.ReactType;
 	render?: () => React.ReactType;
 	path?: string;
+	exact?: true;
 }
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 	component: Component,
