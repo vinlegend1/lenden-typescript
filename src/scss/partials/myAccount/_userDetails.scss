@@ -1,0 +1,60 @@
+.userInfoContainer {
+	.infoBox {
+		margin: 1rem 0;
+		background: #ffffff;
+		border: 0.2px solid #e1e1e1;
+		box-sizing: border-box;
+		box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
+		border-radius: 8px;
+		padding: 1.2rem 1.5rem;
+
+		h3 {
+			font-size: 12px;
+			color: #b4b4b4;
+			font-weight: 500;
+			margin-bottom: 0;
+		}
+
+		hr {
+			margin: 0.8rem 0;
+		}
+		p {
+			font-size: 14px;
+			color: #535353;
+			font-weight: 500;
+			margin-bottom: 0;
+		}
+
+		div {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			h4 {
+				font-size: 12px;
+				color: #b4b4b4;
+				font-weight: 500;
+				margin-bottom: 0;
+				color: #1f74e6;
+			}
+		}
+	}
+
+	.noAddress {
+		div {
+			margin: auto 0;
+			height: 3.65rem;
+		}
+	}
+
+	.changePassword {
+		margin: 2rem 0;
+		background-color: color(backgroundSecondary);
+		color: white;
+		font-family: font(secondary);
+		text-align: center;
+		padding: 1rem;
+		font-size: 14px;
+		border-radius: 4px;
+	}
+}
