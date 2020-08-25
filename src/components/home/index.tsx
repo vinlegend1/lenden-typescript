@@ -6,6 +6,7 @@ import MainBanner from './mainBanner';
 import ToggleButton from './toggleButton';
 import { RootState } from '../../app/models';
 import useResizeEventListener from '../../hooks/useResizeEventListener';
+import Navbar from '../navbar';
 
 export interface HomeProps {}
 
@@ -18,6 +19,7 @@ const Home: React.FC<HomeProps> = () => {
 
 	return (
 		<React.Fragment>
+			<Navbar />
 			<InfoBanner />
 			{isMobile && <Categories />}
 			<MainBanner />
