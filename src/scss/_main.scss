@@ -7,6 +7,9 @@
 @import './partials/sign';
 @import './partials/new';
 @import './partials/home';
+@import './partials/myAccount/';
+
+//TODO - single import & index.scss inside partials
 
 body {
 	// min-height: 100vh;
