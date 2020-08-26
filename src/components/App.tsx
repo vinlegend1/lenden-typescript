@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Login from './sign/login';
 import Signup from './sign/signup';
-import { ToastContainer, Flip } from 'react-toastify';
+import { ToastContainer, Flip, Slide } from 'react-toastify';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUser, getAddress } from '../app/auth/user';
@@ -22,6 +22,8 @@ const App: React.FC = () => {
 	return (
 		<React.Fragment>
 			<ToastContainer
+				enableMultiContainer
+				containerId={'errorToastContainer'}
 				transition={Flip}
 				autoClose={5000}
 				hideProgressBar={false}
@@ -31,7 +33,7 @@ const App: React.FC = () => {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-				className='toastContainer'
+				className='errorToastContainer'
 			/>
 			<React.Fragment>
 				<Switch>
@@ -49,6 +51,22 @@ const App: React.FC = () => {
 					{/* <Redirect to='/not-found' /> */}
 				</Switch>
 			</React.Fragment>
+			<ToastContainer
+				enableMultiContainer
+				position='bottom-center'
+				containerId={'messageToastContainer'}
+				transition={Slide}
+				autoClose={3000}
+				hideProgressBar={true}
+				newestOnTop={false}
+				closeOnClick={false}
+				rtl={false}
+				pauseOnFocusLoss
+				draggable={false}
+				pauseOnHover
+				closeButton={false}
+				className='messageToastContainer'
+			/>
 		</React.Fragment>
 	);
 };

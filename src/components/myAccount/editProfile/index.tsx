@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import EditProfileNav from './editProfileNav';
 import EditGravatar from './editGravatar';
 import EditDetails from './editDetails';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
+import ToastMessage from '../../common/toastMessage';
+import { toast } from 'react-toastify';
 
 export interface EditProfileProps extends RouteComponentProps {}
 
 const EditProfile: React.FC<EditProfileProps> = () => {
+	const history = useHistory();
 	const [gravatar, setGravatar] = useState('3');
+
 	//TODO Get Gravatar from auth.users
 
 	// const onGravatarChange = (gravatar: string) => {
@@ -16,7 +20,15 @@ const EditProfile: React.FC<EditProfileProps> = () => {
 
 	const onDetailsChange = (data: any) => {
 		console.log(data, gravatar);
-		//API CALL - To be managed by redux
+		// API CALL - To be managed by redux
+
+		// wait for api call
+
+		history.push('/my-account');
+		toast(<ToastMessage />, {
+			containerId: 'messageToastContainer',
+			className: 'toasty',
+		});
 	};
 
 	return (

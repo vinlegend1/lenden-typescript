@@ -16,6 +16,7 @@ axios.interceptors.response.use(undefined, (error: ResponseError) => {
 	if (!expectedError) {
 		console.log('error is', error);
 		toast.error('An unexpected error occurred!', {
+			containerId: 'errorToastContainer',
 			autoClose: 10000,
 			className: 'toasty',
 			hideProgressBar: false,
