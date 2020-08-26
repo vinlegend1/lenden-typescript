@@ -13,7 +13,7 @@ interface FetchedAddress {
 	streetname: string;
 	state: string;
 	landmark: string;
-	postalcode: number;
+	postalcode: string;
 	mobilenumber: number;
 }
 
@@ -59,6 +59,7 @@ const slice = createSlice({
 			action: ActionWithPayload<{ data: FetchedAddress }>
 		) => {
 			const address = action.payload.data;
+			address.postalcode = address.postalcode.toString();
 			user.address = mapToViewModel(address);
 		},
 	},

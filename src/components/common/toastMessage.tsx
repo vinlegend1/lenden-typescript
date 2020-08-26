@@ -1,14 +1,16 @@
 import React from 'react';
 
-export interface ToastMessageProps {}
+export interface ToastMessageProps {
+	title: string;
+}
 
-const ToastMessage: React.FC<ToastMessageProps> = () => {
+const ToastMessage: React.FC<ToastMessageProps> = props => {
 	return (
 		<div style={{ margin: 'auto', width: 'fit-content' }}>
 			<img src='/icons/success.svg' alt='' style={{ margin: 'auto 0.4rem' }} />
 			<span
 				style={{ fontSize: '13px', fontFamily: 'Cera Pro', color: 'white' }}>
-				Your profile has been updated successfully !
+				{props.title}
 			</span>
 		</div>
 	);

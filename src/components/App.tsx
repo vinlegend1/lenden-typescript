@@ -10,6 +10,7 @@ import Home from './home';
 import ProtectedRoute from './common/protectedRoute';
 import MyAccount from './myAccount';
 import EditProfile from './myAccount/editProfile';
+import changeAddress from './myAccount/changeAddress';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -45,6 +46,10 @@ const App: React.FC = () => {
 				<Route path='/books/:id' component={ProductPage} />
 				<Route path='/my-products' component={MyProducts} />*/}
 					<ProtectedRoute path='/my-account/edit' component={EditProfile} />
+					<ProtectedRoute
+						path='/my-account/my-address'
+						component={changeAddress}
+					/>
 					<ProtectedRoute path='/my-account' component={MyAccount} />
 					<Route path='/' exact component={Home} />
 					<Redirect from='/categories' exact to='/' />

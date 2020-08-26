@@ -25,10 +25,13 @@ const EditProfile: React.FC<EditProfileProps> = () => {
 		// wait for api call
 
 		history.push('/my-account');
-		toast(<ToastMessage />, {
-			containerId: 'messageToastContainer',
-			className: 'toasty',
-		});
+		toast(
+			<ToastMessage title='Your profile has been updated successfully !' />,
+			{
+				containerId: 'messageToastContainer',
+				className: 'toasty',
+			}
+		);
 	};
 
 	return (

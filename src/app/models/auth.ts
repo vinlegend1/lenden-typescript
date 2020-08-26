@@ -18,7 +18,7 @@ export interface UserSlice {
 		streetName: string;
 		state: string;
 		landmark?: string;
-		postalCode: number;
+		postalCode: string;
 		mobileNumber: number;
 	};
 }

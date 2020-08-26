@@ -13,7 +13,7 @@ export interface ErrorContainer {
 export type PassType = 'password' | 'text';
 interface FormState {
 	data: {
-		[key: string]: string;
+		[key: string]: any;
 	};
 	errors: ErrorContainer;
 	passType?: PassType;

@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/models';
+import { useHistory } from 'react-router-dom';
 
 export interface UserDetailsProps {}
 
 const UserDetails: React.FC<UserDetailsProps> = () => {
 	const user = useSelector((state: RootState) => state.auth.user);
+	const history = useHistory();
 
 	return (
 		<div className='container userInfoContainer'>
@@ -32,7 +34,9 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 				<div className='infoBox'>
 					<div>
 						<h3>My Address</h3>
-						<h4>CHANGE ADDRESS</h4>
+						<h4 onClick={() => history.push('/my-account/my-address')}>
+							CHANGE ADDRESS
+						</h4>
 					</div>
 
 					<hr />
@@ -43,7 +47,9 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 				<div className='infoBox noAddress'>
 					<div>
 						<h3>My Address</h3>
-						<h4>ADD ADDRESS</h4>
+						<h4 onClick={() => history.push('/my-account/my-address')}>
+							ADD ADDRESS
+						</h4>
 					</div>
 				</div>
 			)}
