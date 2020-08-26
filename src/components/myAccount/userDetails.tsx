@@ -20,6 +20,14 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 				<p>+91 - 8211270173</p>
 				{/* TODO Fetch from token */}
 			</div>
+			<div className='infoBox'>
+				<div>
+					<h3>Password</h3>
+					<h4>CHANGE PASSWORD</h4>
+				</div>
+				<hr />
+				<p>•••••••••••••••••••</p>
+			</div>
 			{user.address ? (
 				<div className='infoBox'>
 					<div>
@@ -40,7 +48,7 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 				</div>
 			)}
 
-			<div className='changePassword'>CHANGE PASSWORD</div>
+			{/* <div className='changePassword'>CHANGE PASSWORD</div> */}
 		</div>
 	);
 };
