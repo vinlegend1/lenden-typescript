@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import EditProfileNav from './editProfileNav';
+import SubNav from '../../common/subNav';
 import EditGravatar from './editGravatar';
 import EditDetails from './editDetails';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
@@ -33,7 +33,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
 
 	return (
 		<React.Fragment>
-			<EditProfileNav />
+			<SubNav title='Edit Profile' />
 			<EditGravatar gravatar={gravatar} handleGravatarChange={setGravatar} />
 			<EditDetails handleDetailsChange={onDetailsChange} />
 		</React.Fragment>
