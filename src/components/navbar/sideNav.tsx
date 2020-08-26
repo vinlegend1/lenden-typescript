@@ -72,6 +72,14 @@ const SideNav: React.FC<SideNavProps> = () => {
 
 				{user.userId && (
 					<React.Fragment>
+						<Image
+							id='editUser'
+							src='/icons/edit.svg'
+							onClick={() => {
+								history.push('/my-account');
+								dispatch(toggleMenu(false));
+							}}
+						/>
 						<div
 							id='userContainer'
 							onClick={() => {
