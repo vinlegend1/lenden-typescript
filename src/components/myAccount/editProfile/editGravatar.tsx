@@ -17,9 +17,8 @@ const EditGravatar: React.FC<EditGravatarProps> = props => {
 
 			<div className='gravatarOptions'>
 				{availGravatars.map((g, index) => (
-					<div className='gravatar'>
+					<div className='gravatar' key={index}>
 						<img
-							key={index}
 							src={`/icons/gravatar/user${g}.svg`}
 							alt=''
 							onClick={() => handleGravatarChange(g)}

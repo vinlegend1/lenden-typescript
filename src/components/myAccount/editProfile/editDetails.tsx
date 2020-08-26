@@ -62,10 +62,11 @@ class EditDetails extends CommonForm<EditDetailsProps, EditDetailsState> {
 					'number'
 				)}
 				{this.renderLoader()}
-				<div onClick={this.handleSubmit} id='saveBtn'>
+				<div className='darkButton' onClick={this.handleSubmit} id='saveBtn'>
 					Save
 				</div>
 				<div
+					className='lightButton'
 					onClick={() => this.props.history.push('/my-account')}
 					id='cancelBtn'>
 					Cancel

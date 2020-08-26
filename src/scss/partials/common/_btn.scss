@@ -11,3 +11,26 @@
 	border: none;
 	border-radius: 3px;
 }
+
+%defaultBtn {
+	height: 50px;
+	display: flex;
+	border-radius: 4px;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	cursor: pointer;
+	margin: 1rem 0;
+}
+
+.darkButton {
+	@extend %defaultBtn;
+	background: color(backgroundSecondary);
+	color: white;
+}
+
+.lightButton {
+	@extend %defaultBtn;
+	color: #1a2639;
+	border: 1px solid #1a2639;
+}
