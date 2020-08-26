@@ -30,14 +30,26 @@
 		// align-items: center;
 		flex-wrap: wrap;
 		justify-content: center;
-		img {
-			background-color: rgba(color(background), 0.6);
-			padding: 0.5rem;
-			margin: auto;
-			width: 55px;
-			height: 55px;
-			margin: 0.25rem 0.25rem;
-			border-radius: 50%;
+		.gravatar {
+			img {
+				background-color: rgba(color(background), 0.6);
+				padding: 0.5rem;
+				margin: auto;
+				width: 55px;
+				height: 55px;
+				margin: 0.4rem 0.25rem;
+				border-radius: 50%;
+			}
+			#activeBox {
+				margin: 0 auto;
+				height: 0.5rem;
+				width: 0.5rem;
+				border-radius: 12px;
+			}
+
+			.active {
+				background-color: color(backgroundSecondary);
+			}
 		}
 	}
 }
