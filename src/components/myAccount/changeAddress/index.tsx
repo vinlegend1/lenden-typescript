@@ -1,6 +1,5 @@
 import React from 'react';
 import Joi from 'joi';
-
 import CommonForm, { ErrorContainer } from './../../common/commonForm';
 import { RootState } from '../../../app/models';
 import { connect } from 'react-redux';
@@ -18,7 +17,7 @@ interface Address {
 	state: string;
 	landmark?: string;
 	postalCode: string;
-	mobileNumber: string;
+	mobileNumber: number; //TODO To be removed
 }
 
 export interface ChangeAddressProps extends RouteComponentProps {
@@ -43,7 +42,7 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 			state: '',
 			landmark: '',
 			postalCode: '',
-			mobileNumber: '',
+			mobileNumber: '', //TODO To be removed
 		},
 	};
 
@@ -134,7 +133,7 @@ const mapStateToProps = (state: RootState) => {
 			state: '',
 			landmark: '',
 			postalCode: '',
-			mobileNumber: '',
+			mobileNumber: 0, //TODO To be removed
 		},
 	};
 };
