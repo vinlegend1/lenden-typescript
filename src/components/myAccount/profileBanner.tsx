@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/models';
 import { useHistory } from 'react-router-dom';
-import { gravatarIcons } from '../../icons';
 
 export interface ProfileBannerProps {}
 
@@ -14,7 +13,7 @@ const ProfileBanner: React.FC<ProfileBannerProps> = () => {
 		<div className='profileBanner'>
 			<div className='userDetail'>
 				<div className='imageContainer'>
-					<img src={gravatarIcons.type0} alt='' />
+					<img src='/icons/gravatar/user3.svg' alt='' />
 				</div>
 				<h1>{user.name}</h1>
 			</div>

@@ -5,7 +5,6 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { Navbar, Nav, Image, Form, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from '../../app/models';
-import { genericIcons, lendenSpecific, gravatarIcons } from '../../icons';
 
 export interface MainNavProps {}
 
@@ -25,12 +24,12 @@ const MainNav: React.FC<MainNavProps> = () => {
 				<Navbar.Brand
 					onClick={() => dispatch(toggleMenu(true))}
 					style={{ cursor: 'pointer' }}>
-					<img className='icon' src={genericIcons.menu} alt='' />
+					<img className='icon' src='/icons/menu.svg' alt='' />
 				</Navbar.Brand>
 				<Image
 					onClick={() => history.push('/')}
 					id='logo'
-					src={lendenSpecific.navLogo}
+					src='/icons/navLogo.svg'
 				/>
 
 				<NavLink className='nav-link category' to='/categories/books'>
@@ -61,7 +60,7 @@ const MainNav: React.FC<MainNavProps> = () => {
 						<img
 							className='icon'
 							id='navSearchIcon'
-							src={genericIcons.search}
+							src='/icons/search.svg'
 							alt=''
 						/>
 						<Form.Control
@@ -85,16 +84,16 @@ const MainNav: React.FC<MainNavProps> = () => {
 						<img
 							className='icon'
 							id='mobileSearchIcon'
-							src={genericIcons.search}
+							src='/icons/search.svg'
 							alt=''
 						/>
 					</Nav.Link>
 
 					<Nav.Link className='iconNav'>
-						<img className='icon' src={genericIcons.bookmark} alt='' />
+						<img className='icon' src='/icons/bookmark.svg' alt='' />
 					</Nav.Link>
 					<Nav.Link className='iconNav'>
-						<img className='icon' src={genericIcons.bell} alt='' />
+						<img className='icon' src='/icons/bell.svg' alt='' />
 					</Nav.Link>
 					<Nav.Link id='userImage' onClick={() => history.push('/me')}>
 						<Image
@@ -102,7 +101,9 @@ const MainNav: React.FC<MainNavProps> = () => {
 								maxWidth: 42,
 							}}
 							src={
-								user.userId ? gravatarIcons.type0 : '/images/genericUser.png'
+								user.userId
+									? 'https://placekitten.com/g/300/300'
+									: '/images/genericUser.png'
 							}
 							roundedCircle
 						/>
@@ -118,7 +119,7 @@ const MainNav: React.FC<MainNavProps> = () => {
 							setMobileSearchBoxClass('');
 							setMainNavClass('');
 						}}
-						src={genericIcons.back}
+						src='/icons/back2.svg'
 						alt=''
 					/>
 					<Form.Control
@@ -130,7 +131,7 @@ const MainNav: React.FC<MainNavProps> = () => {
 					<img
 						className='icon'
 						id='mobileSearchIcon'
-						src={genericIcons.search}
+						src='/icons/search.svg'
 						alt=''
 					/>
 				</div>

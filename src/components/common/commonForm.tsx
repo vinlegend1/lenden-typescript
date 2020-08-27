@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { BarLoader } from 'react-spinners';
 import { Action } from 'redux';
-import { genericIcons } from '../../icons';
 
 export interface ErrorContainer {
 	[key: string]: string;
@@ -185,7 +184,7 @@ abstract class CommonForm<
 						(placeholder &&
 							Object.keys(this.state.errors).includes('password') && (
 								<React.Fragment>
-									<img src={genericIcons.info} alt='' />
+									<img src='/icons/info.svg' alt='' />
 									{placeholder}
 								</React.Fragment>
 							)) ||

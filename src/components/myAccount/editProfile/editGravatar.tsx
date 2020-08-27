@@ -1,5 +1,4 @@
 import React from 'react';
-import { gravatarIcons } from '../../../icons';
 
 export interface EditGravatarProps {
 	gravatar: string;
@@ -7,19 +6,20 @@ export interface EditGravatarProps {
 }
 
 const EditGravatar: React.FC<EditGravatarProps> = props => {
+	const availGravatars = ['1', '2', '3', '4', '5'];
 	const { gravatar, handleGravatarChange } = props;
 
 	return (
 		<div className='editGravatar'>
 			<div className='imageContainer'>
-				<img src={gravatarIcons[gravatar]} alt='' />
+				<img src={`/icons/gravatar/user${gravatar}.svg`} alt='' />
 			</div>
 
 			<div className='gravatarOptions'>
-				{Object.keys(gravatarIcons).map(g => (
-					<div className='gravatar' key={g}>
+				{availGravatars.map((g, index) => (
+					<div className='gravatar' key={index}>
 						<img
-							src={gravatarIcons[g]}
+							src={`/icons/gravatar/user${g}.svg`}
 							alt=''
 							onClick={() => handleGravatarChange(g)}
 						/>
