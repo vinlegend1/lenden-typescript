@@ -6,7 +6,8 @@
 	font-style: normal;
 	font-display: swap;
 	unicode-range: U+000-5FF;
-	src: url('/fonts/CeraPro-Light.woff') format('woff');
+	src: local('Cera Pro'), url('/fonts/cerapro-light.woff2') format('woff2'),
+		url('/fonts/cerapro-light.woff') format('woff');
 }
 @font-face {
 	font-family: 'Cera Pro';
@@ -14,7 +15,8 @@
 	font-style: normal;
 	font-display: swap;
 	unicode-range: U+000-5FF;
-	src: url('/fonts/CeraPro-Regular.woff') format('woff');
+	src: local('Cera Pro'), url('/fonts/cerapro-regular.woff2') format('woff2'),
+		url('/fonts/cerapro-regular.woff') format('woff');
 }
 @font-face {
 	font-family: 'Cera Pro';
@@ -22,7 +24,8 @@
 	font-style: normal;
 	font-display: swap;
 	unicode-range: U+000-5FF;
-	src: url('/fonts/CeraPro-Medium.woff') format('woff');
+	src: local('Cera Pro'), url('/fonts/cerapro-medium.woff2') format('woff2'),
+		url('/fonts/cerapro-medium.woff') format('woff');
 }
 
 @font-face {
@@ -31,7 +34,8 @@
 	font-style: normal;
 	font-display: swap;
 	unicode-range: U+000-5FF;
-	src: url('/fonts/CeraPro-Bold.woff') format('woff');
+	src: local('Cera Pro'), url('/fonts/cerapro-bold.woff2') format('woff2'),
+		url('/fonts/cerapro-bold.woff') format('woff');
 }
 @font-face {
 	font-family: 'Cera Pro';
@@ -39,14 +43,15 @@
 	font-style: normal;
 	font-display: swap;
 	unicode-range: U+000-5FF;
-	src: url('/fonts/CeraPro-Black.woff') format('woff');
+	src: local('Cera Pro'), url('/fonts/cerapro-black.woff2') format('woff2'),
+		url('/fonts/cerapro-black.woff') format('woff');
 }
+
+$fontFamily: 'Cera Pro', Roboto, Droid Sans;
 
 $fonts: (
 	// primary: 'raleway',
-		secondary: 'Cera Pro',
-	// kalam: 'kalam',
-		// ptSans: 'PT Sans',
+		secondary: $fontFamily
 );
 
 @function font($fontName) {
