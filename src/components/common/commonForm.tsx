@@ -55,7 +55,7 @@ abstract class CommonForm<
 		return errors;
 	};
 
-	handleSubmit = async (e: React.MouseEvent) => {
+	handleSubmit = async (e: React.MouseEvent | React.KeyboardEvent) => {
 		e.preventDefault();
 
 		if (this.props.updateError) this.props.updateError('');
@@ -150,6 +150,9 @@ abstract class CommonForm<
 						type={this.state.passType}
 						value={this.state.data.password}
 						onChange={this.handleChange}
+						onKeyPress={(event: React.KeyboardEvent) => {
+							if (event.key === 'Enter') this.handleSubmit(event);
+						}}
 					/>
 
 					<InputGroup.Append>
