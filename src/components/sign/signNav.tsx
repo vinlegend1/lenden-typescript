@@ -1,5 +1,6 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
+import LendenIcons from '../../icons/lenden';
 
 export interface SignNavProps {}
 
@@ -7,7 +8,7 @@ const SignNav: React.FC<SignNavProps> = () => {
 	return (
 		<div id='signNav'>
 			<LinkContainer to='/'>
-				<img src='/icons/navLogo.svg' alt='' />
+				<LendenIcons name='nav-logo' />
 			</LinkContainer>
 		</div>
 	);

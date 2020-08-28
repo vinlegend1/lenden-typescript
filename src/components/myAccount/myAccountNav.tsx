@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
-import { genericIcons } from '../../icons';
+import GenericIcons from '../../icons/generic';
 
 export interface AccountNavProps {}
 
@@ -10,7 +10,7 @@ const AccountNav: React.FC<AccountNavProps> = () => {
 	return (
 		<div id='myAccountNav'>
 			<div className='imgContainer' onClick={() => dispatch(toggleMenu(true))}>
-				<img className='icon' src={genericIcons.menu} alt='' />
+				<GenericIcons className='icon' name='menu' />
 			</div>
 			<h1>My Account</h1>
 		</div>

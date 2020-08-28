@@ -5,7 +5,9 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { Navbar, Nav, Image, Form, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from '../../app/models';
-import { genericIcons, lendenSpecific, gravatarIcons } from '../../icons';
+import GenericIcons from '../../icons/generic';
+import LendenIcons from '../../icons/lenden';
+import GravatarIcons from '../../icons/gravatar';
 
 export interface MainNavProps {}
 
@@ -25,13 +27,10 @@ const MainNav: React.FC<MainNavProps> = () => {
 				<Navbar.Brand
 					onClick={() => dispatch(toggleMenu(true))}
 					style={{ cursor: 'pointer' }}>
-					<img className='icon' src={genericIcons.menu} alt='' />
+					<GenericIcons name='menu' />
+					{/* <img className='icon' src={genericIcons.menu} alt='' /> */}
 				</Navbar.Brand>
-				<Image
-					onClick={() => history.push('/')}
-					id='logo'
-					src={lendenSpecific.navLogo}
-				/>
+				<LendenIcons id='logo' name='nav-log' />
 
 				<NavLink className='nav-link category' to='/categories/books'>
 					Books
@@ -58,12 +57,8 @@ const MainNav: React.FC<MainNavProps> = () => {
 
 				<Nav className='ml-auto'>
 					<div id='navSearchBox'>
-						<img
-							className='icon'
-							id='navSearchIcon'
-							src={genericIcons.search}
-							alt=''
-						/>
+						<GenericIcons className='icon' id='navSearchIcon' name='search' />
+
 						<Form.Control
 							id='navSearchInput'
 							type='text'
@@ -82,57 +77,49 @@ const MainNav: React.FC<MainNavProps> = () => {
 								300
 							);
 						}}>
-						<img
+						<GenericIcons
 							className='icon'
 							id='mobileSearchIcon'
-							src={genericIcons.search}
-							alt=''
+							name='search'
 						/>
 					</Nav.Link>
 
 					<Nav.Link className='iconNav'>
-						<img className='icon' src={genericIcons.bookmark} alt='' />
+						<GenericIcons className='icon' name='bookmark' />
 					</Nav.Link>
 					<Nav.Link className='iconNav'>
-						<img className='icon' src={genericIcons.bell} alt='' />
+						<GenericIcons className='icon' name='bell' />
 					</Nav.Link>
 					<Nav.Link id='userImage' onClick={() => history.push('/me')}>
-						<Image
-							style={{
-								maxWidth: 42,
-							}}
-							src={
-								user.userId ? gravatarIcons.type0 : '/images/genericUser.png'
-							}
-							roundedCircle
-						/>
+						{user.userId ? (
+							<div className='outerCircle'>
+								<GravatarIcons name='type0' />
+							</div>
+						) : (
+							<GenericIcons name='user' />
+						)}
 					</Nav.Link>
 				</Nav>
 			</Navbar>
 			<div id='mobileSearchBox' className={mobileSearchBoxClass}>
 				<div className='ml-auto' id='mobileSearchBoxItem'>
-					<img
+					<GenericIcons
 						className='icon'
+						name='back'
 						id='mobileSearchIcon'
 						onClick={() => {
 							setMobileSearchBoxClass('');
 							setMainNavClass('');
 						}}
-						src={genericIcons.back}
-						alt=''
 					/>
+
 					<Form.Control
 						ref={searchBoxInput}
 						id='mobileSearchInput'
 						type='text'
 						placeholder='Search for brands and products'
 					/>
-					<img
-						className='icon'
-						id='mobileSearchIcon'
-						src={genericIcons.search}
-						alt=''
-					/>
+					<GenericIcons name='search' className='icon' id='mobileSearchIcon' />
 				</div>
 			</div>
 		</div>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { lendenSpecific } from '../../icons';
+import LendenIcons from '../../icons/lenden';
 
 export interface MainBannerProps {}
 
 const MainBanner: React.FC<MainBannerProps> = () => {
 	return (
 		<div id='mainBanner' style={{ position: 'relative' }}>
-			<img src={lendenSpecific.mainBanner} alt='' />
+			<LendenIcons name='main-banner' />
 			<div id='knowMore'>Know More</div>
 			<hr />
 		</div>

@@ -8,20 +8,23 @@ import { ReactComponent as Accessory } from './accessory.svg';
 
 export interface CategoryIconsProps {
 	name: string;
+	className?: string;
+	id?: string;
+	onClick?: () => void;
 }
 
-const CategoryIcons: React.FC<CategoryIconsProps> = props => {
-	switch (props.name) {
+const CategoryIcons: React.FC<CategoryIconsProps> = ({ name, ...rest }) => {
+	switch (name) {
 		case 'book':
-			return <Book />;
+			return <Book {...rest} />;
 		case 'mobile':
-			return <Mobile />;
+			return <Mobile {...rest} />;
 		case 'cd':
-			return <Cd />;
+			return <Cd {...rest} />;
 		case 'console':
-			return <Console />;
+			return <Console {...rest} />;
 		case 'accessory':
-			return <Accessory />;
+			return <Accessory {...rest} />;
 		default:
 			return null;
 	}

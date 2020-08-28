@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&family=Kalam&family=PT+Sans&family=Balsamiq+Sans');
+// @import url('https://fonts.googleapis.com/css2?family=Raleway&family=Kalam&family=PT+Sans&family=Balsamiq+Sans');
 
 @font-face {
 	font-family: 'Cera Pro';
@@ -43,10 +43,10 @@
 }
 
 $fonts: (
-	primary: 'raleway',
-	secondary: 'Cera Pro',
-	kalam: 'kalam',
-	ptSans: 'PT Sans',
+	// primary: 'raleway',
+		secondary: 'Cera Pro',
+	// kalam: 'kalam',
+		// ptSans: 'PT Sans',
 );
 
 @function font($fontName) {

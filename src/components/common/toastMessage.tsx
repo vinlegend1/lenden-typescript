@@ -1,5 +1,6 @@
 import React from 'react';
-import { genericIcons } from '../../icons';
+import GenericIcons from '../../icons/generic';
+
 export interface ToastMessageProps {
 	title: string;
 }
@@ -7,11 +8,7 @@ export interface ToastMessageProps {
 const ToastMessage: React.FC<ToastMessageProps> = props => {
 	return (
 		<div style={{ margin: 'auto', width: 'fit-content' }}>
-			<img
-				src={genericIcons.success}
-				alt=''
-				style={{ margin: 'auto 0.4rem' }}
-			/>
+			<GenericIcons name='success' />
 			<span
 				style={{ fontSize: '13px', fontFamily: 'Cera Pro', color: 'white' }}>
 				{props.title}

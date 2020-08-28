@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
-import { Image } from 'react-bootstrap';
 import { slide as Menu } from 'react-burger-menu';
 import { NavLink, useHistory } from 'react-router-dom';
 import { logOutUser } from '../../app/auth/login';
 import { RootState } from '../../app/models';
 import { Swipeable } from 'react-swipeable';
-import { genericIcons, gravatarIcons } from '../../icons';
-import { ReactComponent as Cross } from '../../icons/cross.svg';
+import GenericIcons from '../../icons/generic';
+import GravatarIcons from '../../icons/gravatar';
 
 export interface SideNavProps {}
 
@@ -25,7 +24,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 	);
 
 	const [categoriesItemClass, setCategoriesItemClass] = useState('');
-	const [dropdownIconSrc, setDropdownIconSrc] = useState('/icons/down.svg');
+	const [dropdownIconName, setDropdownIconName] = useState('down');
 
 	const navLinks = [
 		{ to: '/my-products', name: 'My Products' },
@@ -64,25 +63,24 @@ const SideNav: React.FC<SideNavProps> = () => {
 					if (burgerMenu !== state.isOpen) dispatch(toggleMenu(state.isOpen));
 				}}>
 				{menuState.isOpen && (
-					<Cross />
-					// <Image
-					// 	id='closeMenu'
-					// 	src={genericIcons.cross}
-					// 	alt=''
-					// 	onClick={() => dispatch(toggleMenu(false))}
-					// />
+					<GenericIcons
+						name='cross'
+						id='closeMenu'
+						onClick={() => dispatch(toggleMenu(false))}
+					/>
 				)}
 
 				{user.userId && (
 					<React.Fragment>
-						<Image
+						<GenericIcons
 							id='editUser'
-							src={genericIcons.edit}
+							name='edit'
 							onClick={() => {
 								history.push('/my-account');
 								dispatch(toggleMenu(false));
 							}}
 						/>
+
 						<div
 							id='userContainer'
 							onClick={() => {
@@ -90,11 +88,13 @@ const SideNav: React.FC<SideNavProps> = () => {
 								dispatch(toggleMenu(false));
 							}}>
 							<div id='imageContainer'>
-								<Image
-									src={user ? gravatarIcons.type0 : '/images/genericUser.png'}
-									alt=''
-									roundedCircle
-								/>
+								{user.userId ? (
+									<div className='userImage'>
+										<GravatarIcons name='type0' />
+									</div>
+								) : (
+									<GenericIcons name='user' />
+								)}
 							</div>
 							<div id='infoContainer'>
 								<div className='userDetails'>Name : {user.name}</div>
@@ -113,15 +113,6 @@ const SideNav: React.FC<SideNavProps> = () => {
 						Sign In
 					</NavLink>
 				)}
-				{/* {user.user && (
-			<NavLink
-				id='navAnchor'
-				to='/me'
-				className='menu-item'
-				onClick={() => dispatch(toggleMenu(false))}>
-				My Account
-			</NavLink>
-		)} */}
 
 				{navLinks.map((navLink, index) => {
 					if (navLink.to)
@@ -134,9 +125,6 @@ const SideNav: React.FC<SideNavProps> = () => {
 								exact={navLink.exact ? true : false}
 								id={navLink.id}>
 								{navLink.name}
-								{/* {navLink.icon && (
-					<FontAwesomeIcon id={navLink.icon.id} icon={navLink.icon.icon} />
-				)} */}
 							</NavLink>
 						);
 
@@ -149,13 +137,12 @@ const SideNav: React.FC<SideNavProps> = () => {
 									setCategoriesItemClass('displayDropdown');
 								else setCategoriesItemClass('');
 								setTimeout(() => {
-									if (dropdownIconSrc.includes('up'))
-										setDropdownIconSrc('/icons/down.svg');
-									else setDropdownIconSrc('/icons/up.svg');
+									if (dropdownIconName === 'up') setDropdownIconName('down');
+									else setDropdownIconName('up');
 								}, 50);
 							}}>
 							{navLink.name}
-							<img src={dropdownIconSrc} alt='' />
+							<GenericIcons name={dropdownIconName} />
 							<div id='dropdownContainer' className={categoriesItemClass}>
 								<div id='dropdownInnerContainer'>
 									{navLink.list!.map((category, index) => (

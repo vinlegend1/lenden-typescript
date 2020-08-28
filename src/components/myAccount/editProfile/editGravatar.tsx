@@ -1,5 +1,5 @@
 import React from 'react';
-import { gravatarIcons } from '../../../icons';
+import GravatarIcons from '../../../icons/gravatar';
 
 export interface EditGravatarProps {
 	gravatar: string;
@@ -8,21 +8,17 @@ export interface EditGravatarProps {
 
 const EditGravatar: React.FC<EditGravatarProps> = props => {
 	const { gravatar, handleGravatarChange } = props;
-
+	const availGravatars = ['type0', 'type1', 'type2', 'type3', 'type4'];
 	return (
 		<div className='editGravatar'>
 			<div className='imageContainer'>
-				<img src={gravatarIcons[gravatar]} alt='' />
+				<GravatarIcons name={gravatar} />
 			</div>
 
 			<div className='gravatarOptions'>
-				{Object.keys(gravatarIcons).map(g => (
+				{availGravatars.map(g => (
 					<div className='gravatar' key={g}>
-						<img
-							src={gravatarIcons[g]}
-							alt=''
-							onClick={() => handleGravatarChange(g)}
-						/>
+						<GravatarIcons name={g} onClick={() => handleGravatarChange(g)} />
 						<div
 							id='activeBox'
 							className={gravatar === g ? 'active' : ''}></div>
