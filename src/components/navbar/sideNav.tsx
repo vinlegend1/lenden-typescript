@@ -7,6 +7,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { logOutUser } from '../../app/auth/login';
 import { RootState } from '../../app/models';
 import { Swipeable } from 'react-swipeable';
+import { genericIcons, gravatarIcons } from '../../icons';
 
 export interface SideNavProps {}
 
@@ -64,7 +65,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 				{menuState.isOpen && (
 					<Image
 						id='closeMenu'
-						src='/icons/cross.svg'
+						src={genericIcons.cross}
 						alt=''
 						onClick={() => dispatch(toggleMenu(false))}
 					/>
@@ -74,7 +75,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 					<React.Fragment>
 						<Image
 							id='editUser'
-							src='/icons/edit.svg'
+							src={genericIcons.cross}
 							onClick={() => {
 								history.push('/my-account');
 								dispatch(toggleMenu(false));
@@ -88,11 +89,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 							}}>
 							<div id='imageContainer'>
 								<Image
-									src={
-										user
-											? 'https://placekitten.com/g/300/300'
-											: '/images/genericUser.png'
-									}
+									src={user ? gravatarIcons.type0 : '/images/genericUser.png'}
 									alt=''
 									roundedCircle
 								/>

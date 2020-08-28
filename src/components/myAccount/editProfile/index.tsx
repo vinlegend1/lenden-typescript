@@ -10,7 +10,7 @@ export interface EditProfileProps extends RouteComponentProps {}
 
 const EditProfile: React.FC<EditProfileProps> = () => {
 	const history = useHistory();
-	const [gravatar, setGravatar] = useState('3');
+	const [gravatar, setGravatar] = useState('type0');
 
 	//TODO Get Gravatar from auth.users
 

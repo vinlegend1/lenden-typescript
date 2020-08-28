@@ -11,7 +11,7 @@ import accessory from './categories/accessory.svg';
 import type0 from './gravatar/user0.svg';
 import type1 from './gravatar/user1.svg';
 import type2 from './gravatar/user2.svg';
-import type3 from './gravatar/user4.svg';
+import type3 from './gravatar/user3.svg';
 import type4 from './gravatar/user4.svg';
 
 // Generics
@@ -34,7 +34,7 @@ import down from './down.svg';
 import mainBanner from './main-banner.svg';
 import navLogo from './nav-logo.svg';
 
-export const categoryIcons: { [key: string]: string } = {
+export const categoryIcons = {
 	mobile,
 	book,
 	cd,
@@ -42,7 +42,7 @@ export const categoryIcons: { [key: string]: string } = {
 	accessory,
 };
 
-export const gravatarIcons: { [key: string]: string } = {
+export const gravatarIcons = {
 	type0,
 	type1,
 	type2,
@@ -50,7 +50,7 @@ export const gravatarIcons: { [key: string]: string } = {
 	type4,
 };
 
-export const genericIcons: { [key: string]: string } = {
+export const genericIcons = {
 	back,
 	search,
 	bookmark,
@@ -65,7 +65,7 @@ export const genericIcons: { [key: string]: string } = {
 	down,
 };
 
-export const lendenSpecific: { [key: string]: string } = {
+export const lendenSpecific = {
 	navLogo,
 	mainBanner,
 };
