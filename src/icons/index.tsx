@@ -1,11 +1,3 @@
-// Categories
-
-import mobile from './categories/mobile.svg';
-import book from './categories/book.svg';
-import cd from './categories/cd.svg';
-import console from './categories/console.svg';
-import accessory from './categories/accessory.svg';
-
 // Gravatars
 
 import type0 from './gravatar/user0.svg';
@@ -35,11 +27,11 @@ import mainBanner from './main-banner.svg';
 import navLogo from './nav-logo.svg';
 
 export const categoryIcons = {
-	mobile,
-	book,
-	cd,
-	console,
-	accessory,
+	Mobile,
+	Book,
+	Cd,
+	Console,
+	Accessory,
 };
 
 export const gravatarIcons = {
@@ -72,13 +64,13 @@ export const lendenSpecific = {
 
 // let imageUrls = ['success', 'back', 'cross'];
 
-export function preload() {
-	Object.keys(genericIcons)
-		.concat(Object.keys(lendenSpecific))
-		.forEach(imgName => {
-			let img = new Image();
-			img.src = `/icons/${imgName}.svg`;
-		});
-}
+// export function preload() {
+// 	Object.keys(genericIcons)
+// 		.concat(Object.keys(lendenSpecific))
+// 		.forEach(imgName => {
+// 			let img = new Image();
+// 			img.src = `/icons/${imgName}.svg`;
+// 		});
+// }
 
-preload();
+// preload();

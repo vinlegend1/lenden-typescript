@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { categoryIcons } from '../../icons';
+import CategoryIcons from '../../icons/categories';
 
 export interface CategoriesProps {}
 
@@ -25,7 +25,7 @@ const Categories: React.FC<CategoriesProps> = () => {
 					<LinkContainer key={index} to={category.to}>
 						<div className='categoryBox' style={{ margin: '1rem 0 ' }}>
 							<div className='categoryIconBox'>
-								<img src={categoryIcons[category.src]} alt='' />
+								<CategoryIcons name={category.src} />
 							</div>
 							<div className='categoryName'>{category.name.toUpperCase()}</div>
 						</div>

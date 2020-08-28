@@ -8,6 +8,7 @@ import { logOutUser } from '../../app/auth/login';
 import { RootState } from '../../app/models';
 import { Swipeable } from 'react-swipeable';
 import { genericIcons, gravatarIcons } from '../../icons';
+import { ReactComponent as Cross } from '../../icons/cross.svg';
 
 export interface SideNavProps {}
 
@@ -63,12 +64,13 @@ const SideNav: React.FC<SideNavProps> = () => {
 					if (burgerMenu !== state.isOpen) dispatch(toggleMenu(state.isOpen));
 				}}>
 				{menuState.isOpen && (
-					<Image
-						id='closeMenu'
-						src={genericIcons.cross}
-						alt=''
-						onClick={() => dispatch(toggleMenu(false))}
-					/>
+					<Cross />
+					// <Image
+					// 	id='closeMenu'
+					// 	src={genericIcons.cross}
+					// 	alt=''
+					// 	onClick={() => dispatch(toggleMenu(false))}
+					// />
 				)}
 
 				{user.userId && (
