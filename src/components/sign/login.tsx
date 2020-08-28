@@ -9,6 +9,7 @@ import { logInUser, updateError, SignInUser } from '../../app/auth/login';
 
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
+import GenericIcons from '../../icons/generic';
 
 export interface LoginProps extends RouteComponentProps {
 	error: string;
@@ -65,14 +66,10 @@ class Login extends CommonForm<LoginProps, LoginState> {
 
 						<div className='loginOptions'>
 							<div>
-								<div className='pretty p-image p-curve p-smooth'>
+								<div className='pretty p-svg p-curve p-smooth'>
 									<input type='checkbox' />
 									<div className='state'>
-										<img
-											className='image'
-											src='/icons/tick.svg'
-											alt='signed-in'
-										/>
+										<GenericIcons className='svg' name='tick' />
 										<label>Keep me signed in</label>
 									</div>
 								</div>
