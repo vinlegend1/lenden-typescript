@@ -75,7 +75,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 					<React.Fragment>
 						<Image
 							id='editUser'
-							src={genericIcons.cross}
+							src={genericIcons.edit}
 							onClick={() => {
 								history.push('/my-account');
 								dispatch(toggleMenu(false));

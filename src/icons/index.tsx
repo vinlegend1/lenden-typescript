@@ -69,3 +69,16 @@ export const lendenSpecific = {
 	navLogo,
 	mainBanner,
 };
+
+// let imageUrls = ['success', 'back', 'cross'];
+
+export function preload() {
+	Object.keys(genericIcons)
+		.concat(Object.keys(lendenSpecific))
+		.forEach(imgName => {
+			let img = new Image();
+			img.src = `/icons/${imgName}.svg`;
+		});
+}
+
+preload();
