@@ -26,13 +26,13 @@ import down from './down.svg';
 import mainBanner from './main-banner.svg';
 import navLogo from './nav-logo.svg';
 
-export const categoryIcons = {
-	Mobile,
-	Book,
-	Cd,
-	Console,
-	Accessory,
-};
+// export const categoryIcons = {
+// 	Mobile,
+// 	Book,
+// 	Cd,
+// 	Console,
+// 	Accessory,
+// };
 
 export const gravatarIcons = {
 	type0,
