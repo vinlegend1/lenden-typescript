@@ -14,6 +14,7 @@ import {
 
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
+import GenericIcons from '../../icons/generic';
 
 Joi.extend(require('joi-phone-number'));
 export interface SignupProps extends RouteComponentProps {
@@ -123,7 +124,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						)}
 
 						<div className='termsConditions'>
-							<div className='pretty p-image p-curve p-smooth'>
+							<div className='pretty p-svg p-curve p-smooth'>
 								<input
 									type='checkbox'
 									onChange={(e: React.ChangeEvent) => {
@@ -134,11 +135,8 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 									checked={this.state.termsConditions}
 								/>
 								<div className='state'>
-									<img
-										className='image'
-										src='/icons/tick.svg'
-										alt='signed-in'
-									/>
+									<GenericIcons className='svg' name='tick' />
+
 									<label>
 										I accept the Terms & conditions of Len Den India.
 									</label>
