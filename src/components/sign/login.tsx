@@ -6,7 +6,6 @@ import { getCurrentUser } from './../../services/authService';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { RootState } from '../../app/models';
 import { logInUser, updateError, SignInUser } from '../../app/auth/login';
-
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 import GenericIcons from '../../icons/generic';

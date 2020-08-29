@@ -81,7 +81,7 @@
 
 	font-family: font(secondary);
 	font-weight: 500;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .bm-item:hover {
@@ -166,8 +166,9 @@ a.bm-item {
 	font-family: font(secondary);
 
 	#imageContainer {
-		flex-basis: 25%;
-		margin: 0 10px;
+		// flex-basis: 25%;
+		// margin: 0 10px;
+		padding: 0 10px;
 
 		.userImage {
 			width: fit-content;
@@ -182,7 +183,7 @@ a.bm-item {
 	}
 
 	#infoContainer {
-		flex-basis: 75%;
+		// flex-basis: 75%;
 
 		.userDetails {
 			font-weight: 300;
@@ -198,6 +199,7 @@ a.bm-item {
 	user-select: none;
 
 	svg {
+		width: 12px;
 		margin-left: 15px;
 	}
 
@@ -223,5 +225,20 @@ a.bm-item {
 				}
 			}
 		}
+	}
+}
+
+.genericUserContainer {
+	display: flex !important;
+	align-items: center;
+	border-bottom: 0.5px solid #d2d2d2;
+
+	.iconContainer {
+		width: 50px;
+		height: 50px;
+	}
+
+	.title {
+		margin: 0 auto;
 	}
 }

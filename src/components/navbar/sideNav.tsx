@@ -27,8 +27,8 @@ const SideNav: React.FC<SideNavProps> = () => {
 	const [dropdownIconName, setDropdownIconName] = useState('down');
 
 	const navLinks = [
-		{ to: '/my-products', name: 'My Products' },
-		{ to: '/my-barter', name: 'My Barter' },
+		{ to: '/my-products', name: 'My Products', protected: true },
+		{ to: '/my-barter', name: 'My Barter', protected: true },
 		{
 			to: '/',
 			name: 'Home',
@@ -88,13 +88,9 @@ const SideNav: React.FC<SideNavProps> = () => {
 								dispatch(toggleMenu(false));
 							}}>
 							<div id='imageContainer'>
-								{user.userId ? (
-									<div className='userImage'>
-										<GravatarIcons name='type0' />
-									</div>
-								) : (
-									<GenericIcons name='user' />
-								)}
+								<div className='userImage'>
+									<GravatarIcons name='type0' />
+								</div>
 							</div>
 							<div id='infoContainer'>
 								<div className='userDetails'>Name : {user.name}</div>
@@ -105,16 +101,34 @@ const SideNav: React.FC<SideNavProps> = () => {
 				)}
 
 				{!user.userId && (
-					<NavLink
-						id='navAnchor'
-						to='/login'
-						className='menu-item'
-						onClick={() => dispatch(toggleMenu(false))}>
-						Sign In
-					</NavLink>
+					<div
+						className='genericUserContainer'
+						onClick={() => {
+							history.push('/login');
+							dispatch(toggleMenu(false));
+						}}>
+						<div className='iconContainer'>
+							<GenericIcons name='user' />
+						</div>
+						<div className='title'>Login / Signup</div>
+					</div>
 				)}
 
 				{navLinks.map((navLink, index) => {
+					if (navLink.to && navLink.protected)
+						return (
+							user.userId && (
+								<NavLink
+									key={index}
+									to={navLink.to}
+									className='menu-item'
+									onClick={() => dispatch(toggleMenu(false))}
+									exact={navLink.exact ? true : false}
+									id={navLink.id}>
+									{navLink.name}
+								</NavLink>
+							)
+						);
 					if (navLink.to)
 						return (
 							<NavLink
@@ -142,7 +156,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 								}, 50);
 							}}>
 							{navLink.name}
-							<GenericIcons name={dropdownIconName} />
+							<GenericIcons className='icon' name={dropdownIconName} />
 							<div id='dropdownContainer' className={categoriesItemClass}>
 								<div id='dropdownInnerContainer'>
 									{navLink.list!.map((category, index) => (
