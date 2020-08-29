@@ -27,10 +27,10 @@ const MainNav: React.FC<MainNavProps> = () => {
 				<Navbar.Brand
 					onClick={() => dispatch(toggleMenu(true))}
 					style={{ cursor: 'pointer' }}>
-					<GenericIcons name='menu' />
+					<GenericIcons className='icon' name='menu' />
 					{/* <img className='icon' src={genericIcons.menu} alt='' /> */}
 				</Navbar.Brand>
-				<LendenIcons id='logo' name='nav-log' />
+				<LendenIcons id='logo' name='nav-logo' />
 
 				<NavLink className='nav-link category' to='/categories/books'>
 					Books
