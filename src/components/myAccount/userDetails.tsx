@@ -25,7 +25,9 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 			<div className='infoBox'>
 				<div>
 					<h3>Password</h3>
-					<h4>CHANGE PASSWORD</h4>
+					<h4 onClick={() => history.push('/my-account/change-password')}>
+						CHANGE PASSWORD
+					</h4>
 				</div>
 				<hr />
 				<p>•••••••••••••••••••</p>

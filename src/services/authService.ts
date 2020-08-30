@@ -37,3 +37,6 @@ export function setToken(token: string) {
 export function getToken() {
 	return localStorage.getItem(tokenKey);
 }
+export function deleteToken() {
+	return localStorage.removeItem(tokenKey);
+}

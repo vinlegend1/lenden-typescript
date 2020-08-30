@@ -22,14 +22,16 @@ export interface LoginState {
 		password: string;
 	};
 	errors: ErrorContainer;
-	passType: PassType;
+	passType: {
+		password: PassType;
+	};
 }
 
 class Login extends CommonForm<LoginProps, LoginState> {
 	state = {
 		data: { email: '', password: '' },
 		errors: { email: '', password: '' },
-		passType: 'password' as PassType,
+		passType: { password: 'password' as PassType },
 	};
 
 	schema = {
@@ -60,7 +62,11 @@ class Login extends CommonForm<LoginProps, LoginState> {
 						{this.renderInput(
 							'Password',
 							'password',
-							this.state.errors.password
+							this.state.errors.password,
+							'password',
+							undefined,
+							undefined,
+							true
 						)}
 
 						<div className='loginOptions'>

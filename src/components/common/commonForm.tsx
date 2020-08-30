@@ -17,7 +17,9 @@ interface FormState {
 		[key: string]: any;
 	};
 	errors: ErrorContainer;
-	passType?: PassType;
+	passType?: {
+		[key: string]: PassType;
+	};
 }
 
 interface FormProps {
@@ -110,12 +112,20 @@ abstract class CommonForm<
 		name: string,
 		errorMessage: string,
 		type?: string,
-		placeholder?: string
+		placeholder?: string,
+		eyeRequired?: boolean,
+		submitOnEnter?: boolean
 	) => {
-		if (name === 'password')
-			return this.renderPassInput(label, errorMessage, placeholder);
+		if (name === 'password' || eyeRequired)
+			return this.renderPassInput(
+				label,
+				name,
+				errorMessage,
+				placeholder,
+				submitOnEnter
+			);
 		if (name === 'mobileNumber')
-			return this.renderMobileNumberInput(label, errorMessage);
+			return this.renderMobileNumberInput(label, errorMessage, submitOnEnter);
 		return (
 			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
@@ -125,6 +135,10 @@ abstract class CommonForm<
 					type={type || name}
 					value={this.state.data[name]}
 					onChange={this.handleChange}
+					onKeyPress={(event: React.KeyboardEvent) => {
+						if (submitOnEnter && event.key === 'Enter')
+							this.handleSubmit(event);
+					}}
 				/>
 				<Form.Text
 					className={errorMessage ? 'active' : ''}
@@ -137,21 +151,24 @@ abstract class CommonForm<
 
 	private renderPassInput = (
 		label: string,
+		name: string,
 		errorMessage?: string,
-		placeholder?: string
+		placeholder?: string,
+		submitOnEnter?: boolean
 	) => {
 		return (
-			<Form.Group controlId={'password'}>
+			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
 				<InputGroup>
 					<Form.Control
 						className='input passwordInput'
-						name='password'
-						type={this.state.passType}
-						value={this.state.data.password}
+						name={name}
+						type={this.state.passType![name]}
+						value={this.state.data[name]}
 						onChange={this.handleChange}
 						onKeyPress={(event: React.KeyboardEvent) => {
-							if (event.key === 'Enter') this.handleSubmit(event);
+							if (submitOnEnter && event.key === 'Enter')
+								this.handleSubmit(event);
 						}}
 					/>
 
@@ -159,17 +176,21 @@ abstract class CommonForm<
 						<InputGroup.Text
 							className='passwordInputText'
 							onClick={() => {
-								if (this.state.passType === 'password')
-									return setTimeout(() => this.setState({ passType: 'text' }));
+								if (this.state.passType![name] === 'password') {
+									let passType = { ...this.state.passType }!;
+									passType[name] = 'text';
+									return setTimeout(() => this.setState({ passType }));
+								}
 
-								if (this.state.passType === 'text')
-									return setTimeout(() =>
-										this.setState({ passType: 'password' })
-									);
+								if (this.state.passType![name] === 'text') {
+									let passType = { ...this.state.passType }!;
+									passType[name] = 'password';
+									return setTimeout(() => this.setState({ passType }));
+								}
 							}}
 							onMouseDown={(e: React.MouseEvent) => e.preventDefault()}>
 							<div>
-								{this.state.passType === 'password' ? (
+								{this.state.passType![name] === 'password' ? (
 									<FontAwesomeIcon icon={faEye} />
 								) : (
 									<FontAwesomeIcon icon={faEyeSlash} />
@@ -198,7 +219,11 @@ abstract class CommonForm<
 		);
 	};
 
-	private renderMobileNumberInput = (label: string, errorMessage?: string) => (
+	private renderMobileNumberInput = (
+		label: string,
+		errorMessage?: string,
+		submitOnEnter?: boolean
+	) => (
 		<Form.Group controlId='mobileNumber' className='mobileNumberFormGroup'>
 			<Form.Label>{label}</Form.Label>
 
@@ -214,6 +239,10 @@ abstract class CommonForm<
 					type='number'
 					value={this.state.data.mobileNumber}
 					onChange={this.handleChange}
+					onKeyPress={(event: React.KeyboardEvent) => {
+						if (submitOnEnter && event.key === 'Enter')
+							this.handleSubmit(event);
+					}}
 				/>
 			</InputGroup>
 

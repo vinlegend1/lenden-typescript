@@ -34,7 +34,9 @@ export interface SignupState {
 	};
 	errors: ErrorContainer;
 	success: string;
-	passType: PassType;
+	passType: {
+		password: PassType;
+	};
 	termsConditions: boolean;
 }
 
@@ -54,7 +56,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			termsConditions: '',
 		},
 		success: '',
-		passType: 'password' as PassType,
+		passType: { password: 'password' as PassType },
 		termsConditions: false,
 	};
 
@@ -120,7 +122,9 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 							'password',
 							this.state.errors.password,
 							'',
-							'Password must be atleast 6 characters'
+							'Password must be atleast 6 characters',
+							undefined,
+							true
 						)}
 
 						<div className='termsConditions'>
