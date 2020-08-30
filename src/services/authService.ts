@@ -2,9 +2,11 @@ import * as http from './httpService';
 import JwtDecode from 'jwt-decode';
 
 interface DecodedUser {
-	userId: string;
+	userid: string;
 	name: string;
 	sub: string;
+	mobilenumber: string;
+	gravatarid: string;
 }
 
 const tokenKey = 'token';

@@ -14,7 +14,6 @@ interface FetchedAddress {
 	state: string;
 	landmark: string;
 	postalcode: string;
-	mobilenumber: number;
 }
 
 const mapToViewModel = (data: FetchedAddress) => ({
@@ -25,7 +24,6 @@ const mapToViewModel = (data: FetchedAddress) => ({
 	state: data.state,
 	landmark: data.landmark,
 	postalCode: data.postalcode,
-	mobileNumber: data.mobilenumber,
 });
 
 const initialState: UserSlice = {
@@ -33,6 +31,8 @@ const initialState: UserSlice = {
 	name: '',
 	token: '',
 	email: '',
+	gravatarId: '',
+	mobileNumber: '',
 };
 
 const slice = createSlice({
@@ -46,13 +46,24 @@ const slice = createSlice({
 				name: string;
 				token: string;
 				email: string;
+				mobileNumber: string;
+				gravatarId: string;
 			}>
 		) => {
-			const { userId, name, token, email } = action.payload;
+			const {
+				userId,
+				name,
+				token,
+				email,
+				mobileNumber,
+				gravatarId,
+			} = action.payload;
 			user.userId = userId;
 			user.email = email;
 			user.name = name;
 			user.token = token;
+			user.mobileNumber = mobileNumber;
+			user.gravatarId = `type${gravatarId}`;
 		},
 		addressReceived: (
 			user,
@@ -76,9 +87,11 @@ export const getUser = () => (dispatch: Dispatch) => {
 		if (user) {
 			dispatch(
 				userReceivedFromToken({
-					userId: user.userId,
+					userId: user.userid,
 					name: user.name,
 					email: user.sub,
+					mobileNumber: user.mobilenumber,
+					gravatarId: user.gravatarid,
 					token,
 				})
 			);

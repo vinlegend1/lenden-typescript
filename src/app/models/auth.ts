@@ -11,6 +11,8 @@ export interface UserSlice {
 	name: string;
 	token: string;
 	email: string;
+	mobileNumber: string;
+	gravatarId: string;
 	address?: {
 		city: string;
 		country: string;
@@ -19,6 +21,6 @@ export interface UserSlice {
 		state: string;
 		landmark?: string;
 		postalCode: string;
-		mobileNumber: number;
+		// mobileNumber: number;
 	};
 }
