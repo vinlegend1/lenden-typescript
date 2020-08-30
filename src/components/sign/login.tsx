@@ -1,6 +1,6 @@
 import React from 'react';
 import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
-import SignNav from './signNav';
+import GenericNav from '../common/genericNav';
 import Joi from 'joi';
 import { getCurrentUser } from './../../services/authService';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
@@ -52,7 +52,7 @@ class Login extends CommonForm<LoginProps, LoginState> {
 		if (getCurrentUser()) return <Redirect to='/' />; //TODO
 		return (
 			<React.Fragment>
-				<SignNav />
+				<GenericNav />
 				<div className='mainSignContainer'>
 					<div className='formBox'>
 						<h1>Welcome Back,</h1>

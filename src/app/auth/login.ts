@@ -7,7 +7,6 @@ const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
-	// passType: 'password',
 };
 
 const slice = createSlice({
@@ -30,21 +29,13 @@ const slice = createSlice({
 				state.error = action.payload;
 			state.loading = false;
 		},
-		// passTypeUpdated: (state, action: ActionWithPayload<PassType>) => {
-		// 	state.passType = action.payload;
-		// },
 		userLoggedOut: () => {},
 	},
 });
 
 export default slice.reducer;
 
-const {
-	errorUpdated,
-	loginInitiated,
-	loginFailed,
-	// passTypeUpdated,
-} = slice.actions;
+const { errorUpdated, loginInitiated, loginFailed } = slice.actions;
 
 export const { loginFulfilled, userLoggedOut } = slice.actions;
 
@@ -71,5 +62,4 @@ export const logInUser = (user: SignInUser, location: Location) => {
 };
 
 export const updateError = (error: string) => errorUpdated(error);
-// export const updatePassType = (type: PassType) => passTypeUpdated(type);
 export const logOutUser = () => userLoggedOut();

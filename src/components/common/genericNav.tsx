@@ -2,11 +2,11 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import LendenIcons from '../../icons/lenden';
 
-export interface SignNavProps {}
+export interface GenericNavProps {}
 
-const SignNav: React.FC<SignNavProps> = () => {
+const GenericNav: React.FC<GenericNavProps> = () => {
 	return (
-		<div id='signNav'>
+		<div id='genericNav'>
 			<LinkContainer to='/'>
 				<LendenIcons name='nav-logo' />
 			</LinkContainer>
@@ -14,4 +14,4 @@ const SignNav: React.FC<SignNavProps> = () => {
 	);
 };
 
-export default SignNav;
+export default GenericNav;

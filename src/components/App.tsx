@@ -12,6 +12,7 @@ import MyAccount from './myAccount';
 import EditProfile from './myAccount/editProfile';
 import changeAddress from './myAccount/changeAddress';
 import changePassword from './myAccount/changePassword/index';
+import VerifyEmail from './user/verifyEmail';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -41,17 +42,20 @@ const App: React.FC = () => {
 				<Switch>
 					<Route path='/login' component={Login} />
 					<Route path='/signup' component={Signup} />
+
+					<Route path='/user/verify/:token' component={VerifyEmail} />
+
 					{/* <Route path='/not-found' component={NotFound} />
 				<ProtectedRoute path='/new' exact component={NewProduct} />
 				<Route path='/books' exact component={Products} />
 				<Route path='/books/:id' component={ProductPage} />
 				<Route path='/my-products' component={MyProducts} />*/}
+
 					<ProtectedRoute path='/my-account/edit' component={EditProfile} />
 					<ProtectedRoute
 						path='/my-account/change-password'
 						component={changePassword}
 					/>
-
 					<ProtectedRoute
 						path='/my-account/my-address'
 						component={changeAddress}
