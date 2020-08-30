@@ -30,6 +30,7 @@ const slice = createSlice({
 		},
 		signupFailed: (state, action: ActionWithPayload<number>) => {
 			if (action.payload === 400) state.error = 'User already registered!';
+			else if (typeof action.payload === 'string') state.error = action.payload;
 			state.loading = false;
 		},
 		signupFulfilled: state => {
