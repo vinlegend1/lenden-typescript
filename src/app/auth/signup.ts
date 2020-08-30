@@ -55,17 +55,18 @@ export interface SignUpUserModel {
 	name: string;
 	email: string;
 	password: string;
+	mobileNumber: string;
 }
 
 export const signUpUser = (user: SignUpUserModel) => {
-	const { name, email, password } = user;
+	const { name, email, password, mobileNumber } = user;
 	return apiCallBegan({
 		method: 'post',
 		url: 'users',
 		onStart: signupInitiated.type,
 		onSuccess: signupFulfilled.type,
 		onError: signupFailed.type,
-		data: { name, email, password },
+		data: { name, email, password, mobilenumber: mobileNumber },
 	});
 };
 

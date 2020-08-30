@@ -15,6 +15,7 @@ import {
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 import GenericIcons from '../../icons/generic';
+import { Modal, Button } from 'react-bootstrap';
 
 Joi.extend(require('joi-phone-number'));
 export interface SignupProps extends RouteComponentProps {
@@ -38,6 +39,7 @@ export interface SignupState {
 		password: PassType;
 	};
 	termsConditions: boolean;
+	showModal: boolean;
 }
 
 class Signup extends CommonForm<SignupProps, SignupState> {
@@ -58,6 +60,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 		success: '',
 		passType: { password: 'password' as PassType },
 		termsConditions: false,
+		showModal: false,
 	};
 
 	schema = {
@@ -70,8 +73,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 		mobileNumber: Joi.string()
 			.length(10)
 			.pattern(/^[0-9]+$/)
-			.error(() => 'first message')
-			.required()
+			.allow('')
 			.label('Mobile Number')
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
@@ -85,7 +87,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			}),
 	};
 
-	doSubmit = () => {
+	doSubmit = async () => {
 		if (!this.state.termsConditions) {
 			const errors = { ...this.state.errors };
 			errors.termsConditions =
@@ -94,9 +96,9 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 			return this.setState({ errors });
 		}
 		const { data } = this.state;
-		const { signUpUser } = this.props;
+		await this.props.signUpUser(data);
 
-		signUpUser(data);
+		if (!this.props.error) this.setState({ showModal: true });
 	};
 
 	render() {
@@ -109,16 +111,16 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						<h1>Welcome to Len-Den,</h1>
 						<h2>Please register with us to start your barter journey !</h2>
 
-						{this.renderInput('Name', 'name', this.state.errors.name)}
+						{this.renderInput('Name *', 'name', this.state.errors.name)}
 						{this.renderInput(
 							'Mobile Number',
 							'mobileNumber',
 							this.state.errors.mobileNumber,
 							'number'
 						)}
-						{this.renderInput('Email', 'email', this.state.errors.email)}
+						{this.renderInput('Email *', 'email', this.state.errors.email)}
 						{this.renderInput(
-							'Password',
+							'Password *',
 							'password',
 							this.state.errors.password,
 							'',
@@ -169,6 +171,24 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						</div>
 					</div>
 				</div>
+				<Modal
+					className='notificationMessage'
+					size='lg'
+					centered
+					show={this.state.showModal}
+					backdrop='static'
+					keyboard={false}>
+					<Modal.Body>
+						<GenericIcons name='success' />
+						Your account has been created successfully. Kindly verify it using
+						the verification mail sent in your mailbox before logging in.
+						<div
+							onClick={() => this.props.history.push('/login')}
+							className='darkButton'>
+							Login
+						</div>
+					</Modal.Body>
+				</Modal>
 			</React.Fragment>
 		);
 	}

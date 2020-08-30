@@ -46,6 +46,11 @@ abstract class CommonForm<
 		this.setState({ data });
 	};
 
+	componentDidMount() {
+		if (this.props.updateError) this.props.updateError('');
+		if (this.props.updateSuccess) this.props.updateSuccess('');
+	}
+
 	validate = (): null | ErrorContainer => {
 		const { error } = Joi.object(this.schema).validate(this.state.data, {
 			abortEarly: false,
