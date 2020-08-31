@@ -40,6 +40,7 @@ const apiMiddleware = (store: MiddlewareStore) => (
 			});
 	} catch (ex) {
 		if (ex.response) {
+			console.log(ex.response);
 			store.dispatch(apiCallFailed(ex.response.status));
 			if (onError)
 				store.dispatch({ type: onError, payload: ex.response.status });

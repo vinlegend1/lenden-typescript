@@ -39,15 +39,18 @@ const slice = createSlice({
 		verifyFulfilled: state => {
 			state.loading = false;
 			state.error = '';
-			state.success = 'Your Email has been successfully verified!';
+			state.success =
+				'Your account has been successfully verified. You can now login using the button below';
 		},
 
 		verifyFailed: (state, action: ActionWithPayload<number | string>) => {
 			if (typeof action.payload === 'number') {
 				if (action.payload === 403)
-					state.error = 'Invalid link or link expired';
+					state.error =
+						'Sorry, the link you have requested has expired or is invalid. Please go to login in order to generate a new link.';
 				else if (action.payload === 400)
-					state.error = 'Your Email has already been verified';
+					state.error =
+						'Sorry, Your account has been already verified. You can simply login using the button  below';
 			} else if (typeof action.payload === 'string')
 				state.error = action.payload;
 			state.loading = false;

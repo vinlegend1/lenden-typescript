@@ -13,6 +13,7 @@ import { ReactComponent as Success } from './success.svg';
 import { ReactComponent as Up } from './up.svg';
 import { ReactComponent as Down } from './down.svg';
 import { ReactComponent as User } from './user.svg';
+import { ReactComponent as EmailBanner } from './email-banner.svg';
 
 export interface GenericIconsProps {
 	name: string;
@@ -49,6 +50,8 @@ const GenericIcons: React.FC<GenericIconsProps> = ({ name, ...rest }) => {
 			return <Down {...rest} />;
 		case 'user':
 			return <User {...rest} />;
+		case 'email-banner':
+			return <EmailBanner {...rest} />;
 		default:
 			return null;
 	}
