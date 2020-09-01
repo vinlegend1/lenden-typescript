@@ -30,12 +30,29 @@ const slice = createSlice({
 			state.loading = false;
 		},
 		userLoggedOut: () => {},
+		forgotPasswordSuccess: (state, action) => {
+			state.loading = false;
+			state.error = '';
+			state.success =
+				"We've sent a password reset link to your email. Click on the link and reset your password!";
+		},
+		forgotPasswordFailed: (state, action) => {
+			state.loading = false;
+			state.error = 'Something went wrong!';
+			state.success = '';
+		},
 	},
 });
 
 export default slice.reducer;
 
-const { errorUpdated, loginInitiated, loginFailed } = slice.actions;
+const {
+	errorUpdated,
+	loginInitiated,
+	loginFailed,
+	forgotPasswordSuccess,
+	forgotPasswordFailed,
+} = slice.actions;
 
 export const { loginFulfilled, userLoggedOut } = slice.actions;
 
@@ -63,3 +80,13 @@ export const logInUser = (user: SignInUser, location: Location) => {
 
 export const updateError = (error: string) => errorUpdated(error);
 export const logOutUser = () => userLoggedOut();
+
+export const forgotPassword = (email: string) =>
+	apiCallBegan({
+		method: 'post',
+		data: { email },
+		url: 'users/passwordresetrequest',
+		onStart: loginInitiated.type,
+		onSuccess: forgotPasswordSuccess.type,
+		onError: forgotPasswordFailed.type,
+	});

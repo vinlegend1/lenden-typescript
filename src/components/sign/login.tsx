@@ -80,7 +80,11 @@ class Login extends CommonForm<LoginProps, LoginState> {
 								</div>
 							</div>
 
-							<div className='forgotPassword'>Forgot Password?</div>
+							<div
+								onClick={() => this.props.history.push('/user/forgot-password')}
+								className='forgotPassword'>
+								Forgot Password?
+							</div>
 						</div>
 
 						{this.renderLoader()}
