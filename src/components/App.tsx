@@ -13,6 +13,7 @@ import EditProfile from './myAccount/editProfile';
 import changeAddress from './myAccount/changeAddress';
 import changePassword from './myAccount/changePassword/index';
 import VerifyEmail from './user/verifyEmail';
+import NotFound from './common/notFound';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -45,8 +46,9 @@ const App: React.FC = () => {
 
 					<Route path='/user/verify/:token' component={VerifyEmail} />
 
-					{/* <Route path='/not-found' component={NotFound} />
-				<ProtectedRoute path='/new' exact component={NewProduct} />
+					<Route path='/not-found' component={NotFound} />
+
+					{/*<ProtectedRoute path='/new' exact component={NewProduct} />
 				<Route path='/books' exact component={Products} />
 				<Route path='/books/:id' component={ProductPage} />
 				<Route path='/my-products' component={MyProducts} />*/}
@@ -61,9 +63,11 @@ const App: React.FC = () => {
 						component={changeAddress}
 					/>
 					<ProtectedRoute path='/my-account' component={MyAccount} />
+
 					<Route path='/' exact component={Home} />
+
 					<Redirect from='/categories' exact to='/' />
-					{/* <Redirect to='/not-found' /> */}
+					<Redirect to='/not-found' />
 				</Switch>
 			</React.Fragment>
 			<ToastContainer

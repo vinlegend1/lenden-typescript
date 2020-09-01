@@ -58,6 +58,7 @@ const slice = createSlice({
 				mobileNumber,
 				gravatarId,
 			} = action.payload;
+
 			user.userId = userId;
 			user.email = email;
 			user.name = name;

@@ -14,6 +14,7 @@ import { ReactComponent as Up } from './up.svg';
 import { ReactComponent as Down } from './down.svg';
 import { ReactComponent as User } from './user.svg';
 import { ReactComponent as EmailBanner } from './email-banner.svg';
+import { ReactComponent as NotFound } from './404.svg';
 
 export interface GenericIconsProps {
 	name: string;
@@ -52,6 +53,8 @@ const GenericIcons: React.FC<GenericIconsProps> = ({ name, ...rest }) => {
 			return <User {...rest} />;
 		case 'email-banner':
 			return <EmailBanner {...rest} />;
+		case 'not-found':
+			return <NotFound {...rest} />;
 		default:
 			return null;
 	}
