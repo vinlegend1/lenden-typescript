@@ -1,0 +1,19 @@
+.verifyEmailContainer {
+	font-family: font(secondary);
+
+	.emailBanner {
+		padding: 1rem;
+		margin: 2rem auto;
+		max-width: 250px;
+	}
+
+	p {
+		text-align: center;
+		font-size: 18px;
+		font-weight: 500;
+	}
+
+	.darkButton {
+		margin: 3rem auto;
+	}
+}

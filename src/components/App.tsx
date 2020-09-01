@@ -12,7 +12,7 @@ import MyAccount from './myAccount';
 import EditProfile from './myAccount/editProfile';
 import changeAddress from './myAccount/changeAddress';
 import changePassword from './myAccount/changePassword/index';
-import VerifyEmail from './user/verifyEmail';
+import VerifyEmail from './sign/verifyEmail';
 import NotFound from './common/notFound';
 
 const App: React.FC = () => {
