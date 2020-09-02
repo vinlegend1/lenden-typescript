@@ -81,9 +81,6 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 	render() {
 		if (this.props.loadingPage) return <PageLoader />;
 		else {
-			// if (this.props.error) {
-			// 	if (this.props.error === verifyTokenErrors.invalidEmail)
-			// 		return <Redirect to='/not-found' />;
 			if (this.props.error === verifyTokenErrors.expiredEmail) {
 				return (
 					<React.Fragment>
@@ -179,7 +176,6 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	// forgotPassword: (email: string) => dispatch(forgotPassword(email)),
 	verifyToken: (token: string) => dispatch(verifyPasswordToken(token)),
 	resetPassword: (data: { token: string; password: string }) =>
 		dispatch(resetPassword(data)),

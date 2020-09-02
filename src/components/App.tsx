@@ -16,6 +16,7 @@ import VerifyEmail from './sign/verifyEmail';
 import NotFound from './common/notFound';
 import ForgotPassword from './sign/forgotPassword';
 import ResetPassword from './sign/resetPassword';
+import UserProtectedRoute from './common/userProtectedRoute';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -43,12 +44,21 @@ const App: React.FC = () => {
 			/>
 			<React.Fragment>
 				<Switch>
-					<Route path='/login' component={Login} />
-					<Route path='/signup' component={Signup} />
+					<UserProtectedRoute path='/login' component={Login} />
+					<UserProtectedRoute path='/signup' component={Signup} />
 
-					<Route path='/user/verify/:token' component={VerifyEmail} />
-					<Route path='/user/forgot-password' component={ForgotPassword} />
-					<Route path='/user/reset-password/:token' component={ResetPassword} />
+					<UserProtectedRoute
+						path='/user/verify/:token'
+						component={VerifyEmail}
+					/>
+					<UserProtectedRoute
+						path='/user/forgot-password'
+						component={ForgotPassword}
+					/>
+					<UserProtectedRoute
+						path='/user/reset-password/:token'
+						component={ResetPassword}
+					/>
 
 					<Route path='/not-found' component={NotFound} />
 

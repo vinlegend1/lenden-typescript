@@ -2,8 +2,7 @@ import React from 'react';
 import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
 import GenericNav from '../common/genericNav';
 import Joi from 'joi';
-import { getCurrentUser } from './../../services/authService';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { RootState } from '../../app/models';
 import {
 	logInUser,
@@ -64,7 +63,6 @@ class Login extends CommonForm<LoginProps, LoginState> {
 	};
 
 	render() {
-		if (getCurrentUser()) return <Redirect to='/' />; //TODO
 		return (
 			<React.Fragment>
 				<GenericNav />
