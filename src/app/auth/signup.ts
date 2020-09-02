@@ -10,6 +10,15 @@ const initialState: SignSlice = {
 	loading: false,
 };
 
+export const verifyEmailErrors = {
+	linkExpired:
+		'Sorry, the link you have requested has expired. Please go to login in order to generate a new link.',
+	linkInvalid:
+		'Sorry, the link you have requested is invalid. Please go to login in order to generate a new link.',
+	emailAlreadyVerified:
+		'Sorry, Your account has been already verified. You can simply login using the button below',
+};
+
 const slice = createSlice({
 	name: 'signup',
 	initialState,
@@ -59,14 +68,11 @@ const slice = createSlice({
 			if (typeof action.payload === 'string') state.error = action.payload;
 			else {
 				if (action.payload.status === 401)
-					state.error =
-						'Sorry, the link you have requested has expired. Please go to login in order to generate a new link.';
+					state.error = verifyEmailErrors.linkExpired;
 				else if (action.payload.status === 400)
-					state.error =
-						'Sorry, the link you have requested is invalid. Please go to login in order to generate a new link.';
+					state.error = verifyEmailErrors.linkInvalid;
 				else if (action.payload.status === 404)
-					state.error =
-						'Sorry, Your account has been already verified. You can simply login using the button  below';
+					state.error = verifyEmailErrors.emailAlreadyVerified;
 				else state.error = action.payload.data.message.trim();
 			}
 

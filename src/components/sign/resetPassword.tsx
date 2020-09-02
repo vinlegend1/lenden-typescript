@@ -85,11 +85,12 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 				return (
 					<React.Fragment>
 						<GenericNav />
-						<div className='container resetPasswordExpired'>
+						<div className='container tokenExpired'>
 							<div className='iconContainer'>
 								<GenericIcons name='expired' />
 							</div>
 							<p>{this.props.error}</p>
+							{/* TODO Test */}
 							<div
 								onClick={() => this.props.history.replace('/login')}
 								className='darkButton'>

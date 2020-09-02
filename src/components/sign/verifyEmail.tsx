@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory, Redirect } from 'react-router-dom';
 import { RootState } from '../../app/models';
-import { verifyEmailAddress } from '../../app/auth/signup';
+import { verifyEmailAddress, verifyEmailErrors } from '../../app/auth/signup';
 import GenericNav from '../common/genericNav';
 import PageLoader from '../common/pageLoader';
 import GenericIcons from '../../icons/generic';
@@ -26,22 +26,48 @@ const VerifyEmail: React.FC<VerifyEmailProps> = props => {
 		dispatch(verifyEmailAddress(token));
 	}, []);
 
-	return loading ? (
-		<PageLoader />
-	) : (
-		<React.Fragment>
-			<GenericNav />
-			<div className='container verifyEmailContainer'>
-				<div className='emailBanner'>
-					<GenericIcons name='email-banner' />
-				</div>
-				<p>{error ? error : success}</p>
-				<div onClick={() => history.replace('/login')} className='darkButton'>
-					Login
-				</div>
-			</div>
-		</React.Fragment>
-	);
+	if (loading) return <PageLoader />;
+	else {
+		if (error === verifyEmailErrors.linkInvalid)
+			return <Redirect to='/not-found' />;
+		else if (
+			error === verifyEmailErrors.linkExpired ||
+			error === verifyEmailErrors.emailAlreadyVerified
+		)
+			return (
+				<React.Fragment>
+					<GenericNav />
+					<div className='container tokenExpired'>
+						<div className='iconContainer'>
+							<GenericIcons name='expired' />
+						</div>
+						<p>{error}</p>
+						<div
+							onClick={() => history.replace('/login')}
+							className='darkButton'>
+							Login Page
+						</div>
+					</div>
+				</React.Fragment>
+			);
+		else
+			return (
+				<React.Fragment>
+					<GenericNav />
+					<div className='container verifyEmailContainer'>
+						<div className='emailBanner'>
+							<GenericIcons name='email-banner' />
+						</div>
+						<p>{success}</p>
+						<div
+							onClick={() => history.replace('/login')}
+							className='darkButton'>
+							Login
+						</div>
+					</div>
+				</React.Fragment>
+			);
+	}
 };
 
 export default VerifyEmail;
