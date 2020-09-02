@@ -15,6 +15,7 @@ import changePassword from './myAccount/changePassword/index';
 import VerifyEmail from './sign/verifyEmail';
 import NotFound from './common/notFound';
 import ForgotPassword from './sign/forgotPassword';
+import ResetPassword from './sign/resetPassword';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const App: React.FC = () => {
 
 					<Route path='/user/verify/:token' component={VerifyEmail} />
 					<Route path='/user/forgot-password' component={ForgotPassword} />
+					<Route path='/user/reset-password/:token' component={ResetPassword} />
 
 					<Route path='/not-found' component={NotFound} />
 

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
 import { SignSlice } from '../models/auth';
 import { ActionWithPayload } from './../models';
+import { ErrorResponsePayload } from '../models/api';
 
 const initialState: SignSlice = {
 	error: '',
@@ -25,9 +26,17 @@ const slice = createSlice({
 			state.success = '';
 			state.loading = true;
 		},
-		signupFailed: (state, action: ActionWithPayload<number>) => {
-			if (action.payload === 400) state.error = 'User already registered!';
-			else if (typeof action.payload === 'string') state.error = action.payload;
+		signupFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else {
+				if (action.payload.status === 400)
+					state.error = 'User already registered!';
+				else state.error = action.payload.data.message.trim();
+			}
+
 			state.loading = false;
 		},
 		signupFulfilled: state => {
@@ -43,16 +52,24 @@ const slice = createSlice({
 				'Your account has been successfully verified. You can now login using the button below';
 		},
 
-		verifyFailed: (state, action: ActionWithPayload<number | string>) => {
-			if (typeof action.payload === 'number') {
-				if (action.payload === 403)
+		verifyFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else {
+				if (action.payload.status === 401)
 					state.error =
-						'Sorry, the link you have requested has expired or is invalid. Please go to login in order to generate a new link.';
-				else if (action.payload === 400)
+						'Sorry, the link you have requested has expired. Please go to login in order to generate a new link.';
+				else if (action.payload.status === 400)
+					state.error =
+						'Sorry, the link you have requested is invalid. Please go to login in order to generate a new link.';
+				else if (action.payload.status === 404)
 					state.error =
 						'Sorry, Your account has been already verified. You can simply login using the button  below';
-			} else if (typeof action.payload === 'string')
-				state.error = action.payload;
+				else state.error = action.payload.data.message.trim();
+			}
+
 			state.loading = false;
 		},
 	},

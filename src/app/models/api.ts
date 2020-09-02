@@ -18,3 +18,10 @@ export interface ResponseObject {
 	location?: Location;
 	userId?: string;
 }
+
+export interface ErrorResponsePayload {
+	status: number;
+	data: {
+		message: string;
+	};
+}

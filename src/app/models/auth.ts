@@ -3,7 +3,7 @@ export interface SignSlice {
 	error: string;
 	success: string;
 	loading: boolean;
-	// passType: PassType;
+	loadingPage?: boolean;
 }
 
 export interface UserSlice {

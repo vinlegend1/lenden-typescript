@@ -40,10 +40,13 @@ const apiMiddleware = (store: MiddlewareStore) => (
 			});
 	} catch (ex) {
 		if (ex.response) {
-			console.log(ex.response);
-			store.dispatch(apiCallFailed(ex.response.status));
-			if (onError)
-				store.dispatch({ type: onError, payload: ex.response.status });
+			console.log(ex.response.data);
+			const error = {
+				status: ex.response.status,
+				data: ex.response.data,
+			};
+			store.dispatch(apiCallFailed(error));
+			if (onError) store.dispatch({ type: onError, payload: error });
 		} else {
 			store.dispatch(apiCallFailed(ex.message));
 			if (onError) store.dispatch({ type: onError, payload: ex.message });

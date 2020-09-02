@@ -7,7 +7,7 @@ import GenericNav from '../common/genericNav';
 import PageLoader from '../common/pageLoader';
 import GenericIcons from '../../icons/generic';
 
-export interface MatchParams {
+interface MatchParams {
 	token: string;
 }
 

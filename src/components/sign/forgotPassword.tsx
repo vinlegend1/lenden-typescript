@@ -72,6 +72,7 @@ class ForgotPassword extends CommonForm<
 					)}
 
 					{this.renderLoader()}
+					{this.renderErrorAlert()}
 
 					<div className='darkButton' onClick={this.handleSubmit} id='saveBtn'>
 						{`${this.state.sentOnce ? 'Res' : 'S'}end Link`}

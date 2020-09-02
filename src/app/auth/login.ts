@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
 import { SignSlice } from '../models/auth';
 import { ActionWithPayload } from './../models';
+import { ErrorResponsePayload } from '../models/api';
 
 const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
+	loadingPage: true,
 };
 
 const slice = createSlice({
@@ -19,27 +21,102 @@ const slice = createSlice({
 			state.loading = false;
 		},
 		loginInitiated: state => {
+			state.error = '';
+			state.success = '';
 			state.loading = true;
 		},
 		loginFulfilled: () => {},
-		loginFailed: (state, action: ActionWithPayload<number | string>) => {
-			if (typeof action.payload === 'number' && action.payload === 403) {
-				state.error = 'Invalid email or password';
-			} else if (typeof action.payload === 'string')
+		loginFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			if (typeof action.payload === 'string') {
 				state.error = action.payload;
+			} else {
+				if (action.payload.status === 403)
+					state.error = 'Invalid email or password';
+				else state.error = action.payload.data.message.trim();
+			}
+
 			state.loading = false;
 		},
 		userLoggedOut: () => {},
-		forgotPasswordSuccess: (state, action) => {
+		forgotPasswordSuccess: state => {
 			state.loading = false;
 			state.error = '';
 			state.success =
 				"We've sent a password reset link to your email. Click on the link and reset your password!";
 		},
-		forgotPasswordFailed: (state, action) => {
+		forgotPasswordFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
 			state.loading = false;
-			state.error = 'Something went wrong!';
 			state.success = '';
+
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else {
+				if (action.payload.status === 404)
+					state.error = "User hasn't signed up yet!";
+				else state.error = action.payload.data.message.trim();
+			}
+		},
+
+		verifyPasswordTokenInitiated: state => {
+			state.loadingPage = true;
+		},
+
+		verifyPasswordTokenSuccess: state => {
+			state.success = 'Token Verified!';
+			state.loadingPage = false;
+			state.error = '';
+		},
+
+		verifyPasswordTokenFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			state.success = '';
+
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else {
+				if (action.payload.status === 401)
+					state.error = 'Sorry, the link you have requested has expired';
+				else if (action.payload.status === 404)
+					state.error = 'Sorry, the link you have requested is invalid';
+				else state.error = action.payload.data.message.trim();
+			}
+
+			state.loadingPage = false;
+		},
+
+		verifyUserInitiated: state => {
+			state.error = '';
+			state.success = '';
+			state.loading = true;
+		},
+
+		verifyUserSuccess: state => {
+			state.error = '';
+			state.success = 'Verified!';
+		},
+
+		verifyUserFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			state.success = '';
+
+			if (typeof action.payload === 'string') {
+				state.error = action.payload;
+				state.loading = false;
+			} else {
+				if (action.payload.status === 404) state.error = '';
+				else if (action.payload.status === 400) {
+					state.error = "Email hasn't been verified yet";
+					state.loading = false;
+				} else state.error = action.payload.data.message.trim();
+			}
 		},
 	},
 });
@@ -52,6 +129,12 @@ const {
 	loginFailed,
 	forgotPasswordSuccess,
 	forgotPasswordFailed,
+	verifyPasswordTokenFailed,
+	verifyPasswordTokenInitiated,
+	verifyPasswordTokenSuccess,
+	verifyUserFailed,
+	verifyUserInitiated,
+	verifyUserSuccess,
 } = slice.actions;
 
 export const { loginFulfilled, userLoggedOut } = slice.actions;
@@ -81,6 +164,16 @@ export const logInUser = (user: SignInUser, location: Location) => {
 export const updateError = (error: string) => errorUpdated(error);
 export const logOutUser = () => userLoggedOut();
 
+export const verifyUser = (email: string) =>
+	apiCallBegan({
+		method: 'post',
+		data: { email },
+		url: 'users/isuserverified',
+		onStart: verifyUserInitiated.type,
+		onSuccess: verifyUserSuccess.type,
+		onError: verifyUserFailed.type,
+	});
+
 export const forgotPassword = (email: string) =>
 	apiCallBegan({
 		method: 'post',
@@ -89,4 +182,14 @@ export const forgotPassword = (email: string) =>
 		onStart: loginInitiated.type,
 		onSuccess: forgotPasswordSuccess.type,
 		onError: forgotPasswordFailed.type,
+	});
+
+export const verifyPasswordToken = (token: string) =>
+	apiCallBegan({
+		method: 'post',
+		data: { token },
+		url: 'users/verifytoken',
+		onStart: verifyPasswordTokenInitiated.type,
+		onSuccess: verifyPasswordTokenSuccess.type,
+		onError: verifyPasswordTokenFailed.type,
 	});
