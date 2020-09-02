@@ -16,6 +16,7 @@ import { ReactComponent as User } from './user.svg';
 import { ReactComponent as EmailBanner } from './email-banner.svg';
 import { ReactComponent as NotFound } from './404.svg';
 import { ReactComponent as Error } from './error.svg';
+import { ReactComponent as Expired } from './expired.svg';
 
 export interface GenericIconsProps {
 	name: string;
@@ -58,6 +59,8 @@ const GenericIcons: React.FC<GenericIconsProps> = ({ name, ...rest }) => {
 			return <NotFound {...rest} />;
 		case 'error':
 			return <Error {...rest} />;
+		case 'expired':
+			return <Expired {...rest} />;
 		default:
 			return null;
 	}

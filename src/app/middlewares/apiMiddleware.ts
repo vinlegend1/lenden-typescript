@@ -40,7 +40,6 @@ const apiMiddleware = (store: MiddlewareStore) => (
 			});
 	} catch (ex) {
 		if (ex.response) {
-			console.log(ex.response.data);
 			const error = {
 				status: ex.response.status,
 				data: ex.response.data,

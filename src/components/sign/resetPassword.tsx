@@ -7,7 +7,13 @@ import { connect } from 'react-redux';
 import { Dispatch, Action } from '@reduxjs/toolkit';
 import { RootState } from '../../app/models';
 import PageLoader from '../common/pageLoader';
-import { verifyPasswordToken } from './../../app/auth/login';
+import {
+	verifyPasswordToken,
+	verifyTokenErrors,
+	resetPassword,
+} from './../../app/auth/login';
+import GenericIcons from '../../icons/generic';
+import { Modal } from 'react-bootstrap';
 
 interface MatchParams {
 	token: string;
@@ -18,6 +24,7 @@ export interface ResetPasswordProps extends RouteComponentProps<MatchParams> {
 	error: string;
 	loadingPage: boolean | undefined;
 	verifyToken: (token: string) => Action;
+	resetPassword: (data: { token: string; password: string }) => Action;
 }
 
 export interface ResetPasswordState {
@@ -29,6 +36,7 @@ export interface ResetPasswordState {
 	passType: {
 		newPassword: PassType;
 	};
+	showModal: boolean;
 }
 
 class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
@@ -41,17 +49,29 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 		passType: {
 			newPassword: 'password' as PassType,
 		},
+		showModal: false,
 	};
-	componentDidMount() {
+	componentDidMount = async () => {
 		const token = this.props.match.params.token;
-		this.props.verifyToken(token);
-	}
+		await this.props.verifyToken(token);
+		if (this.props.error && this.props.error === verifyTokenErrors.invalidEmail)
+			return this.props.history.replace('/not-found');
+	};
 
-	doSubmit = () => {
+	doSubmit = async () => {
 		if (this.state.data.newPassword !== this.state.data.confirmPassword) {
 			let errors = { ...this.state.errors };
 			errors.confirmPassword = 'Passwords do not match';
 			return this.setState({ errors });
+		}
+
+		await this.props.resetPassword({
+			password: this.state.data.newPassword,
+			token: this.props.match.params.token,
+		});
+
+		if (!this.props.error) {
+			this.setState({ showModal: true });
 		}
 	};
 	schema = {
@@ -61,13 +81,24 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 	render() {
 		if (this.props.loadingPage) return <PageLoader />;
 		else {
-			if (this.props.error) {
-				if (this.props.error === 'invalid token')
-					return <Redirect to='/not-found' />;
+			// if (this.props.error) {
+			// 	if (this.props.error === verifyTokenErrors.invalidEmail)
+			// 		return <Redirect to='/not-found' />;
+			if (this.props.error === verifyTokenErrors.expiredEmail) {
 				return (
 					<React.Fragment>
 						<GenericNav />
-						<div className='container'>{this.props.error}</div>
+						<div className='container resetPasswordExpired'>
+							<div className='iconContainer'>
+								<GenericIcons name='expired' />
+							</div>
+							<p>{this.props.error}</p>
+							<div
+								onClick={() => this.props.history.replace('/login')}
+								className='darkButton'>
+								Login Page
+							</div>
+						</div>
 					</React.Fragment>
 				);
 			}
@@ -100,6 +131,7 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 						)}
 
 						{this.renderLoader()}
+						{this.renderErrorAlert()}
 
 						<div
 							className='darkButton'
@@ -113,6 +145,24 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 							Cancel
 						</div>
 					</div>
+					<Modal
+						className='notificationMessage'
+						size='lg'
+						centered
+						show={this.state.showModal}
+						backdrop='static'
+						keyboard={false}>
+						<Modal.Body>
+							<GenericIcons name='success' />
+							Your Password has been changed successfully. Please Login now to
+							continue
+							<div
+								onClick={() => this.props.history.push('/login')}
+								className='darkButton'>
+								Login
+							</div>
+						</Modal.Body>
+					</Modal>
 				</React.Fragment>
 			);
 		}
@@ -131,6 +181,8 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
 	// forgotPassword: (email: string) => dispatch(forgotPassword(email)),
 	verifyToken: (token: string) => dispatch(verifyPasswordToken(token)),
+	resetPassword: (data: { token: string; password: string }) =>
+		dispatch(resetPassword(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

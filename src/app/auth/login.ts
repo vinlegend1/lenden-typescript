@@ -4,6 +4,12 @@ import { SignSlice } from '../models/auth';
 import { ActionWithPayload } from './../models';
 import { ErrorResponsePayload } from '../models/api';
 
+export const verifyTokenErrors = {
+	invalidEmail: 'Sorry, the link you have requested is invalid',
+	expiredEmail:
+		'Sorry, the link you have requested has expired. Please generate a new link!',
+};
+
 const initialState: SignSlice = {
 	error: '',
 	success: '',
@@ -56,9 +62,10 @@ const slice = createSlice({
 
 			if (typeof action.payload === 'string') state.error = action.payload;
 			else {
-				if (action.payload.status === 404)
-					state.error = "User hasn't signed up yet!";
-				else state.error = action.payload.data.message.trim();
+				// if (action.payload.status === 404)
+				// 	state.error = "User hasn't signed up yet!";
+				// else
+				state.error = action.payload.data.message.trim();
 			}
 		},
 
@@ -81,9 +88,9 @@ const slice = createSlice({
 			if (typeof action.payload === 'string') state.error = action.payload;
 			else {
 				if (action.payload.status === 401)
-					state.error = 'Sorry, the link you have requested has expired';
+					state.error = verifyTokenErrors.expiredEmail;
 				else if (action.payload.status === 404)
-					state.error = 'Sorry, the link you have requested is invalid';
+					state.error = verifyTokenErrors.invalidEmail;
 				else state.error = action.payload.data.message.trim();
 			}
 
@@ -118,6 +125,26 @@ const slice = createSlice({
 				} else state.error = action.payload.data.message.trim();
 			}
 		},
+
+		resetPasswordFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			if (typeof action.payload === 'string') {
+				state.error = action.payload;
+				state.loading = false;
+			} else {
+				state.error = action.payload.data.message;
+			}
+			state.success = '';
+			state.loading = false;
+		},
+
+		resetPasswordSuccess: state => {
+			state.error = '';
+			state.loading = false;
+			state.success = 'Successfully Changed!';
+		},
 	},
 });
 
@@ -135,6 +162,7 @@ const {
 	verifyUserFailed,
 	verifyUserInitiated,
 	verifyUserSuccess,
+	resetPasswordFailed,
 } = slice.actions;
 
 export const { loginFulfilled, userLoggedOut } = slice.actions;
@@ -188,8 +216,17 @@ export const verifyPasswordToken = (token: string) =>
 	apiCallBegan({
 		method: 'post',
 		data: { token },
-		url: 'users/verifytoken',
+		url: 'users/istokenvalid',
 		onStart: verifyPasswordTokenInitiated.type,
 		onSuccess: verifyPasswordTokenSuccess.type,
 		onError: verifyPasswordTokenFailed.type,
+	});
+
+export const resetPassword = (data: { password: string; token: string }) =>
+	apiCallBegan({
+		method: 'post',
+		data,
+		url: 'users/passwordreset',
+		onStart: loginInitiated.type,
+		onError: resetPasswordFailed.type,
 	});
