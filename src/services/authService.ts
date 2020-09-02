@@ -42,3 +42,11 @@ export function getToken() {
 export function deleteToken() {
 	return localStorage.removeItem(tokenKey);
 }
+
+export function tokenListener() {
+	window.addEventListener('storage', event => {
+		if (event.key === 'token') window.location.reload();
+	});
+}
+
+tokenListener();
