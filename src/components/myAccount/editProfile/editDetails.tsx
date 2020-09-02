@@ -61,7 +61,7 @@ class EditDetails extends CommonForm<EditDetailsProps, EditDetailsState> {
 					this.state.errors.mobileNumber,
 					'number'
 				)}
-				{this.renderLoader()}
+				{this.renderLoader(this.props.loading)}
 				<div className='darkButton' onClick={this.handleSubmit} id='saveBtn'>
 					Save
 				</div>

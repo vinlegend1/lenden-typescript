@@ -154,7 +154,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 							</small>
 						</div>
 
-						{this.renderLoader()}
+						{this.renderLoader(this.props.loading)}
 						{this.renderErrorAlert()}
 						{this.renderSuccessAlert()}
 

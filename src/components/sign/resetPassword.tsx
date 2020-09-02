@@ -127,7 +127,7 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 							true
 						)}
 
-						{this.renderLoader()}
+						{this.renderLoader(this.props.loading)}
 						{this.renderErrorAlert()}
 
 						<div

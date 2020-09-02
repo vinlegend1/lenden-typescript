@@ -10,11 +10,16 @@ export const verifyTokenErrors = {
 		'Sorry, the link you have requested has expired. Please generate a new link!',
 };
 
+export const verifyEmailErrors = {
+	notVerified: "Email hasn't been verified yet",
+};
+
 const initialState: SignSlice = {
 	error: '',
 	success: '',
 	loading: false,
 	loadingPage: true,
+	modalLoading: false,
 };
 
 const slice = createSlice({
@@ -61,12 +66,7 @@ const slice = createSlice({
 			state.success = '';
 
 			if (typeof action.payload === 'string') state.error = action.payload;
-			else {
-				// if (action.payload.status === 404)
-				// 	state.error = "User hasn't signed up yet!";
-				// else
-				state.error = action.payload.data.message.trim();
-			}
+			else state.error = action.payload.data.message.trim();
 		},
 
 		verifyPasswordTokenInitiated: state => {
@@ -120,7 +120,7 @@ const slice = createSlice({
 			} else {
 				if (action.payload.status === 404) state.error = '';
 				else if (action.payload.status === 400) {
-					state.error = "Email hasn't been verified yet";
+					state.error = verifyEmailErrors.notVerified;
 					state.loading = false;
 				} else state.error = action.payload.data.message.trim();
 			}
@@ -133,9 +133,8 @@ const slice = createSlice({
 			if (typeof action.payload === 'string') {
 				state.error = action.payload;
 				state.loading = false;
-			} else {
-				state.error = action.payload.data.message;
-			}
+			} else state.error = action.payload.data.message;
+
 			state.success = '';
 			state.loading = false;
 		},
@@ -144,6 +143,28 @@ const slice = createSlice({
 			state.error = '';
 			state.loading = false;
 			state.success = 'Successfully Changed!';
+		},
+
+		sendVerificationEmailInitiated: state => {
+			state.error = '';
+			state.success = '';
+			state.modalLoading = true;
+		},
+
+		sendVerificationEmailSuccess: state => {
+			state.error = '';
+			state.modalLoading = false;
+			state.success = 'Successfully Sent!';
+		},
+		sendVerificationEmailFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			state.success = '';
+			state.modalLoading = false;
+			if (typeof action.payload === 'string') {
+				state.error = action.payload;
+			} else state.error = action.payload.data.message;
 		},
 	},
 });
@@ -163,6 +184,9 @@ const {
 	verifyUserInitiated,
 	verifyUserSuccess,
 	resetPasswordFailed,
+	sendVerificationEmailInitiated,
+	sendVerificationEmailFailed,
+	sendVerificationEmailSuccess,
 } = slice.actions;
 
 export const { loginFulfilled, userLoggedOut } = slice.actions;
@@ -229,4 +253,14 @@ export const resetPassword = (data: { password: string; token: string }) =>
 		url: 'users/passwordreset',
 		onStart: loginInitiated.type,
 		onError: resetPasswordFailed.type,
+	});
+
+export const sendVerificationEmail = (email: string) =>
+	apiCallBegan({
+		method: 'post',
+		data: { email },
+		url: 'users/verifyagain',
+		onStart: sendVerificationEmailInitiated.type,
+		onSuccess: sendVerificationEmailSuccess.type,
+		onError: sendVerificationEmailFailed.type,
 	});

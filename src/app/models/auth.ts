@@ -4,6 +4,7 @@ export interface SignSlice {
 	success: string;
 	loading: boolean;
 	loadingPage?: boolean;
+	modalLoading?: boolean;
 }
 
 export interface UserSlice {

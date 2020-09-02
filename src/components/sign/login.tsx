@@ -14,13 +14,19 @@ import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
+import {
+	sendVerificationEmail,
+	verifyEmailErrors,
+} from './../../app/auth/login';
 
 export interface LoginProps extends RouteComponentProps {
 	error: string;
 	loading: boolean;
+	modalLoading: boolean | undefined;
 	logInUser: (data: SignInUser, location: any) => Action;
 	updateError: (error: string) => Action;
 	verifyUserAccount: (email: string) => Action;
+	sendVerificationEmail: (email: string) => Action;
 }
 export interface LoginState {
 	data: {
@@ -31,7 +37,8 @@ export interface LoginState {
 	passType: {
 		password: PassType;
 	};
-	showModal: boolean;
+	showNotVerifiedModal: boolean;
+	showSuccessModal: boolean;
 }
 
 class Login extends CommonForm<LoginProps, LoginState> {
@@ -39,7 +46,8 @@ class Login extends CommonForm<LoginProps, LoginState> {
 		data: { email: '', password: '' },
 		errors: { email: '', password: '' },
 		passType: { password: 'password' as PassType },
-		showModal: false,
+		showNotVerifiedModal: false,
+		showSuccessModal: false,
 	};
 
 	schema = {
@@ -54,8 +62,11 @@ class Login extends CommonForm<LoginProps, LoginState> {
 		const { data } = this.state;
 		const { logInUser, location } = this.props;
 		await this.props.verifyUserAccount(this.state.data.email);
-		if (this.props.error) {
-			this.setState({ showModal: true });
+		if (
+			this.props.error &&
+			this.props.error === verifyEmailErrors.notVerified
+		) {
+			this.setState({ showNotVerifiedModal: true });
 		}
 		if (!this.props.error) {
 			logInUser(data, location);
@@ -100,7 +111,7 @@ class Login extends CommonForm<LoginProps, LoginState> {
 							</div>
 						</div>
 
-						{this.renderLoader()}
+						{this.renderLoader(this.props.loading)}
 						{this.renderErrorAlert()}
 
 						<div onClick={this.handleSubmit} className='darkButton'>
@@ -118,17 +129,50 @@ class Login extends CommonForm<LoginProps, LoginState> {
 					className='notificationMessage'
 					size='lg'
 					centered
-					show={this.state.showModal}
+					show={this.state.showNotVerifiedModal}
 					keyboard={false}
-					onHide={() => this.setState({ showModal: false })}>
+					onHide={() => this.setState({ showNotVerifiedModal: false })}>
 					<Modal.Body>
 						<GenericIcons name='error' />
 						Your email hasn't been verified yet. Please verify it using the link
 						provided in your mail or re-send link.
+						{this.renderLoader(this.props.modalLoading)}
 						<div
-							onClick={() => this.props.history.push('/login')}
+							onClick={async () => {
+								await this.props.sendVerificationEmail(this.state.data.email);
+								if (!this.props.error) {
+									this.setState({
+										showNotVerifiedModal: false,
+										showSuccessModal: true,
+									});
+								} else this.setState({ showNotVerifiedModal: false });
+							}}
 							className='darkButton'>
 							Resend Link
+						</div>
+					</Modal.Body>
+				</Modal>
+				<Modal
+					className='notificationMessage'
+					size='lg'
+					centered
+					show={this.state.showSuccessModal}
+					keyboard={false}
+					onHide={() => this.setState({ showSuccessModal: false })}>
+					<Modal.Body>
+						<GenericIcons name='success' />
+						Verification mail has been sent successfully. Kindly verify it from
+						your mailbox before logging in.
+						<div
+							onClick={() => {
+								this.props.history.push('/login');
+								this.setState({
+									showNotVerifiedModal: false,
+									showSuccessModal: false,
+								});
+							}}
+							className='darkButton'>
+							Login
 						</div>
 					</Modal.Body>
 				</Modal>
@@ -137,10 +181,11 @@ class Login extends CommonForm<LoginProps, LoginState> {
 	}
 }
 const mapStateToProps = (state: RootState) => {
-	const { error, loading } = state.auth.login;
+	const { error, loading, modalLoading } = state.auth.login;
 	return {
 		error,
 		loading,
+		modalLoading,
 	};
 };
 
@@ -149,6 +194,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 		dispatch(logInUser(data, location)),
 	updateError: (error: string) => dispatch(updateError(error)),
 	verifyUserAccount: (email: string) => dispatch(verifyUser(email)),
+	sendVerificationEmail: (email: string) =>
+		dispatch(sendVerificationEmail(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

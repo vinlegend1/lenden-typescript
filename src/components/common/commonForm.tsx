@@ -75,13 +75,13 @@ abstract class CommonForm<
 		this.doSubmit();
 	};
 
-	renderLoader = () => (
+	renderLoader = (isLoading?: boolean) => (
 		<div className='loader'>
 			<BarLoader
 				height={4}
 				css='display:block;margin:2vh auto'
 				color={'#1a2639'}
-				loading={this.props.loading}
+				loading={isLoading}
 			/>
 		</div>
 	);
