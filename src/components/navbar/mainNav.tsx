@@ -28,7 +28,6 @@ const MainNav: React.FC<MainNavProps> = () => {
 					onClick={() => dispatch(toggleMenu(true))}
 					style={{ cursor: 'pointer' }}>
 					<GenericIcons className='icon' name='menu' />
-					{/* <img className='icon' src={genericIcons.menu} alt='' /> */}
 				</Navbar.Brand>
 				<LendenIcons id='logo' name='nav-logo' />
 

@@ -89,7 +89,7 @@ const slice = createSlice({
 			else {
 				if (action.payload.status === 401)
 					state.error = verifyTokenErrors.expiredEmail;
-				else if (action.payload.status === 404)
+				else if (action.payload.status === 400)
 					state.error = verifyTokenErrors.invalidEmail;
 				else state.error = action.payload.data.message.trim();
 			}
@@ -122,7 +122,10 @@ const slice = createSlice({
 				else if (action.payload.status === 400) {
 					state.error = verifyEmailErrors.notVerified;
 					state.loading = false;
-				} else state.error = action.payload.data.message.trim();
+				} else {
+					state.error = action.payload.data.message.trim();
+					state.loading = false;
+				}
 			}
 		},
 
