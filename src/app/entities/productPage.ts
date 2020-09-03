@@ -81,7 +81,9 @@ export const getProduct = (id: string) => (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const userId = getState().auth.user.userId ? getState().auth.user.userId : '';
+	const userId = getState().auth.userDetails.user.userId
+		? getState().auth.userDetails.user.userId
+		: '';
 	const { id: idInState } = getState().entities.productPage.product;
 	if (idInState === id) return dispatch(setLoadingPage(false));
 

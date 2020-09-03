@@ -120,7 +120,7 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { address } = state.auth.user;
+	const { address } = state.auth.userDetails.user;
 
 	if (address) return { address };
 

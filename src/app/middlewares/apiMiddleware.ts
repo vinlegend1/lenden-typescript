@@ -10,7 +10,7 @@ const apiMiddleware = (store: MiddlewareStore) => (
 ) => async (action: { type: string; payload: RequestObject }) => {
 	if (action.type !== apiCallBegan.type) return next(action);
 
-	const userId = store.getState().auth.user.userId;
+	const userId = store.getState().auth.userDetails.user.userId;
 	const {
 		method = 'get',
 		url,

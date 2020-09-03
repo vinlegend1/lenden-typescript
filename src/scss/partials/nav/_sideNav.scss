@@ -159,26 +159,38 @@ a.bm-item {
 	border-bottom: 0.5px solid #d2d2d2;
 	display: flex;
 	width: inherit;
-	padding: 1.3rem 0.2rem;
+	padding: 1.3rem 0;
 	margin-bottom: 0.8rem;
 	align-content: center;
 	align-items: center;
 	font-family: font(secondary);
+	margin: 0 -0.5rem 0.8rem -0.5rem;
+	justify-content: center;
 
 	#imageContainer {
 		// flex-basis: 25%;
 		// margin: 0 10px;
-		padding: 0 10px;
+		padding: 0 10px 0 0;
 
 		.userImage {
 			width: fit-content;
 			background-color: rgba(255, 255, 255, 0.3);
-			padding: 0.5rem;
+			// padding: 0.3rem 0;
 			border-radius: 50%;
+			width: 60px;
+			height: 60px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		svg {
-			width: 40px;
+			width: inherit;
+			height: inherit;
+			display: block;
+			max-width: 40px;
+			max-height: 48px;
+			// margin: 0 auto;
 		}
 	}
 

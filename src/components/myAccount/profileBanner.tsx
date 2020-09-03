@@ -7,14 +7,14 @@ import GravatarIcons from '../../icons/gravatar';
 export interface ProfileBannerProps {}
 
 const ProfileBanner: React.FC<ProfileBannerProps> = () => {
-	const user = useSelector((state: RootState) => state.auth.user);
+	const user = useSelector((state: RootState) => state.auth.userDetails.user);
 	const history = useHistory();
 
 	return (
 		<div className='profileBanner'>
 			<div className='userDetail'>
 				<div className='imageContainer'>
-					<GravatarIcons name='type0' />
+					<GravatarIcons name={user.gravatarId} />
 				</div>
 				<h1>{user.name}</h1>
 			</div>

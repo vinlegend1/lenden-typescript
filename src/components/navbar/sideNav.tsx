@@ -18,7 +18,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 	const burgerMenu = useSelector(
 		(state: RootState) => state.entities.burgerMenu.isOpen
 	);
-	const user = useSelector((state: RootState) => state.auth.user);
+	const user = useSelector((state: RootState) => state.auth.userDetails.user);
 	const menuState = useSelector(
 		(state: RootState) => state.entities.burgerMenu
 	);
@@ -89,7 +89,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 							}}>
 							<div id='imageContainer'>
 								<div className='userImage'>
-									<GravatarIcons name='type0' />
+									<GravatarIcons name={user.gravatarId} />
 								</div>
 							</div>
 							<div id='infoContainer'>

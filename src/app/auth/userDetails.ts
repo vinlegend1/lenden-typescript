@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserSlice } from '../models/auth';
 import { apiCallBegan } from '../api';
 import { getCurrentUser, getToken } from '../../services/authService';
-import { RootState, ActionWithPayload } from './../models/index';
+import { RootState, ActionWithPayload } from '../models/index';
 import { Dispatch } from 'redux';
 import { userLoggedOut } from './login';
 
@@ -27,12 +27,18 @@ const mapToViewModel = (data: FetchedAddress) => ({
 });
 
 const initialState: UserSlice = {
-	userId: '',
-	name: '',
-	token: '',
-	email: '',
-	gravatarId: '',
-	mobileNumber: '',
+	user: {
+		userId: '',
+		name: '',
+		token: '',
+		email: '',
+		gravatarId: '',
+		mobileNumber: '',
+	},
+
+	error: '',
+	success: '',
+	loading: false,
 };
 
 const slice = createSlice({
@@ -40,7 +46,7 @@ const slice = createSlice({
 	initialState,
 	reducers: {
 		userReceivedFromToken: (
-			user: UserSlice,
+			{ user },
 			action: ActionWithPayload<{
 				userId: string;
 				name: string;
@@ -67,7 +73,7 @@ const slice = createSlice({
 			user.gravatarId = `type${gravatarId}`;
 		},
 		addressReceived: (
-			user,
+			{ user },
 			action: ActionWithPayload<{ data: FetchedAddress }>
 		) => {
 			const address = action.payload.data;
@@ -104,7 +110,7 @@ export const getAddress = () => (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const userId = getState().auth.user.userId;
+	const userId = getState().auth.userDetails.user.userId;
 	if (userId)
 		dispatch(
 			apiCallBegan({

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 export interface UserDetailsProps {}
 
 const UserDetails: React.FC<UserDetailsProps> = () => {
-	const user = useSelector((state: RootState) => state.auth.user);
+	const user = useSelector((state: RootState) => state.auth.userDetails.user);
 	const history = useHistory();
 
 	return (
@@ -19,8 +19,7 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 			<div className='infoBox'>
 				<h3>Mobile Number</h3>
 				<hr />
-				<p>+91 - 8211270173</p>
-				{/* TODO Fetch from token */}
+				<p>+91 - {user.mobileNumber}</p>
 			</div>
 			<div className='infoBox'>
 				<div>

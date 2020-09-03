@@ -77,7 +77,7 @@ class EditDetails extends CommonForm<EditDetailsProps, EditDetailsState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { name } = state.auth.user;
+	const { name } = state.auth.userDetails.user;
 
 	return {
 		name,

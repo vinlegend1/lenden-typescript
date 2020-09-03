@@ -85,7 +85,9 @@ export const getProducts = () => async (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const userId = getState().auth.user.userId ? getState().auth.user.userId : '';
+	const userId = getState().auth.userDetails.user.userId
+		? getState().auth.userDetails.user.userId
+		: '';
 	let { list, page, limit, category } = getState().entities.products;
 
 	const currPage = Math.ceil(list.length / limit) + 1;

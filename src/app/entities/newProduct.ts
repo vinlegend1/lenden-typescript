@@ -132,7 +132,7 @@ export const postBook = (data: BookForm, images: File[]) => async (
 	getState: () => RootState
 ) => {
 	await dispatch(uploadImages(images));
-	const userId = getState().auth.user.userId;
+	const userId = getState().auth.userDetails.user.userId;
 	const product = getState().entities.newProduct.product;
 
 	if (product) {

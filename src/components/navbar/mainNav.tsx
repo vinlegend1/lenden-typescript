@@ -13,7 +13,7 @@ export interface MainNavProps {}
 
 const MainNav: React.FC<MainNavProps> = () => {
 	const dispatch = useDispatch();
-	const user = useSelector((state: RootState) => state.auth.user);
+	const user = useSelector((state: RootState) => state.auth.userDetails.user);
 	const history = useHistory();
 
 	const searchBoxInput = useRef(null);
