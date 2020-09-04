@@ -80,12 +80,45 @@ const slice = createSlice({
 			address.postalcode = address.postalcode.toString();
 			user.address = mapToViewModel(address);
 		},
+
+		editProfileInitiated: state => {
+			state.error = '';
+			state.success = '';
+			state.loading = true;
+		},
+
+		editProfileSuccess: (
+			state,
+			action: ActionWithPayload<{
+				data: {
+					token: string;
+					name: string;
+					mobilenumber: string;
+					gravatarid: string;
+				};
+			}>
+		) => {
+			const { name, token, mobilenumber, gravatarid } = action.payload.data;
+			state.success = 'successfully verified';
+			state.error = '';
+			state.loading = false;
+			state.user.name = name;
+			state.user.token = token;
+			state.user.mobileNumber = mobilenumber;
+			state.user.gravatarId = `type${gravatarid}`;
+		},
 	},
 });
 
 export default slice.reducer;
 
-const { userReceivedFromToken, addressReceived } = slice.actions;
+const {
+	userReceivedFromToken,
+	addressReceived,
+	editProfileInitiated,
+} = slice.actions;
+
+export const { editProfileSuccess } = slice.actions;
 
 export const getUser = () => (dispatch: Dispatch) => {
 	const token = getToken();
@@ -110,7 +143,7 @@ export const getAddress = () => (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const userId = getState().auth.userDetails.user.userId;
+	const { userId } = getState().auth.userDetails.user;
 	if (userId)
 		dispatch(
 			apiCallBegan({
@@ -119,4 +152,26 @@ export const getAddress = () => (
 				onSuccess: addressReceived.type,
 			})
 		);
+};
+
+export const editProfile = ({
+	name,
+	mobileNumber,
+	gravatarId,
+}: {
+	name: string;
+	mobileNumber: string;
+	gravatarId: string;
+}) => async (dispatch: Dispatch, getState: () => RootState) => {
+	const { email } = getState().auth.userDetails.user;
+
+	await dispatch(
+		apiCallBegan({
+			method: 'put',
+			url: 'users/editprofile',
+			data: { name, email, mobilenumber: mobileNumber, gravatarid: gravatarId },
+			onStart: editProfileInitiated.type,
+			onSuccess: editProfileSuccess.type,
+		})
+	);
 };

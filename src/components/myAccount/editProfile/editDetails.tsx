@@ -10,6 +10,7 @@ export interface EditDetailsProps extends RouteComponentProps {
 	loading: boolean;
 	error: string;
 	name: string;
+	mobileNumber: string;
 	handleDetailsChange: (d: { name: string; mobileNumber: string }) => void;
 }
 
@@ -24,7 +25,7 @@ export interface EditDetailsState {
 class EditDetails extends CommonForm<EditDetailsProps, EditDetailsState> {
 	state = {
 		loading: false,
-		data: { name: this.props.name, mobileNumber: '' },
+		data: { name: this.props.name, mobileNumber: this.props.mobileNumber },
 		errors: { name: '', mobileNumber: '' },
 	};
 
@@ -77,10 +78,11 @@ class EditDetails extends CommonForm<EditDetailsProps, EditDetailsState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { name } = state.auth.userDetails.user;
+	const { name, mobileNumber } = state.auth.userDetails.user;
 
 	return {
 		name,
+		mobileNumber,
 		loading: false, //TODO Fetch from auth.user
 		error: '',
 	};

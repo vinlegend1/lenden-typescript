@@ -50,3 +50,9 @@ export function tokenListener() {
 }
 
 tokenListener();
+
+export function someRandomListener() {
+	console.log('called');
+	window.addEventListener('pageshow', e => console.log('heha', e));
+}
+someRandomListener();

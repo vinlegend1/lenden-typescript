@@ -92,7 +92,7 @@ const MainNav: React.FC<MainNavProps> = () => {
 					<Nav.Link id='userImage' onClick={() => history.push('/me')}>
 						{user.userId ? (
 							<div className='outerCircle'>
-								<GravatarIcons name='type0' />
+								<GravatarIcons name={user.gravatarId} />
 							</div>
 						) : (
 							<GenericIcons name='user' />
