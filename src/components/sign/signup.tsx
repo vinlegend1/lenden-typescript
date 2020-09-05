@@ -72,7 +72,8 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 		mobileNumber: Joi.string()
 			.length(10)
 			.pattern(/^[0-9]+$/)
-			.allow('')
+			// .allow('')
+			.required()
 			.label('Mobile Number')
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
@@ -111,7 +112,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 
 						{this.renderInput('Name *', 'name', this.state.errors.name)}
 						{this.renderInput(
-							'Mobile Number',
+							'Mobile Number *',
 							'mobileNumber',
 							this.state.errors.mobileNumber,
 							'number'
