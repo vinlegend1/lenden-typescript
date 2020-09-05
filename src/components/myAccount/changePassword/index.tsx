@@ -72,11 +72,6 @@ class changePassword extends CommonForm<
 		if (!this.props.error) {
 			this.setState({ showModal: true });
 		}
-		// TODO API CALL SUCCESS
-
-		// delete token on success
-
-		// ask to login again
 	};
 
 	render() {

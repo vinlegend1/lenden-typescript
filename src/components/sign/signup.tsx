@@ -129,7 +129,7 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						)}
 
 						<div className='termsConditions'>
-							<div className='pretty p-svg p-curve p-smooth'>
+							<div className='pretty p-svg p-curve'>
 								<input
 									type='checkbox'
 									onChange={(e: React.ChangeEvent) => {

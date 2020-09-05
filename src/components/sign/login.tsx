@@ -95,7 +95,7 @@ class Login extends CommonForm<LoginProps, LoginState> {
 
 						<div className='loginOptions'>
 							<div>
-								<div className='pretty p-svg p-curve p-smooth'>
+								<div className='pretty p-svg p-curve'>
 									<input type='checkbox' />
 									<div className='state'>
 										<GenericIcons className='svg' name='tick' />
