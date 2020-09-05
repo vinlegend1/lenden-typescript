@@ -6,10 +6,20 @@ import CommonForm, {
 import SubNav from '../../common/subNav';
 import { RouteComponentProps } from 'react-router-dom';
 import Joi from 'joi';
+import { RootState } from '../../../app/models';
+import { Dispatch, Action } from 'redux';
+import { changeUserPassword } from '../../../app/auth/userDetails';
+import { connect } from 'react-redux';
+import { Modal } from 'react-bootstrap';
+import GenericIcons from '../../../icons/generic';
 
 export interface changePasswordProps extends RouteComponentProps {
 	loading: boolean;
 	error: string;
+	changeUserPassword: (data: {
+		newPassword: string;
+		oldPassword: string;
+	}) => Action;
 }
 
 export interface changePasswordState {
@@ -23,6 +33,7 @@ export interface changePasswordState {
 		currentPassword: PassType;
 		newPassword: PassType;
 	};
+	showModal: boolean;
 }
 
 class changePassword extends CommonForm<
@@ -40,6 +51,7 @@ class changePassword extends CommonForm<
 			currentPassword: 'password' as PassType,
 			newPassword: 'password' as PassType,
 		},
+		showModal: false,
 	};
 
 	schema = {
@@ -47,14 +59,19 @@ class changePassword extends CommonForm<
 		newPassword: Joi.string().min(6).max(255).required().label('New Password'),
 		confirmPassword: Joi.string().required().label('Confirm Password'),
 	};
-	doSubmit = () => {
+	doSubmit = async () => {
 		if (this.state.data.newPassword !== this.state.data.confirmPassword) {
 			let errors = { ...this.state.errors };
 			errors.confirmPassword = 'Passwords do not match';
 			return this.setState({ errors });
 		}
-		console.log(this.state.data.currentPassword, this.state.data.newPassword);
-
+		await this.props.changeUserPassword({
+			oldPassword: this.state.data.currentPassword,
+			newPassword: this.state.data.newPassword,
+		});
+		if (!this.props.error) {
+			this.setState({ showModal: true });
+		}
 		// TODO API CALL SUCCESS
 
 		// delete token on success
@@ -97,6 +114,9 @@ class changePassword extends CommonForm<
 						undefined,
 						true
 					)}
+					{this.renderErrorAlert()}
+					{this.renderLoader(this.props.loading)}
+
 					<div className='darkButton' onClick={this.handleSubmit} id='saveBtn'>
 						Save
 					</div>
@@ -106,9 +126,40 @@ class changePassword extends CommonForm<
 						Cancel
 					</div>
 				</div>
+				<Modal
+					className='notificationMessage'
+					size='lg'
+					centered
+					show={this.state.showModal}
+					backdrop='static'
+					keyboard={false}>
+					<Modal.Body>
+						<GenericIcons name='success' />
+						Your password has been changed successfully! Please login again to
+						continue
+						<div
+							onClick={() => this.props.history.push('/login')}
+							className='darkButton'>
+							Login
+						</div>
+					</Modal.Body>
+				</Modal>
 			</React.Fragment>
 		);
 	}
 }
 
-export default changePassword;
+const mapStateToProps = (state: RootState) => {
+	const { loading, error } = state.auth.userDetails;
+
+	return {
+		loading,
+		error,
+	};
+};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	changeUserPassword: (data: { newPassword: string; oldPassword: string }) =>
+		dispatch(changeUserPassword(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(changePassword);

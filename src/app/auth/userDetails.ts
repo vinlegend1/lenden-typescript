@@ -156,6 +156,29 @@ const slice = createSlice({
 			state.loading = false;
 			state.success = '';
 		},
+
+		changePasswordInitiated: state => {
+			state.error = '';
+			state.success = '';
+			state.loading = true;
+		},
+		changePasswordSuccess: state => {
+			state.error = '';
+			state.success = 'Successfully Updated';
+			state.loading = false;
+		},
+		changePasswordFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else {
+				if (action.payload.status === 400) state.error = 'Invalid password';
+				else state.error = action.payload.data.message.trim();
+			}
+			state.success = '';
+			state.loading = false;
+		},
 	},
 });
 
@@ -170,7 +193,11 @@ const {
 	updateAddressInitiated,
 	updateAddressSuccess,
 	updateAddressFailed,
+	changePasswordInitiated,
+	changePasswordFailed,
 } = slice.actions;
+
+export const { changePasswordSuccess } = slice.actions;
 
 export const getUser = () => (dispatch: Dispatch) => {
 	const token = getToken();
@@ -241,6 +268,19 @@ export const updateAddress = ({
 		})
 	);
 };
+
+export const changeUserPassword = (data: {
+	oldPassword: string;
+	newPassword: string;
+}) =>
+	apiCallBegan({
+		method: 'post',
+		url: 'users/changepassword',
+		data: { oldpassword: data.oldPassword, newpassword: data.newPassword },
+		onStart: changePasswordInitiated.type,
+		onError: changePasswordFailed.type,
+		onSuccess: changePasswordSuccess.type,
+	});
 
 export const getAddressInString = (user: UserDetails) => {
 	if (user.address) {
