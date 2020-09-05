@@ -8,7 +8,7 @@ export interface EditGravatarProps {
 
 const EditGravatar: React.FC<EditGravatarProps> = props => {
 	const { gravatar, handleGravatarChange } = props;
-	const availGravatars = ['type0', 'type1', 'type2', 'type3', 'type4'];
+	const availGravatars = ['type1', 'type2', 'type3', 'type4', 'type5'];
 	return (
 		<div className='editGravatar'>
 			<div className='imageContainer'>

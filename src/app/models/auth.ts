@@ -7,25 +7,26 @@ export interface SignSlice {
 	modalLoading?: boolean;
 }
 
+export interface UserAddress {
+	city: string;
+	country: string;
+	houseNumber: string;
+	area: string;
+	state: string;
+	landmark?: string;
+	postalCode: string;
+}
+export interface UserDetails {
+	userId: string;
+	name: string;
+	token: string;
+	email: string;
+	mobileNumber: string;
+	gravatarId: string;
+	address?: UserAddress;
+}
 export interface UserSlice {
-	user: {
-		userId: string;
-		name: string;
-		token: string;
-		email: string;
-		mobileNumber: string;
-		gravatarId: string;
-		address?: {
-			city: string;
-			country: string;
-			houseNumber: string;
-			streetName: string;
-			state: string;
-			landmark?: string;
-			postalCode: string;
-			// mobileNumber: number;
-		};
-	};
+	user: UserDetails;
 	error: string;
 	success: string;
 	loading: boolean;

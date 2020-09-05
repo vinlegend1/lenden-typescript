@@ -4,7 +4,7 @@ import Signup from './sign/signup';
 import { ToastContainer, Flip, Slide } from 'react-toastify';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUser, getAddress } from '../app/auth/userDetails';
+import { getUser, getUserInfo } from '../app/auth/userDetails';
 
 import Home from './home';
 import ProtectedRoute from './common/protectedRoute';
@@ -23,7 +23,8 @@ const App: React.FC = () => {
 	dispatch(getUser());
 
 	useEffect(() => {
-		dispatch(getAddress());
+		dispatch(getUserInfo());
+		// dispatch(getAddress());
 	}, [dispatch]);
 
 	return (

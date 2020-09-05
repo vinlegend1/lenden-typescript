@@ -3,7 +3,7 @@ import reducer from './reducer';
 import apiMiddleware from './middlewares/apiMiddleware';
 import postLogin from './middlewares/postLogin';
 import logout from './middlewares/logout';
-import postEditProfileSuccess from './middlewares/postEditProfileSuccess';
+// import postEditProfileSuccess from './middlewares/postEditProfileSuccess';
 
 const store = configureStore({
 	reducer,
@@ -12,7 +12,7 @@ const store = configureStore({
 		apiMiddleware,
 		postLogin,
 		logout,
-		postEditProfileSuccess,
+		// postEditProfileSuccess,
 	],
 });
 

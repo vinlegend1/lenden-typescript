@@ -3,10 +3,7 @@ import JwtDecode from 'jwt-decode';
 
 interface DecodedUser {
 	userid: string;
-	name: string;
 	sub: string;
-	mobilenumber: string;
-	gravatarid: string;
 }
 
 const tokenKey = 'token';
@@ -50,9 +47,3 @@ export function tokenListener() {
 }
 
 tokenListener();
-
-export function someRandomListener() {
-	console.log('called');
-	window.addEventListener('pageshow', e => console.log('heha', e));
-}
-someRandomListener();

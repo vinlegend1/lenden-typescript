@@ -8,26 +8,20 @@ import { RouteComponentProps } from 'react-router-dom';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import ToastMessage from '../../common/toastMessage';
-
-interface Address {
-	city: string;
-	country: string;
-	houseNumber: string;
-	streetName: string;
-	state: string;
-	landmark?: string;
-	postalCode: string;
-	mobileNumber: number; //TODO To be removed
-}
+import { UserAddress } from './../../../app/models/auth';
+import { updateAddress } from '../../../app/auth/userDetails';
+import { Action } from 'redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 export interface ChangeAddressProps extends RouteComponentProps {
 	loading: boolean;
 	error: string;
-	address: Address;
+	address: UserAddress;
+	updateAddress: (address: UserAddress) => any;
 }
 
 export interface ChangeAddressState {
-	data: Address;
+	data: UserAddress;
 	errors: ErrorContainer;
 }
 
@@ -38,11 +32,10 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 			city: '',
 			country: '',
 			houseNumber: '',
-			streetName: '',
+			area: '',
 			state: '',
 			landmark: '',
 			postalCode: '',
-			mobileNumber: '', //TODO To be removed
 		},
 	};
 
@@ -54,25 +47,24 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 
 	schema = {
 		houseNumber: Joi.string().required().label('House Number'),
-		streetName: Joi.string().required().label('Street'),
+		area: Joi.string().required().label('Area'),
 		state: Joi.string().required().label('State'),
 		city: Joi.string().required().label('City'),
 		postalCode: Joi.string().min(6).max(8).required().label('Postal Code'),
 		landmark: Joi.string().allow('').label('Landmark'),
 		country: Joi.string().required().label('Country'),
-		mobileNumber: Joi.number().required().label('Mobile Number'),
 	};
 
-	doSubmit = () => {
-		console.log(this.state.data);
-		// TODO API CALL - managed by redux
-		// TODO update address - redux action
+	doSubmit = async () => {
+		await this.props.updateAddress(this.state.data);
 
-		this.props.history.push('/my-account');
-		toast(<ToastMessage title='Your Address was updated successfully !' />, {
-			containerId: 'messageToastContainer',
-			className: 'toasty',
-		});
+		if (!this.props.error) {
+			this.props.history.push('/my-account');
+			toast(<ToastMessage title='Your Address was updated successfully !' />, {
+				containerId: 'messageToastContainer',
+				className: 'toasty',
+			});
+		}
 	};
 	render() {
 		return (
@@ -84,11 +76,7 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 						'houseNumber',
 						this.state.errors.houseNumber
 					)}
-					{this.renderInput(
-						'Street',
-						'streetName',
-						this.state.errors.streetName
-					)}
+					{this.renderInput('Area', 'area', this.state.errors.area)}
 					{this.renderInput('State', 'state', this.state.errors.state)}
 					{this.renderInput('City', 'city', this.state.errors.city)}
 					{this.renderInput(
@@ -99,6 +87,9 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 					)}
 					{this.renderInput('Landmark', 'landmark', this.state.errors.landmark)}
 					{this.renderInput('Country', 'country', this.state.errors.country)}
+
+					{this.renderLoader(this.props.loading)}
+					{this.renderErrorAlert()}
 
 					<div
 						className='darkButton'
@@ -120,22 +111,26 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { address } = state.auth.userDetails.user;
+	const { loading, error, user } = state.auth.userDetails;
 
-	if (address) return { address };
+	if (user.address) return { loading, error, address: user.address };
 
 	return {
+		loading,
+		error,
 		address: {
 			city: '',
 			country: '',
 			houseNumber: '',
-			streetName: '',
+			area: '',
 			state: '',
 			landmark: '',
 			postalCode: '',
-			mobileNumber: 0, //TODO To be removed
 		},
 	};
 };
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
+	updateAddress: (data: UserAddress) => dispatch(updateAddress(data)),
+});
 
-export default connect(mapStateToProps, null)(ChangeAddress);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeAddress);

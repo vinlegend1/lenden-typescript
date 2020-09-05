@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/models';
 import { useHistory } from 'react-router-dom';
+import { getAddressInString } from '../../app/auth/userDetails';
 
 export interface UserDetailsProps {}
 
@@ -41,7 +42,7 @@ const UserDetails: React.FC<UserDetailsProps> = () => {
 					</div>
 
 					<hr />
-					<p>{`${user.address.houseNumber},  ${user.address.streetName}, ${user.address.city}, ${user.address.state}, ${user.address.postalCode}`}</p>
+					<p>{getAddressInString(user)}</p>
 					{/* TODO ADD THIS IN SELECTOR FUNCTION */}
 				</div>
 			) : (

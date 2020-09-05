@@ -1,29 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { UserSlice } from '../models/auth';
+import { UserSlice, UserDetails } from '../models/auth';
 import { apiCallBegan } from '../api';
 import { getCurrentUser, getToken } from '../../services/authService';
 import { RootState, ActionWithPayload } from '../models/index';
 import { Dispatch } from 'redux';
 import { userLoggedOut } from './login';
+import { ErrorResponsePayload } from '../models/api';
+import { UserAddress } from './../models/auth';
 
 interface FetchedAddress {
 	city: string;
 	country: string;
 	housenumber: string;
-	streetname: string;
+	area: string;
 	state: string;
-	landmark: string;
+	landmark?: string;
 	postalcode: string;
+}
+
+interface FetchedInfo {
+	name: string;
+	mobilenumber: string;
+	gravatarid: string;
+	addressdetails?: {
+		housenumber: string;
+		area: string;
+		state: string;
+		city: string;
+		country: string;
+		landmark?: string;
+		postalcode: string;
+	};
 }
 
 const mapToViewModel = (data: FetchedAddress) => ({
 	city: data.city,
 	country: data.country,
 	houseNumber: data.housenumber,
-	streetName: data.streetname,
+	area: data.area,
 	state: data.state,
 	landmark: data.landmark,
-	postalCode: data.postalcode,
+	postalCode: data.postalcode.toString(),
 });
 
 const initialState: UserSlice = {
@@ -49,36 +66,33 @@ const slice = createSlice({
 			{ user },
 			action: ActionWithPayload<{
 				userId: string;
-				name: string;
-				token: string;
 				email: string;
-				mobileNumber: string;
-				gravatarId: string;
+				token: string;
 			}>
 		) => {
-			const {
-				userId,
-				name,
-				token,
-				email,
-				mobileNumber,
-				gravatarId,
-			} = action.payload;
+			const { userId, token, email } = action.payload;
 
 			user.userId = userId;
 			user.email = email;
-			user.name = name;
 			user.token = token;
-			user.mobileNumber = mobileNumber;
-			user.gravatarId = `type${gravatarId}`;
 		},
-		addressReceived: (
+
+		getUserInfoSuccess: (
 			{ user },
-			action: ActionWithPayload<{ data: FetchedAddress }>
+			action: ActionWithPayload<{ data: FetchedInfo }>
 		) => {
-			const address = action.payload.data;
-			address.postalcode = address.postalcode.toString();
-			user.address = mapToViewModel(address);
+			const {
+				name,
+				mobilenumber,
+				gravatarid,
+				addressdetails,
+			} = action.payload.data;
+
+			user.name = name;
+			user.mobileNumber = mobilenumber;
+			user.gravatarId = `type${gravatarid}`;
+			if (addressdetails) user.address = mapToViewModel(addressdetails);
+			else user.address = undefined;
 		},
 
 		editProfileInitiated: state => {
@@ -91,21 +105,56 @@ const slice = createSlice({
 			state,
 			action: ActionWithPayload<{
 				data: {
-					token: string;
 					name: string;
 					mobilenumber: string;
 					gravatarid: string;
 				};
 			}>
 		) => {
-			const { name, token, mobilenumber, gravatarid } = action.payload.data;
+			const { name, mobilenumber, gravatarid } = action.payload.data;
 			state.success = 'successfully verified';
 			state.error = '';
 			state.loading = false;
 			state.user.name = name;
-			state.user.token = token;
 			state.user.mobileNumber = mobilenumber;
 			state.user.gravatarId = `type${gravatarid}`;
+		},
+		editProfileFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			state.success = '';
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else state.error = action.payload.data.message.trim();
+
+			state.loading = false;
+		},
+		updateAddressInitiated: state => {
+			state.error = '';
+			state.success = '';
+			state.loading = true;
+		},
+
+		updateAddressSuccess: (
+			state,
+			action: ActionWithPayload<{
+				data: FetchedAddress;
+			}>
+		) => {
+			state.user.address = mapToViewModel(action.payload.data);
+			state.error = '';
+			state.success = 'Successfully Updated!';
+			state.loading = false;
+		},
+		updateAddressFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else state.error = action.payload.data.message.trim();
+
+			state.loading = false;
+			state.success = '';
 		},
 	},
 });
@@ -114,11 +163,14 @@ export default slice.reducer;
 
 const {
 	userReceivedFromToken,
-	addressReceived,
 	editProfileInitiated,
+	editProfileSuccess,
+	getUserInfoSuccess,
+	editProfileFailed,
+	updateAddressInitiated,
+	updateAddressSuccess,
+	updateAddressFailed,
 } = slice.actions;
-
-export const { editProfileSuccess } = slice.actions;
 
 export const getUser = () => (dispatch: Dispatch) => {
 	const token = getToken();
@@ -128,30 +180,12 @@ export const getUser = () => (dispatch: Dispatch) => {
 			dispatch(
 				userReceivedFromToken({
 					userId: user.userid,
-					name: user.name,
 					email: user.sub,
-					mobileNumber: user.mobilenumber,
-					gravatarId: user.gravatarid,
 					token,
 				})
 			);
 		}
 	}
-};
-
-export const getAddress = () => (
-	dispatch: Dispatch,
-	getState: () => RootState
-) => {
-	const { userId } = getState().auth.userDetails.user;
-	if (userId)
-		dispatch(
-			apiCallBegan({
-				method: 'get',
-				url: `users/address/${userId}`,
-				onSuccess: addressReceived.type,
-			})
-		);
 };
 
 export const editProfile = ({
@@ -162,16 +196,66 @@ export const editProfile = ({
 	name: string;
 	mobileNumber: string;
 	gravatarId: string;
-}) => async (dispatch: Dispatch, getState: () => RootState) => {
-	const { email } = getState().auth.userDetails.user;
+}) =>
+	apiCallBegan({
+		method: 'put',
+		url: 'users/editprofile',
+		data: { name, mobilenumber: mobileNumber, gravatarid: gravatarId },
+		onStart: editProfileInitiated.type,
+		onSuccess: editProfileSuccess.type,
+		onError: editProfileFailed.type,
+	});
 
+export const getUserInfo = () => (
+	dispatch: Dispatch,
+	getState: () => RootState
+) => {
+	const { userId } = getState().auth.userDetails.user;
+	if (userId)
+		return dispatch(
+			apiCallBegan({
+				method: 'get',
+				url: 'users/getinfo',
+				onSuccess: getUserInfoSuccess.type,
+			})
+		);
+};
+
+export const updateAddress = ({
+	houseNumber,
+	postalCode,
+	...rest
+}: UserAddress) => async (dispatch: Dispatch, getState: () => RootState) => {
 	await dispatch(
 		apiCallBegan({
-			method: 'put',
-			url: 'users/editprofile',
-			data: { name, email, mobilenumber: mobileNumber, gravatarid: gravatarId },
-			onStart: editProfileInitiated.type,
-			onSuccess: editProfileSuccess.type,
+			method: getState().auth.userDetails.user.address ? 'put' : 'post',
+			url: 'users/address',
+			data: {
+				housenumber: houseNumber,
+				postalcode: postalCode,
+				...rest,
+			},
+			onStart: updateAddressInitiated.type,
+			onSuccess: updateAddressSuccess.type,
+			onError: updateAddressFailed.type,
 		})
 	);
+};
+
+export const getAddressInString = (user: UserDetails) => {
+	if (user.address) {
+		const {
+			houseNumber,
+			area,
+			state,
+			city,
+			postalCode,
+			landmark,
+			country,
+		} = user.address;
+		if (landmark)
+			return `${houseNumber}, ${area}, ${state}, ${city}, ${postalCode}, ${landmark}, ${country}`;
+		return `${houseNumber}, ${area}, ${state}, ${city}, ${postalCode}, ${country}`;
+	}
+	return ``;
 };
