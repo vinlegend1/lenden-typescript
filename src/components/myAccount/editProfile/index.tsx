@@ -82,7 +82,7 @@ class EditProfile extends CommonForm<EditProfileProps, EditProfileState> {
 			gravatarId: this.state.gravatar.split('type')[1],
 		});
 		if (!this.props.error) {
-			this.props.history.push('/my-account');
+			this.props.history.goBack();
 			toast(
 				<ToastMessage title='Your profile has been updated successfully !' />,
 				{

@@ -59,7 +59,7 @@ class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
 		await this.props.updateAddress(this.state.data);
 
 		if (!this.props.error) {
-			this.props.history.push('/my-account');
+			this.props.history.goBack();
 			toast(<ToastMessage title='Your Address was updated successfully !' />, {
 				containerId: 'messageToastContainer',
 				className: 'toasty',
