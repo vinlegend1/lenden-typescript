@@ -17,6 +17,7 @@ import NotFound from './common/notFound';
 import ForgotPassword from './sign/forgotPassword';
 import ResetPassword from './sign/resetPassword';
 import UserProtectedRoute from './common/userProtectedRoute';
+import PostProduct from './postProduct';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -67,6 +68,8 @@ const App: React.FC = () => {
 				<Route path='/books' exact component={Products} />
 				<Route path='/books/:id' component={ProductPage} />
 				<Route path='/my-products' component={MyProducts} />*/}
+
+					<Route path='/post-product' component={PostProduct} />
 
 					<ProtectedRoute path='/my-account/edit' component={EditProfile} />
 					<ProtectedRoute

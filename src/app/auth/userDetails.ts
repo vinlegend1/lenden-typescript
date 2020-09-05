@@ -4,7 +4,6 @@ import { apiCallBegan } from '../api';
 import { getCurrentUser, getToken } from '../../services/authService';
 import { RootState, ActionWithPayload } from '../models/index';
 import { Dispatch } from 'redux';
-import { userLoggedOut } from './login';
 import { ErrorResponsePayload } from '../models/api';
 import { UserAddress } from './../models/auth';
 
