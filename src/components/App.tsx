@@ -18,6 +18,7 @@ import ForgotPassword from './sign/forgotPassword';
 import ResetPassword from './sign/resetPassword';
 import UserProtectedRoute from './common/userProtectedRoute';
 import PostProduct from './postProduct';
+import NewBook from './postProduct/newBook';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -69,6 +70,8 @@ const App: React.FC = () => {
 				<Route path='/books/:id' component={ProductPage} />
 				<Route path='/my-products' component={MyProducts} />*/}
 
+					<Redirect exact from='/post-product/book' to='/post-product/book/1' />
+					<Route path='/post-product/book' component={NewBook} />
 					<Route path='/post-product' component={PostProduct} />
 
 					<ProtectedRoute path='/my-account/edit' component={EditProfile} />

@@ -4,6 +4,7 @@ import common from './common';
 import products from './products';
 import productPage from './productPage';
 import newProduct from './newProduct';
+import postProduct from './postProduct';
 
 export default combineReducers({
 	common,
@@ -11,4 +12,5 @@ export default combineReducers({
 	products,
 	productPage,
 	newProduct,
+	postProduct,
 });

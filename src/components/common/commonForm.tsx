@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent } from 'react';
-import { Form, InputGroup, Alert } from 'react-bootstrap';
+import { Form, InputGroup, Alert, ProgressBar } from 'react-bootstrap';
 import Joi from 'joi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
@@ -23,8 +23,8 @@ interface FormState {
 }
 
 interface FormProps {
-	loading: boolean;
-	error: string;
+	loading?: boolean;
+	error?: string;
 	success?: string;
 
 	updateSuccess?: (success: string) => Action;
@@ -37,6 +37,8 @@ abstract class CommonForm<
 > extends Component<T, U> {
 	abstract schema: {};
 	abstract doSubmit: () => void;
+
+	radioInputField = React.createRef<HTMLInputElement>();
 
 	handleChange = (event: ChangeEvent) => {
 		const input = event.currentTarget as HTMLInputElement;
@@ -140,12 +142,41 @@ abstract class CommonForm<
 					className='input email'
 					name={name}
 					type={type || name}
-					value={this.state.data[name]}
+					value={this.state.data[name] === -1 ? '' : this.state.data[name]}
 					onChange={this.handleChange}
 					onKeyPress={(event: React.KeyboardEvent) => {
 						if (submitOnEnter && event.key === 'Enter')
 							this.handleSubmit(event);
 					}}
+				/>
+				<Form.Text
+					className={errorMessage ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{errorMessage}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
+	renderTextArea = (
+		label: string,
+		name: string,
+		errorMessage: string,
+		placeholder?: string,
+		type?: string
+	) => {
+		const { data } = this.state;
+		return (
+			<Form.Group>
+				<Form.Label>{label}</Form.Label>
+				<Form.Control
+					className='input'
+					as='textarea'
+					rows={5}
+					name={name}
+					onChange={this.handleChange}
+					value={data[name]}
+					placeholder={placeholder}
+					style={{ resize: 'none' }}
 				/>
 				<Form.Text
 					className={errorMessage ? 'active' : ''}
@@ -260,6 +291,135 @@ abstract class CommonForm<
 			</Form.Text>
 		</Form.Group>
 	);
+
+	renderRadioInput = (label: string, name: string, ...rest: string[]) => {
+		return (
+			<Form.Group className='radioInput'>
+				<Form.Label>{label}</Form.Label>
+				<div className='radioGroup'>
+					{rest.map((option, index) => (
+						<label
+							className='radio'
+							key={index}
+							onClick={() => {
+								const data: any = { ...this.state.data };
+								data[name] = index + 1;
+								this.setState({ data });
+							}}>
+							<input
+								type='radio'
+								checked={this.state.data[name] === index + 1 ? true : false}
+								readOnly
+							/>
+							<div>
+								<span className='check'></span>
+							</div>
+							<span
+								className={this.state.data[name] === index + 1 ? 'active' : ''}>
+								{option}
+							</span>
+						</label>
+					))}
+				</div>
+				<Form.Text
+					className={this.state.errors[name] ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{this.state.errors[name]}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
+
+	renderProgressBar = (currValue: number, totalValue: number) => (
+		<div className='progressBar'>
+			<ProgressBar variant='success' now={(currValue / totalValue) * 100} />
+			<span>
+				Page {currValue} of {totalValue}
+			</span>
+		</div>
+	);
+
+	renderRadioInputWithField = (
+		label: string,
+		name: string,
+		yes: string,
+		no: string
+	) => {
+		return (
+			<Form.Group className='radioInput'>
+				<Form.Label>{label}</Form.Label>
+				<div className='radioGroup'>
+					<label
+						className='radio'
+						onClick={() => {
+							const data: any = { ...this.state.data };
+							data[name] = 0;
+							this.setState({ data });
+						}}>
+						<input
+							type='radio'
+							checked={this.state.data[name] === 0 ? true : false}
+							readOnly
+						/>
+						<div>
+							<span className='check'></span>
+						</div>
+						<span className={this.state.data[name] === 0 ? 'active' : ''}>
+							{no}
+						</span>
+					</label>
+					<label
+						className='radio'
+						onClick={() => {
+							const data: any = { ...this.state.data };
+
+							if (data[name] === 0 || data[name] === -1) {
+								setTimeout(
+									() =>
+										(this.radioInputField.current! as HTMLInputElement).focus(),
+									50
+								);
+								this.radioInputField.current?.focus();
+								data[name] = 1;
+								this.setState({ data });
+							}
+						}}>
+						<input
+							type='radio'
+							checked={this.state.data[name] > 0 ? true : false}
+							readOnly
+						/>
+						<div>
+							<span className='check'></span>
+						</div>
+						<span className={this.state.data[name] > 0 ? 'active' : ''}>
+							{yes}
+						</span>
+						<div>
+							<Form.Control
+								ref={this.radioInputField}
+								className='timesInput'
+								type='number'
+								value={
+									this.state.data[name] === -1 ? '' : this.state.data[name]
+								}
+								onChange={(e: React.ChangeEvent) => {
+									const data: any = { ...this.state.data };
+									data[name] = (e.currentTarget as HTMLInputElement).value;
+									this.setState({ data });
+								}}
+							/>
+						</div>
+					</label>
+				</div>
+				<Form.Text
+					className={this.state.errors[name] ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{this.state.errors[name]}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
 }
 
 export default CommonForm;

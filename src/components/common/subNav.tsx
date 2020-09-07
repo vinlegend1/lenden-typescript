@@ -2,11 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import GenericIcons from '../../icons/generic';
 
-export interface EditProfileNavProps {
+export interface SubNavProps {
 	title: string;
 }
 
-const EditProfileNav: React.FC<EditProfileNavProps> = props => {
+const SubNav: React.FC<SubNavProps> = props => {
 	const history = useHistory();
 	return (
 		<div id='subNav'>
@@ -18,4 +18,4 @@ const EditProfileNav: React.FC<EditProfileNavProps> = props => {
 	);
 };
 
-export default EditProfileNav;
+export default SubNav;

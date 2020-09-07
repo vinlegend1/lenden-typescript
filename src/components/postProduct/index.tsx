@@ -1,10 +1,11 @@
 import * as React from 'react';
 import SubNav from '../common/subNav';
 import CategoryIcons from '../../icons/categories';
+import { RouteComponentProps } from 'react-router-dom';
 
-export interface PostProductProps {}
+export interface PostProductProps extends RouteComponentProps {}
 
-const PostProduct: React.FC<PostProductProps> = () => {
+const PostProduct: React.FC<PostProductProps> = props => {
 	return (
 		<React.Fragment>
 			<SubNav title='Post your product' />
@@ -12,7 +13,9 @@ const PostProduct: React.FC<PostProductProps> = () => {
 				<h1>Choose a Category</h1>
 				<div className='categoryContainer'>
 					<div className='row'>
-						<div className='col col-l'>
+						<div
+							className='col col-l'
+							onClick={() => props.history.push('/post-product/book')}>
 							<CategoryIcons name='book' />
 							<p>Books</p>
 						</div>
