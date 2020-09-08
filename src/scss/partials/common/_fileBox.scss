@@ -1,38 +1,33 @@
 .fileBox {
 	position: relative;
-
+	margin: 0.5rem;
 	input {
 		display: none;
 	}
 
 	.file {
-		width: 85px;
-		height: 85px;
-		padding: 1.5rem;
+		width: 100px;
+		height: 100px;
+		// padding: 2.5rem;
 		border: 0.5px solid #5c5c5c;
 		border-radius: 4px;
 		position: relative;
-		// background-size: cover;
-
 		background-color: white;
-		// background-repeat: no-repeat;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
-		// background-position: center;;
-		background-size: 150px;
+		svg {
+			width: 35px;
+			height: 35px;
+		}
 
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
-		// &:before {
-		// 	content: '';
-		// 	position: absolute;
-		// 	top: 0;
-		// 	right: 0;
-		// 	bottom: 0;
-		// 	left: 0;
-		// 	background: rgba(0, 0, 0, 0.7);
-		// 	opacity: 0.6;
-		// }
 	}
 
 	.active {

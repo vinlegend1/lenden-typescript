@@ -84,35 +84,56 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 						'Yes',
 						'No'
 					)}
+					<div style={{ width: 'fit-content', margin: '0 auto' }}>
+						<div style={{ display: 'flex', justifyContent: '' }}>
+							<FileBox
+								file={this.state.images[0]}
+								handleFileChange={(event: any) => {
+									const images: File[] = [...this.state.images];
+									images[0] = event.target.files[0];
+									this.setState({ images });
+								}}
+							/>
 
-					<div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-						<FileBox
-							file={this.state.images[0]}
-							handleFileChange={(event: any) => {
-								const images: File[] = [...this.state.images];
-								images[0] = event.target.files[0];
-								this.setState({ images });
-							}}
-						/>
+							<FileBox
+								file={this.state.images[0]}
+								handleFileChange={(event: any) => {
+									const images: File[] = [...this.state.images];
+									images[0] = event.target.files[0];
+									this.setState({ images });
+								}}
+							/>
 
-						<FileBox
-							file={this.state.images[0]}
-							handleFileChange={(event: any) => {
-								const images: File[] = [...this.state.images];
-								images[0] = event.target.files[0];
-								this.setState({ images });
-							}}
-						/>
+							<FileBox
+								file={this.state.images[0]}
+								handleFileChange={(event: any) => {
+									const images: File[] = [...this.state.images];
+									images[0] = event.target.files[0];
+									this.setState({ images });
+								}}
+							/>
+						</div>
+						<div style={{ display: 'flex' }}>
+							<FileBox
+								file={this.state.images[0]}
+								handleFileChange={(event: any) => {
+									const images: File[] = [...this.state.images];
+									images[0] = event.target.files[0];
+									this.setState({ images });
+								}}
+							/>
 
-						<FileBox
-							file={this.state.images[0]}
-							handleFileChange={(event: any) => {
-								const images: File[] = [...this.state.images];
-								images[0] = event.target.files[0];
-								this.setState({ images });
-							}}
-						/>
+							<FileBox
+								file={this.state.images[0]}
+								handleFileChange={(event: any) => {
+									const images: File[] = [...this.state.images];
+									images[0] = event.target.files[0];
+									this.setState({ images });
+								}}
+							/>
+						</div>
 					</div>
+
 					{this.renderProgressBar(2, 2)}
 					<div className='darkButton'>Post Now</div>
 				</div>
