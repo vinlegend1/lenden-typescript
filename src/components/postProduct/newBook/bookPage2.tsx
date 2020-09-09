@@ -26,8 +26,10 @@ export interface BookPage2State {
 		ques10: number;
 	};
 	errors: ErrorContainer;
-	images: File[];
-	// file?: File;
+
+	images: {
+		[key: string]: File;
+	};
 }
 
 class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
@@ -35,7 +37,7 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 	state = {
 		data: { ques6: 0, ques7: 0, ques8: 0, ques9: 0, ques10: -1 },
 		errors: { ques6: '', ques7: '', ques8: '', ques9: '', ques10: '' },
-		images: [],
+		images: {},
 	};
 
 	doSubmit = () => {};
@@ -85,55 +87,12 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 						'No'
 					)}
 					<div style={{ width: 'fit-content', margin: '0 auto' }}>
-						<div style={{ display: 'flex', justifyContent: '' }}>
-							<FileBox
-								file={this.state.images[0]}
-								handleFileChange={(event: any) => {
-									const images: File[] = [...this.state.images];
-									images[0] = event.target.files[0];
-									this.setState({ images });
-								}}
-							/>
-
-							<FileBox
-								file={this.state.images[0]}
-								handleFileChange={(event: any) => {
-									const images: File[] = [...this.state.images];
-									images[0] = event.target.files[0];
-									this.setState({ images });
-								}}
-							/>
-
-							<FileBox
-								file={this.state.images[0]}
-								handleFileChange={(event: any) => {
-									const images: File[] = [...this.state.images];
-									images[0] = event.target.files[0];
-									this.setState({ images });
-								}}
-							/>
-						</div>
+						<div style={{ display: 'flex', justifyContent: '' }}></div>
 						<div style={{ display: 'flex' }}>
-							<FileBox
-								file={this.state.images[0]}
-								handleFileChange={(event: any) => {
-									const images: File[] = [...this.state.images];
-									images[0] = event.target.files[0];
-									this.setState({ images });
-								}}
-							/>
-
-							<FileBox
-								file={this.state.images[0]}
-								handleFileChange={(event: any) => {
-									const images: File[] = [...this.state.images];
-									images[0] = event.target.files[0];
-									this.setState({ images });
-								}}
-							/>
+							{this.renderFileBox('image1')}
+							{this.renderFileBox('image2')}
 						</div>
 					</div>
-
 					{this.renderProgressBar(2, 2)}
 					<div className='darkButton'>Post Now</div>
 				</div>

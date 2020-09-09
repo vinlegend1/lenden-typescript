@@ -18,6 +18,7 @@ import { ReactComponent as NotFound } from './404.svg';
 import { ReactComponent as Error } from './error.svg';
 import { ReactComponent as Expired } from './expired.svg';
 import { ReactComponent as Camera } from './camera.svg';
+import { ReactComponent as CrossBlack } from './cross-black.svg';
 
 export interface GenericIconsProps {
 	name: string;
@@ -64,6 +65,8 @@ const GenericIcons: React.FC<GenericIconsProps> = ({ name, ...rest }) => {
 			return <Expired {...rest} />;
 		case 'camera':
 			return <Camera {...rest} />;
+		case 'cross-black':
+			return <CrossBlack {...rest} />;
 		default:
 			return null;
 	}

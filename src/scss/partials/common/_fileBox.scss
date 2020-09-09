@@ -12,22 +12,19 @@
 		border: 0.5px solid #5c5c5c;
 		border-radius: 4px;
 		position: relative;
-		background-color: white;
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: center;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		// background-color: white;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: top;
 
 		svg {
 			width: 35px;
 			height: 35px;
 		}
-
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
 	}
 
 	.active {
@@ -38,7 +35,7 @@
 			right: 0;
 			bottom: 0;
 			left: 0;
-			background: rgba(0, 0, 0, 0.7);
+			background: rgba(0, 0, 0, 0.5);
 			opacity: 0.6;
 		}
 	}
@@ -50,6 +47,56 @@
 		svg {
 			width: 35px;
 			height: 35px;
+		}
+	}
+}
+
+.previewImage {
+	font-family: font(secondary);
+	.modal-content {
+		background: #ffffff;
+		border-radius: 8px !important;
+		border: 0.2px solid #e1e1e1;
+		box-sizing: border-box;
+		box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
+
+		.modal-body {
+			padding: 1rem;
+			.cross {
+				text-align: right;
+				svg {
+					width: 40px;
+				}
+			}
+			.imageContainer {
+				padding: 0 1rem;
+				margin: 1rem 0;
+				img {
+					margin: 0 auto;
+					display: block;
+					margin-bottom: 0.5rem;
+					max-width: 100%;
+				}
+				p {
+					font-size: 14px;
+					color: #1f74e6;
+				}
+			}
+
+			.buttonContainer {
+				display: flex;
+				margin-top: 2rem;
+				.lightButton,
+				.darkButton {
+					margin: 0 0.5rem;
+					flex-basis: 50%;
+				}
+
+				.lightButton {
+					border-color: #ff556e;
+					color: #ff556e;
+				}
+			}
 		}
 	}
 }

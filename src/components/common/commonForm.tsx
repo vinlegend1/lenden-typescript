@@ -6,6 +6,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { BarLoader } from 'react-spinners';
 import { Action } from 'redux';
 import GenericIcons from '../../icons/generic';
+import FileBox from './FileBox';
 
 export interface ErrorContainer {
 	[key: string]: string;
@@ -20,6 +21,10 @@ interface FormState {
 	passType?: {
 		[key: string]: PassType;
 	};
+	images?: {
+		[key: string]: File;
+	};
+	// images?: File[];
 }
 
 interface FormProps {
@@ -419,6 +424,29 @@ abstract class CommonForm<
 				</Form.Text>
 			</Form.Group>
 		);
+	};
+
+	renderFileBox = (name: string) => {
+		if (this.state.images)
+			return (
+				<FileBox
+					file={this.state.images[name]}
+					handleFileChange={(event: any) => {
+						const images = { ...this.state.images };
+						if (images) {
+							images[name] = event.target.files[0];
+							this.setState({ images });
+						}
+					}}
+					deleteFile={() => {
+						const images = { ...this.state.images };
+						if (images) {
+							delete images[name];
+							this.setState({ images });
+						}
+					}}
+				/>
+			);
 	};
 }
 
