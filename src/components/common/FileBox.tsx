@@ -91,6 +91,7 @@ const FileBox: React.FC<FileBoxProps> = props => {
 								onClick={() => {
 									showModal(false);
 									fileInput.value = '';
+									setImageSrc('');
 									props.deleteFile();
 									fileInput.click();
 								}}>
