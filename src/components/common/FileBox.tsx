@@ -1,6 +1,7 @@
 import * as React from 'react';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export interface FileBoxProps {
 	file: File;
@@ -27,27 +28,30 @@ const FileBox: React.FC<FileBoxProps> = props => {
 				type='file'
 				onChange={(event: React.ChangeEvent) => {
 					props.handleFileChange(event);
-					console.log(props.file);
 				}}
 				accept='image/jpeg, image/png'
 				ref={input => (fileInput = input!)}
 			/>
 			<div
-				className={`file ${props.file ? 'active' : ''}`}
+				className={`file ${imageSrc ? 'active' : ''}`}
 				style={{
-					backgroundImage: `url(${props.file ? imageSrc : ''})`,
+					backgroundImage: `url(${imageSrc ? imageSrc : ''})`,
 				}}
 				onClick={() => {
 					if (!props.file) fileInput.click();
 					else showModal(true);
 				}}>
 				{!props.file && <GenericIcons name='camera' />}
+				{props.file && !imageSrc && (
+					<ClipLoader size={25} color={'#1a2639'} loading={true} />
+				)}
 			</div>
 			{props.file && (
 				<div
 					className='cross'
 					onClick={() => {
 						fileInput.value = '';
+						setImageSrc('');
 						props.deleteFile();
 					}}>
 					<GenericIcons name='cross' />
@@ -61,6 +65,7 @@ const FileBox: React.FC<FileBoxProps> = props => {
 					show={modal}
 					keyboard={false}
 					animation={true}
+					scrollable={true}
 					onHide={() => showModal(false)}>
 					<Modal.Body>
 						<div className='cross' onClick={() => showModal(false)}>
@@ -76,6 +81,7 @@ const FileBox: React.FC<FileBoxProps> = props => {
 								onClick={() => {
 									showModal(false);
 									fileInput.value = '';
+									setImageSrc('');
 									props.deleteFile();
 								}}>
 								Delete
