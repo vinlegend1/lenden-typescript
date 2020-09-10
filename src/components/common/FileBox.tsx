@@ -2,6 +2,7 @@ import * as React from 'react';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
 import ClipLoader from 'react-spinners/ClipLoader';
+import imageCompression from 'browser-image-compression';
 
 export interface FileBoxProps {
 	file: File;
@@ -16,11 +17,19 @@ const FileBox: React.FC<FileBoxProps> = props => {
 
 	if (props.file) {
 		const reader = new FileReader();
-		reader.readAsDataURL(props.file);
+		let compressedFile: any;
+		(async () => {
+			compressedFile = await imageCompression(props.file, {
+				maxSizeMB: 0.1,
+				maxWidthOrHeight: 1920,
+				useWebWorker: true,
+			});
 
-		reader.onloadend = () => {
-			setImageSrc(reader.result as string);
-		};
+			reader.readAsDataURL(compressedFile);
+			reader.onloadend = () => {
+				setImageSrc(reader.result as string);
+			};
+		})();
 	}
 	return (
 		<div className='fileBox'>

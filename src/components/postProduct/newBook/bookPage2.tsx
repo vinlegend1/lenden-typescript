@@ -55,9 +55,8 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 					{this.renderRadioInput(
 						'Is your book foxed such that it has visible spots and browning?',
 						'ques6',
-						'No stains',
-						'Personal marks',
-						'Marks of Ink/Pencil/Highlighter/Whitener, etc.'
+						'No spots/browning',
+						'Visible spots and browning'
 					)}
 					{this.renderRadioInput(
 						'What is the condition of the binding of your book?',
