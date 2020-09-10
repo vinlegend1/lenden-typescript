@@ -344,7 +344,7 @@ abstract class CommonForm<
 		</div>
 	);
 
-	renderRadioInputWithField = (label: string, name: string) => {
+	renderRadioInputWithRange = (label: string, name: string) => {
 		return (
 			<Form.Group className='radioInput'>
 				<Form.Label>{label}</Form.Label>

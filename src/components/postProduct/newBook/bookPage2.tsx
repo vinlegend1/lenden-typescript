@@ -121,7 +121,7 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 						'coverCondition',
 						...questionDetails.coverCondition.options
 					)}
-					{this.renderRadioInputWithField(
+					{this.renderRadioInputWithRange(
 						questionDetails.bookRepaired.name,
 						'bookRepaired'
 					)}

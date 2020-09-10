@@ -89,7 +89,7 @@ class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 	};
 	render() {
 		return (
-			<div className='newBook'>
+			<div className='postProduct newBook'>
 				<div className='container selectedChoice'>
 					<h2>Selected Category</h2>
 					<div>

@@ -13,7 +13,6 @@ const NewBook: React.FC<NewBookProps> = () => {
 
 	React.useEffect(() => {
 		return () => {
-			console.log('heh');
 			dispatch(clearForm());
 		};
 	}, []);
