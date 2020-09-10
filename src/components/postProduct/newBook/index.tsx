@@ -3,14 +3,18 @@ import SubNav from '../../common/subNav';
 import { Switch, Route } from 'react-router-dom';
 import BookPage1 from './bookPage1';
 import BookPage2 from './bookPage2';
+import { useDispatch } from 'react-redux';
+import { clearForm } from '../../../app/entities/postProduct/bookForm';
 
 export interface NewBookProps {}
 
 const NewBook: React.FC<NewBookProps> = () => {
+	const dispatch = useDispatch();
+
 	React.useEffect(() => {
 		return () => {
 			console.log('heh');
-			// dispatch cleanup request
+			dispatch(clearForm());
 		};
 	}, []);
 	return (

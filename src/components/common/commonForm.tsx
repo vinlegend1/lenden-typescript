@@ -344,12 +344,7 @@ abstract class CommonForm<
 		</div>
 	);
 
-	renderRadioInputWithField = (
-		label: string,
-		name: string,
-		yes: string,
-		no: string
-	) => {
+	renderRadioInputWithField = (label: string, name: string) => {
 		return (
 			<Form.Group className='radioInput'>
 				<Form.Label>{label}</Form.Label>
@@ -370,7 +365,7 @@ abstract class CommonForm<
 							<span className='check'></span>
 						</div>
 						<span className={this.state.data[name] === 0 ? 'active' : ''}>
-							{no}
+							No
 						</span>
 					</label>
 					<label
@@ -398,7 +393,7 @@ abstract class CommonForm<
 							<span className='check'></span>
 						</div>
 						<span className={this.state.data[name] > 0 ? 'active' : ''}>
-							{yes}
+							Yes
 						</span>
 						<div>
 							<Form.Control

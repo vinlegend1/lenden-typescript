@@ -2,15 +2,16 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import CommonForm, { ErrorContainer } from '../../common/commonForm';
 import { RootState } from '../../../app/models';
-import { Dispatch } from '@reduxjs/toolkit';
+import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 
 import { connect, ConnectedProps } from 'react-redux';
 import {
 	updatePage2Details,
 	Page2,
+	questionDetails,
+	postBookForm,
 } from './../../../app/entities/postProduct/bookForm';
-import GenericIcons from '../../../icons/generic';
-import FileBox from '../../common/FileBox';
+import Joi from 'joi';
 
 export interface BookPage2Props extends RouteComponentProps, ReduxProps {
 	loading: boolean;
@@ -19,11 +20,10 @@ export interface BookPage2Props extends RouteComponentProps, ReduxProps {
 
 export interface BookPage2State {
 	data: {
-		ques6: number;
-		ques7: number;
-		ques8: number;
-		ques9: number;
-		ques10: number;
+		bookFoxed: number;
+		bindingCondition: number;
+		coverCondition: number;
+		bookRepaired: number;
 	};
 	errors: ErrorContainer;
 
@@ -35,16 +35,70 @@ export interface BookPage2State {
 class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 	fileInput: any;
 	state = {
-		data: { ques6: 0, ques7: 0, ques8: 0, ques9: 0, ques10: -1 },
-		errors: { ques6: '', ques7: '', ques8: '', ques9: '', ques10: '' },
+		data: {
+			bookFoxed: this.props.data.bookFoxed,
+			bindingCondition: this.props.data.bindingCondition,
+			coverCondition: this.props.data.coverCondition,
+			bookRepaired: this.props.data.bookRepaired,
+		},
+		errors: {
+			bookFoxed: '',
+			bindingCondition: '',
+			coverCondition: '',
+			bookRepaired: '',
+		},
 		images: {},
 	};
 
-	doSubmit = () => {};
-	schema = {};
+	doSubmit = () => {
+		this.props.updatePage2Details(this.state.data);
+		this.props.postBookForm();
+	};
+	schema = {
+		bookFoxed: Joi.number()
+			.min(1)
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'number.min')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
+		bindingCondition: Joi.number()
+			.min(1)
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'number.min')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
+		coverCondition: Joi.number()
+			.min(1)
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'number.min')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
+		bookRepaired: Joi.number()
+			.min(0)
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'number.min')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
+	};
 	render() {
-		// if (!this.props.data.ques1)
-		// 	this.props.history.replace('/post-product/book/1');
+		if (!this.props.data.title)
+			this.props.history.replace('/post-product/book/1');
 		return (
 			<div className='newBook'>
 				<div className='container mainContainer'>
@@ -53,37 +107,23 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 						spots or turn brown like this. This process is called FOXING.
 					</p>
 					{this.renderRadioInput(
-						'Is your book foxed such that it has visible spots and browning?',
-						'ques6',
-						'No spots/browning',
-						'Visible spots and browning'
+						questionDetails.bookFoxed.name,
+						'bookFoxed',
+						...questionDetails.bookFoxed.options
 					)}
 					{this.renderRadioInput(
-						'What is the condition of the binding of your book?',
-						'ques7',
-						'Undamaged',
-						'Light wrinkles',
-						'Heavy Breaks'
+						questionDetails.bindingCondition.name,
+						'bindingCondition',
+						...questionDetails.bindingCondition.options
 					)}
 					{this.renderRadioInput(
-						'What is the condition of the front and back side of your book? ',
-						'ques8',
-						'Not damaged at all',
-						'Slight wear and tear due to normal usage',
-						'Visible tear/cracks and/or bent and worn out edges'
-					)}
-					{this.renderRadioInput(
-						'What is the condition of the binding of your book?',
-						'ques9',
-						'Undamaged',
-						'Light wrinkles',
-						'Heavy Breaks'
+						questionDetails.coverCondition.name,
+						'coverCondition',
+						...questionDetails.coverCondition.options
 					)}
 					{this.renderRadioInputWithField(
-						'Has your book ever been repaired earlier? If yes, mention the number of times it has been repaired.',
-						'ques10',
-						'Yes',
-						'No'
+						questionDetails.bookRepaired.name,
+						'bookRepaired'
 					)}
 					<div style={{ width: 'fit-content', margin: '0 auto' }}>
 						<div style={{ display: 'flex', justifyContent: '' }}></div>
@@ -93,7 +133,9 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 						</div>
 					</div>
 					{this.renderProgressBar(2, 2)}
-					<div className='darkButton'>Post Now</div>
+					<div className='darkButton' onClick={this.handleSubmit}>
+						Post Now
+					</div>
 				</div>
 			</div>
 		);
@@ -106,8 +148,9 @@ const mapStateToProps = (state: RootState) => {
 		data,
 	};
 };
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
 	updatePage2Details: (data: Page2) => dispatch(updatePage2Details(data)),
+	postBookForm: () => dispatch(postBookForm()),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

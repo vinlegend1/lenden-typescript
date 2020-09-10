@@ -6,9 +6,11 @@ import { Dispatch } from '@reduxjs/toolkit';
 import {
 	updatePage1Details,
 	Page1,
+	questionDetails,
 } from '../../../app/entities/postProduct/bookForm';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../../app/models';
+import { animateScroll as scroll } from 'react-scroll';
 
 export interface BookPage1Props extends RouteComponentProps, ReduxProps {
 	loading: boolean;
@@ -17,11 +19,11 @@ export interface BookPage1Props extends RouteComponentProps, ReduxProps {
 
 export interface BookPage1State {
 	data: {
-		ques1: string;
-		ques2: string;
-		ques3: number;
-		ques4: number;
-		ques5: number;
+		title: string;
+		description: string;
+		mrp: number;
+		bindingType: number;
+		inkStains: number;
 	};
 	errors: ErrorContainer;
 }
@@ -29,23 +31,33 @@ export interface BookPage1State {
 class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 	state = {
 		data: {
-			ques1: this.props.data.ques1,
-			ques2: this.props.data.ques2,
-			ques3: this.props.data.ques3,
-			ques4: this.props.data.ques4,
-			ques5: this.props.data.ques5,
+			title: this.props.data.title,
+			description: this.props.data.description,
+			mrp: this.props.data.mrp,
+			bindingType: this.props.data.bindingType,
+			inkStains: this.props.data.inkStains,
 		},
-		errors: { ques1: '', ques2: '', ques3: '', ques4: '', ques5: '' },
+		errors: {
+			title: '',
+			description: '',
+			mrp: '',
+			bindingType: '',
+			inkStains: '',
+		},
 	};
 
 	doSubmit = () => {
 		this.props.updatePage1Details(this.state.data);
 		this.props.history.push('/post-product/book/2');
+		scroll.scrollToTop({
+			duration: 200,
+			smooth: 'linear',
+		});
 	};
 	schema = {
-		ques1: Joi.string().required().label('Title'),
-		ques2: Joi.string().required().label('Description'),
-		ques3: Joi.number()
+		title: Joi.string().required().label('Title'),
+		description: Joi.string().required().label('Description'),
+		mrp: Joi.number()
 			.min(1)
 			.required()
 			.error((errors: any) => {
@@ -54,7 +66,7 @@ class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 				});
 				return errors;
 			}),
-		ques4: Joi.number()
+		bindingType: Joi.number()
 			.min(1)
 			.required()
 			.error((errors: any) => {
@@ -64,7 +76,7 @@ class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 				});
 				return errors;
 			}),
-		ques5: Joi.number()
+		inkStains: Joi.number()
 			.min(1)
 			.required()
 			.error((errors: any) => {
@@ -95,33 +107,30 @@ class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 					</p>
 
 					{this.renderInput(
-						'What is the title of your book?',
-						'ques1',
-						this.state.errors.ques1
+						questionDetails.title.name,
+						'title',
+						this.state.errors.title
 					)}
 					{this.renderTextArea(
-						'Describe your book in few words',
-						'ques2',
-						this.state.errors.ques2
+						questionDetails.description.name,
+						'description',
+						this.state.errors.description
 					)}
 					{this.renderInput(
-						' What is the MRP as printed on/in the book? (refer back side/inside the book)',
-						'ques3',
-						this.state.errors.ques3,
+						questionDetails.mrp.name,
+						'mrp',
+						this.state.errors.mrp,
 						'number'
 					)}
 					{this.renderRadioInput(
-						'What is your book’s binding type?',
-						'ques4',
-						'Paperback',
-						'Hardbound'
+						questionDetails.bindingType.name,
+						'bindingType',
+						...questionDetails.bindingType.options
 					)}
 					{this.renderRadioInput(
-						'Are there any ink stain inside and outside the book? ',
-						'ques5',
-						'No stains',
-						'Personal marks',
-						'Marks of Ink/Pencil/Highlighter/Whitener, etc.'
+						questionDetails.inkStains.name,
+						'inkStains',
+						...questionDetails.inkStains.options
 					)}
 
 					{this.renderProgressBar(1, 2)}

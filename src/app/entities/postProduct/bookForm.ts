@@ -1,33 +1,86 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { ActionWithPayload } from './../../models/index';
+import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import { ActionWithPayload, RootState } from './../../models/index';
+import { apiCallBegan } from './../../api';
 
 export interface Page1 {
-	ques1: string;
-	ques2: string;
-	ques3: number;
-	ques4: number;
-	ques5: number;
+	title: string;
+	description: string;
+	mrp: number;
+	bindingType: number;
+	inkStains: number;
 }
 
 export interface Page2 {
-	ques6: number;
-	ques7: number;
-	ques8: number;
-	ques9: number;
-	ques10: number;
+	bookFoxed: number;
+	bindingCondition: number;
+	coverCondition: number;
+	bookRepaired: number;
 }
 
+export const questionDetails = {
+	title: {
+		key: 'title',
+		name: 'What is the title of your book?',
+	},
+	description: {
+		key: 'description',
+		name: 'Describe your book in few words',
+	},
+	mrp: {
+		key: 'mrp',
+		name:
+			'What is the MRP as printed on/in the book? (refer back side/inside the book)',
+	},
+	bindingType: {
+		key: 'binding_type',
+		name: 'What is your book’s binding type?',
+		options: ['Paperback', 'Hardbound'],
+	},
+	inkStains: {
+		key: 'ink_stains',
+		name: 'Are there any ink stain inside and outside the book?',
+		options: [
+			'No stains',
+			'Personal marks',
+			'Marks of Ink/Pencil/Highlighter/Whitener, etc.',
+		],
+	},
+	bookFoxed: {
+		key: 'book_foxed',
+		name: 'Is your book foxed such that it has visible spots and browning?',
+		options: ['No spots/browning', 'Visible spots and browning'],
+	},
+	bindingCondition: {
+		key: 'binding_condition',
+		name: 'What is the condition of the binding of your book?',
+		options: ['Undamaged', 'Light wrinkles', 'Heavy Breaks'],
+	},
+	coverCondition: {
+		key: 'front_back_condition',
+		name: 'What is the condition of the front and back side of your book? ',
+		options: [
+			'Not damaged at all',
+			'Slight wear and tear due to normal usage',
+			'Visible tear/cracks and/or bent and worn out edges',
+		],
+	},
+	bookRepaired: {
+		key: 'book_repaired_earlier',
+		name:
+			'Has your book ever been repaired earlier? If yes, mention the number of times it has been repaired.',
+	},
+};
+
 const initialState: Page1 & Page2 = {
-	ques1: '',
-	ques2: '',
-	ques3: -1,
-	ques4: 0,
-	ques5: 0,
-	ques6: 0,
-	ques7: 0,
-	ques8: 0,
-	ques9: 0,
-	ques10: 0,
+	title: '',
+	description: '',
+	mrp: -1,
+	bindingType: 0,
+	inkStains: 0,
+	bookFoxed: 0,
+	bindingCondition: 0,
+	coverCondition: 0,
+	bookRepaired: -1,
 };
 
 const slice = createSlice({
@@ -35,22 +88,32 @@ const slice = createSlice({
 	initialState,
 	reducers: {
 		page1DetailsUpdated: (state, action: ActionWithPayload<Page1>) => {
-			const { ques1, ques2, ques3, ques4, ques5 } = action.payload;
+			const {
+				title,
+				description,
+				mrp,
+				bindingType,
+				inkStains,
+			} = action.payload;
 
-			state.ques1 = ques1;
-			state.ques2 = ques2;
-			state.ques3 = ques3;
-			state.ques4 = ques4;
-			state.ques5 = ques5;
+			state.title = title;
+			state.description = description;
+			state.mrp = mrp;
+			state.bindingType = bindingType;
+			state.inkStains = inkStains;
 		},
 		page2DetailsUpdated: (state, action: ActionWithPayload<Page2>) => {
-			const { ques6, ques7, ques8, ques9, ques10 } = action.payload;
+			const {
+				bookFoxed,
+				bindingCondition,
+				coverCondition,
+				bookRepaired,
+			} = action.payload;
 
-			state.ques6 = ques6;
-			state.ques7 = ques7;
-			state.ques8 = ques8;
-			state.ques9 = ques9;
-			state.ques10 = ques10;
+			state.bookFoxed = bookFoxed;
+			state.bindingCondition = bindingCondition;
+			state.coverCondition = coverCondition;
+			state.bookRepaired = bookRepaired;
 		},
 
 		formCleared: state => Object.keys(state).forEach(key => (state[key] = '')),
@@ -59,7 +122,35 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-const { page1DetailsUpdated, page2DetailsUpdated } = slice.actions;
+const { page1DetailsUpdated, page2DetailsUpdated, formCleared } = slice.actions;
 
 export const updatePage1Details = (data: Page1) => page1DetailsUpdated(data);
 export const updatePage2Details = (data: Page2) => page2DetailsUpdated(data);
+
+export const postBookForm = () => (
+	dispatch: Dispatch,
+	getState: () => RootState
+) => {
+	const state = getState().entities.postProduct.bookForm;
+	let derivedState = {};
+
+	for (let item in state) {
+		if (typeof state[item] === 'number' && questionDetails[item].options) {
+			derivedState[questionDetails[item].key] =
+				questionDetails[item].options[state[item] - 1];
+		} else {
+			derivedState[questionDetails[item].key] = state[item];
+		}
+	}
+	console.log(derivedState);
+
+	dispatch(
+		apiCallBegan({
+			method: 'post',
+			url: 'products/book',
+			data: derivedState,
+		})
+	);
+};
+
+export const clearForm = () => formCleared();
