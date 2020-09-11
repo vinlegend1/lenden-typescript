@@ -2,7 +2,7 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { ActionWithPayload, RootState } from './../../models/index';
 import { apiCallBegan } from './../../api';
 
-export interface Page1 {
+export interface BookFormSlicePage1 {
 	title: string;
 	description: string;
 	mrp: number;
@@ -10,14 +10,14 @@ export interface Page1 {
 	inkStains: string;
 }
 
-export interface Page2 {
+export interface BookFormSlicePage2 {
 	bookFoxed: string;
 	bindingCondition: string;
 	coverCondition: string;
 	bookRepaired: number;
 }
 
-const initialState: Page1 & Page2 = {
+const initialState: BookFormSlicePage1 & BookFormSlicePage2 = {
 	title: '',
 	description: '',
 	mrp: -1,
@@ -29,7 +29,7 @@ const initialState: Page1 & Page2 = {
 	bookRepaired: -1,
 };
 
-const mapToViewModal = (data: Page1 & Page2) => ({
+const mapToViewModal = (data: BookFormSlicePage1 & BookFormSlicePage2) => ({
 	title: data.title,
 	description: data.description,
 	binding_type: data.bindingType,
@@ -44,7 +44,10 @@ const slice = createSlice({
 	name: 'bookForm',
 	initialState,
 	reducers: {
-		page1DetailsUpdated: (state, action: ActionWithPayload<Page1>) => {
+		page1DetailsUpdated: (
+			state,
+			action: ActionWithPayload<BookFormSlicePage1>
+		) => {
 			const {
 				title,
 				description,
@@ -59,7 +62,10 @@ const slice = createSlice({
 			state.bindingType = bindingType;
 			state.inkStains = inkStains;
 		},
-		page2DetailsUpdated: (state, action: ActionWithPayload<Page2>) => {
+		page2DetailsUpdated: (
+			state,
+			action: ActionWithPayload<BookFormSlicePage2>
+		) => {
 			const {
 				bookFoxed,
 				bindingCondition,
@@ -81,8 +87,10 @@ export default slice.reducer;
 
 const { page1DetailsUpdated, page2DetailsUpdated, formCleared } = slice.actions;
 
-export const updatePage1Details = (data: Page1) => page1DetailsUpdated(data);
-export const updatePage2Details = (data: Page2) => page2DetailsUpdated(data);
+export const updateBookFormPage1Details = (data: BookFormSlicePage1) =>
+	page1DetailsUpdated(data);
+export const updateBookFormPage2Details = (data: BookFormSlicePage2) =>
+	page2DetailsUpdated(data);
 
 export const postBookForm = () => (
 	dispatch: Dispatch,
@@ -100,4 +108,4 @@ export const postBookForm = () => (
 	);
 };
 
-export const clearForm = () => formCleared();
+export const clearBookForm = () => formCleared();

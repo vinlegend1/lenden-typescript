@@ -3,8 +3,18 @@ import CommonForm, { ErrorContainer } from './../../common/commonForm';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
+import gamingCdForm from '../../../data/forms/gamingCdFormData';
+import { RootState } from '../../../app/models';
+import { ThunkDispatch, Action } from '@reduxjs/toolkit';
+import {
+	GamingCdFormSliceState,
+	updateGamingCdFormDetails,
+	postGamingCdForm,
+	clearGamingCdForm,
+} from './../../../app/entities/postProduct/gamingCdForm';
+import { connect, ConnectedProps } from 'react-redux';
 
-export interface NewGamingCdProps extends RouteComponentProps {
+export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {
 	loading: boolean;
 	error: string;
 }
@@ -13,47 +23,61 @@ export interface NewGamingCdState {
 	data: {
 		title: string;
 		deviceCompatible: string;
-		originalCase: number;
-		scratches: number;
+		description: string;
+		originalCase: string;
+		scratches: string;
 	};
 	errors: ErrorContainer;
 }
 
 class NewGamingCd extends CommonForm<NewGamingCdProps, NewGamingCdState> {
 	state = {
-		data: { title: '', deviceCompatible: '', originalCase: 0, scratches: 0 },
+		data: {
+			title: this.props.data.title,
+			deviceCompatible: this.props.data.deviceCompatible,
+			description: this.props.data.description,
+			originalCase: this.props.data.originalCase,
+			scratches: this.props.data.scratches,
+		},
 		errors: {
 			title: '',
 			deviceCompatible: '',
+			description: '',
 			originalCase: '',
 			scratches: '',
 		},
 	};
+	componentWillUnmount() {
+		this.props.clearForm();
+	}
+
 	schema = {
 		title: Joi.string().required().label('Title'),
 		deviceCompatible: Joi.string().required().label('Compatible Device'),
-		originalCase: Joi.number()
-			.min(1)
+		description: Joi.string().required().label('Description'),
+		originalCase: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
 			}),
-		scratches: Joi.number()
-			.min(1)
+		scratches: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
 			}),
 	};
-	doSubmit = () => {};
+	doSubmit = () => {
+		this.props.updateDetails(this.state.data);
+		this.props.postForm();
+	};
 	render() {
 		return (
 			<React.Fragment>
@@ -76,27 +100,30 @@ class NewGamingCd extends CommonForm<NewGamingCdProps, NewGamingCdState> {
 						</p>
 
 						{this.renderInput(
-							'What is the title of your Video game ?',
+							gamingCdForm.title.name,
 							'title',
 							this.state.errors.title
 						)}
 						{this.renderInput(
-							'Mention the device your game is compatible with.',
+							gamingCdForm.deviceCompatible.name,
 							'deviceCompatible',
 							this.state.errors.deviceCompatible
 						)}
+						{this.renderInput(
+							gamingCdForm.description.name,
+							'description',
+							this.state.errors.description
+						)}
 
 						{this.renderRadioInput(
-							'Do you have the original case of the gaming cd?',
+							gamingCdForm.originalCase.name,
 							'originalCase',
-							'No',
-							'Yes'
+							...gamingCdForm.originalCase.options
 						)}
 						{this.renderRadioInput(
-							'Does your video game have any scratches?',
+							gamingCdForm.scratches.name,
 							'scratches',
-							'No',
-							'Yes'
+							...gamingCdForm.scratches.options
 						)}
 
 						{this.renderProgressBar(1, 1)}
@@ -110,4 +137,20 @@ class NewGamingCd extends CommonForm<NewGamingCdProps, NewGamingCdState> {
 	}
 }
 
-export default NewGamingCd;
+const mapStateToProps = (state: RootState) => {
+	const data = state.entities.postProduct.gamingCdForm;
+	return {
+		data,
+	};
+};
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
+	updateDetails: (data: GamingCdFormSliceState) =>
+		dispatch(updateGamingCdFormDetails(data)),
+	postForm: () => dispatch(postGamingCdForm()),
+	clearForm: () => dispatch(clearGamingCdForm()),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(NewGamingCd);

@@ -4,13 +4,13 @@ import CommonForm, { ErrorContainer } from '../../common/commonForm';
 import Joi from 'joi';
 import { Dispatch } from '@reduxjs/toolkit';
 import {
-	updatePage1Details,
-	Page1,
+	updateBookFormPage1Details,
+	BookFormSlicePage1,
 } from '../../../app/entities/postProduct/bookForm';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../../app/models';
 import { animateScroll as scroll } from 'react-scroll';
-import bookForm from '../../../data/forms/bookForm';
+import bookForm from '../../../data/forms/bookFormData';
 
 export interface BookPage1Props extends RouteComponentProps, ReduxProps {
 	loading: boolean;
@@ -148,7 +148,8 @@ const mapStateToProps = (state: RootState) => {
 	};
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	updatePage1Details: (data: Page1) => dispatch(updatePage1Details(data)),
+	updatePage1Details: (data: BookFormSlicePage1) =>
+		dispatch(updateBookFormPage1Details(data)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

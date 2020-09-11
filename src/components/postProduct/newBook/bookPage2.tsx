@@ -6,12 +6,12 @@ import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 
 import { connect, ConnectedProps } from 'react-redux';
 import {
-	updatePage2Details,
-	Page2,
+	updateBookFormPage2Details,
+	BookFormSlicePage2,
 	postBookForm,
 } from './../../../app/entities/postProduct/bookForm';
 import Joi from 'joi';
-import bookForm from '../../../data/forms/bookForm';
+import bookForm from '../../../data/forms/bookFormData';
 
 export interface BookPage2Props extends RouteComponentProps, ReduxProps {
 	loading: boolean;
@@ -146,7 +146,8 @@ const mapStateToProps = (state: RootState) => {
 	};
 };
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
-	updatePage2Details: (data: Page2) => dispatch(updatePage2Details(data)),
+	updatePage2Details: (data: BookFormSlicePage2) =>
+		dispatch(updateBookFormPage2Details(data)),
 	postBookForm: () => dispatch(postBookForm()),
 });
 
