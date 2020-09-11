@@ -4,6 +4,7 @@ import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
 import { Form } from 'react-bootstrap';
+import gamingConsolesData from '../../../data/forms/gamingConsolesData';
 
 export interface NewGamingConsoleProps extends RouteComponentProps {
 	loading: boolean;
@@ -17,8 +18,8 @@ export interface NewGamingConsoleState {
 		// originalCase: number;
 		// scratches: number;
 		checkbox: number[];
-		brand: string | number;
-		model: string | number;
+		brand: number | string;
+		model: string;
 	};
 	errors: ErrorContainer;
 }
@@ -32,7 +33,7 @@ class NewGamingConsole extends CommonForm<
 			// title: '', deviceCompatible: '', originalCase: 0, scratches: 0
 			checkbox: [] as number[],
 			brand: 0,
-			model: 0,
+			model: '',
 		},
 		errors: {
 			// title: '',
@@ -87,26 +88,30 @@ class NewGamingConsole extends CommonForm<
 							</span>
 						</p>
 
-						{/* {this.renderInput(
-							'What is the title of your Video game ?',
-							'o',
-							''
-						)} */}
-
 						{this.renderRadioInputWithOthers(
-							'What is the title of your Video game ?',
-							'model',
-							'a',
-							'b',
-							'c'
+							gamingConsolesData.brand.name,
+							'brand',
+							...gamingConsolesData.brand.options
 						)}
 
-						{typeof this.state.data.model === 'string' &&
-							this.renderInput(
-								'Mention the device your game is compatible with.',
-								'deviceCompatible',
-								''
-							)}
+						{!gamingConsolesData.brand.options.includes(
+							this.state.data.brand.toString()
+						) && this.renderInput(gamingConsolesData.model.name, 'model', '')}
+
+						{gamingConsolesData.brand.options.includes(
+							this.state.data.brand.toString()
+						) && (
+							<Form.Group controlId='exampleForm.SelectCustom'>
+								<Form.Label>{gamingConsolesData.model.name}</Form.Label>
+								<Form.Control as='select' custom>
+									{gamingConsolesData.model.options[this.state.data.brand].map(
+										(model: string) => (
+											<option>{model}</option>
+										)
+									)}
+								</Form.Control>
+							</Form.Group>
+						)}
 						{/* 
 						{typeof this.state.data.model === 'number' &&
 							this.renderInput(

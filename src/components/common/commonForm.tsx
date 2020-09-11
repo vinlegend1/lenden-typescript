@@ -506,19 +506,19 @@ abstract class CommonForm<
 							key={index}
 							onClick={() => {
 								const data: any = { ...this.state.data };
-								data[name] = index + 1;
+								data[name] = option;
 								this.setState({ data });
 							}}>
 							<input
 								type='radio'
-								checked={this.state.data[name] === index + 1 ? true : false}
+								checked={this.state.data[name] === option ? true : false}
 								readOnly
 							/>
 							<div>
 								<span className='check'></span>
 							</div>
 							<span
-								className={this.state.data[name] === index + 1 ? 'active' : ''}>
+								className={this.state.data[name] === option ? 'active' : ''}>
 								{option}
 							</span>
 						</label>
@@ -528,20 +528,25 @@ abstract class CommonForm<
 						onClick={() => {
 							const data: any = { ...this.state.data };
 
-							if (typeof data[name] !== 'string') {
-								setTimeout(
-									() =>
-										(this.radioInputField.current! as HTMLInputElement).focus(),
-									50
-								);
-								this.radioInputField.current?.focus();
-								data[name] = '';
-								this.setState({ data });
-							}
+							// if (typeof data[name] !== 'string') {
+							setTimeout(
+								() =>
+									(this.radioInputField.current! as HTMLInputElement).focus(),
+								50
+							);
+							this.radioInputField.current?.focus();
+							data[name] = '';
+							this.setState({ data });
+							// }
 						}}>
 						<input
 							type='radio'
-							checked={typeof this.state.data[name] === 'string' ? true : false}
+							checked={
+								rest.includes(this.state.data[name]) ||
+								this.state.data[name] === 0
+									? false
+									: true
+							}
 							readOnly
 						/>
 						<div>
@@ -549,7 +554,10 @@ abstract class CommonForm<
 						</div>
 						<span
 							className={
-								typeof this.state.data[name] === 'string' ? 'active' : ''
+								rest.includes(this.state.data[name]) ||
+								this.state.data[name] === 0
+									? ''
+									: 'active'
 							}>
 							Others
 						</span>
@@ -559,7 +567,8 @@ abstract class CommonForm<
 								className='othersInput'
 								type='text'
 								value={
-									typeof this.state.data[name] === 'number'
+									rest.includes(this.state.data[name]) ||
+									this.state.data[name] === 0
 										? ''
 										: this.state.data[name]
 								}
