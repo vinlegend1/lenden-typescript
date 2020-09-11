@@ -6,11 +6,11 @@ import { Dispatch } from '@reduxjs/toolkit';
 import {
 	updatePage1Details,
 	Page1,
-	questionDetails,
 } from '../../../app/entities/postProduct/bookForm';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../../app/models';
 import { animateScroll as scroll } from 'react-scroll';
+import bookForm from '../../../data/forms/bookForm';
 
 export interface BookPage1Props extends RouteComponentProps, ReduxProps {
 	loading: boolean;
@@ -22,8 +22,8 @@ export interface BookPage1State {
 		title: string;
 		description: string;
 		mrp: number;
-		bindingType: number;
-		inkStains: number;
+		bindingType: string;
+		inkStains: string;
 	};
 	errors: ErrorContainer;
 }
@@ -66,22 +66,20 @@ class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 				});
 				return errors;
 			}),
-		bindingType: Joi.number()
-			.min(1)
+		bindingType: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
 			}),
-		inkStains: Joi.number()
-			.min(1)
+		inkStains: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
@@ -107,30 +105,30 @@ class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
 					</p>
 
 					{this.renderInput(
-						questionDetails.title.name,
+						bookForm.title.name,
 						'title',
 						this.state.errors.title
 					)}
 					{this.renderTextArea(
-						questionDetails.description.name,
+						bookForm.description.name,
 						'description',
 						this.state.errors.description
 					)}
 					{this.renderInput(
-						questionDetails.mrp.name,
+						bookForm.mrp.name,
 						'mrp',
 						this.state.errors.mrp,
 						'number'
 					)}
 					{this.renderRadioInput(
-						questionDetails.bindingType.name,
+						bookForm.bindingType.name,
 						'bindingType',
-						...questionDetails.bindingType.options
+						...bookForm.bindingType.options
 					)}
 					{this.renderRadioInput(
-						questionDetails.inkStains.name,
+						bookForm.inkStains.name,
 						'inkStains',
-						...questionDetails.inkStains.options
+						...bookForm.inkStains.options
 					)}
 
 					{this.renderProgressBar(1, 2)}

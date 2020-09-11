@@ -8,10 +8,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import {
 	updatePage2Details,
 	Page2,
-	questionDetails,
 	postBookForm,
 } from './../../../app/entities/postProduct/bookForm';
 import Joi from 'joi';
+import bookForm from '../../../data/forms/bookForm';
 
 export interface BookPage2Props extends RouteComponentProps, ReduxProps {
 	loading: boolean;
@@ -20,9 +20,9 @@ export interface BookPage2Props extends RouteComponentProps, ReduxProps {
 
 export interface BookPage2State {
 	data: {
-		bookFoxed: number;
-		bindingCondition: number;
-		coverCondition: number;
+		bookFoxed: string;
+		bindingCondition: string;
+		coverCondition: string;
 		bookRepaired: number;
 	};
 	errors: ErrorContainer;
@@ -55,32 +55,29 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 		this.props.postBookForm();
 	};
 	schema = {
-		bookFoxed: Joi.number()
-			.min(1)
+		bookFoxed: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
 			}),
-		bindingCondition: Joi.number()
-			.min(1)
+		bindingCondition: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
 			}),
-		coverCondition: Joi.number()
-			.min(1)
+		coverCondition: Joi.string()
 			.required()
 			.error((errors: any) => {
 				errors.forEach((err: any) => {
-					if (err.code === 'number.min')
+					if (err.code === 'string.empty')
 						err.message = 'This question is required';
 				});
 				return errors;
@@ -107,22 +104,22 @@ class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
 						spots or turn brown like this. This process is called FOXING.
 					</p>
 					{this.renderRadioInput(
-						questionDetails.bookFoxed.name,
+						bookForm.bookFoxed.name,
 						'bookFoxed',
-						...questionDetails.bookFoxed.options
+						...bookForm.bookFoxed.options
 					)}
 					{this.renderRadioInput(
-						questionDetails.bindingCondition.name,
+						bookForm.bindingCondition.name,
 						'bindingCondition',
-						...questionDetails.bindingCondition.options
+						...bookForm.bindingCondition.options
 					)}
 					{this.renderRadioInput(
-						questionDetails.coverCondition.name,
+						bookForm.coverCondition.name,
 						'coverCondition',
-						...questionDetails.coverCondition.options
+						...bookForm.coverCondition.options
 					)}
 					{this.renderRadioInputWithRange(
-						questionDetails.bookRepaired.name,
+						bookForm.bookRepaired.name,
 						'bookRepaired'
 					)}
 					<div style={{ width: 'fit-content', margin: '0 auto' }}>

@@ -6,82 +6,39 @@ export interface Page1 {
 	title: string;
 	description: string;
 	mrp: number;
-	bindingType: number;
-	inkStains: number;
+	bindingType: string;
+	inkStains: string;
 }
 
 export interface Page2 {
-	bookFoxed: number;
-	bindingCondition: number;
-	coverCondition: number;
+	bookFoxed: string;
+	bindingCondition: string;
+	coverCondition: string;
 	bookRepaired: number;
 }
-
-export const questionDetails = {
-	title: {
-		key: 'title',
-		name: 'What is the title of your book?',
-	},
-	description: {
-		key: 'description',
-		name: 'Describe your book in few words',
-	},
-	mrp: {
-		key: 'mrp',
-		name:
-			'What is the MRP as printed on/in the book? (refer back side/inside the book)',
-	},
-	bindingType: {
-		key: 'binding_type',
-		name: 'What is your book’s binding type?',
-		options: ['Paperback', 'Hardbound'],
-	},
-	inkStains: {
-		key: 'ink_stains',
-		name: 'Are there any ink stain inside and outside the book?',
-		options: [
-			'No stains',
-			'Personal marks',
-			'Marks of Ink/Pencil/Highlighter/Whitener, etc.',
-		],
-	},
-	bookFoxed: {
-		key: 'book_foxed',
-		name: 'Is your book foxed such that it has visible spots and browning?',
-		options: ['No spots/browning', 'Visible spots and browning'],
-	},
-	bindingCondition: {
-		key: 'binding_condition',
-		name: 'What is the condition of the binding of your book?',
-		options: ['Undamaged', 'Light wrinkles', 'Heavy Breaks'],
-	},
-	coverCondition: {
-		key: 'front_back_condition',
-		name: 'What is the condition of the front and back side of your book? ',
-		options: [
-			'Not damaged at all',
-			'Slight wear and tear due to normal usage',
-			'Visible tear/cracks and/or bent and worn out edges',
-		],
-	},
-	bookRepaired: {
-		key: 'book_repaired_earlier',
-		name:
-			'Has your book ever been repaired earlier? If yes, mention the number of times it has been repaired.',
-	},
-};
 
 const initialState: Page1 & Page2 = {
 	title: '',
 	description: '',
 	mrp: -1,
-	bindingType: 0,
-	inkStains: 0,
-	bookFoxed: 0,
-	bindingCondition: 0,
-	coverCondition: 0,
+	bindingType: '',
+	inkStains: '',
+	bookFoxed: '',
+	bindingCondition: '',
+	coverCondition: '',
 	bookRepaired: -1,
 };
+
+const mapToViewModal = (data: Page1 & Page2) => ({
+	title: data.title,
+	description: data.description,
+	binding_type: data.bindingType,
+	ink_stains: data.inkStains,
+	book_foxed: data.bookFoxed,
+	binding_condition: data.bindingCondition,
+	front_back_condition: data.coverCondition,
+	book_repaired_earlier: data.bookRepaired,
+});
 
 const slice = createSlice({
 	name: 'bookForm',
@@ -131,24 +88,14 @@ export const postBookForm = () => (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const state = getState().entities.postProduct.bookForm;
-	let derivedState = {};
-
-	for (let item in state) {
-		if (typeof state[item] === 'number' && questionDetails[item].options) {
-			derivedState[questionDetails[item].key] =
-				questionDetails[item].options[state[item] - 1];
-		} else {
-			derivedState[questionDetails[item].key] = state[item];
-		}
-	}
-	console.log(derivedState);
+	const formState = getState().entities.postProduct.bookForm;
+	const data = mapToViewModal(formState);
 
 	dispatch(
 		apiCallBegan({
 			method: 'post',
 			url: 'products/book',
-			data: derivedState,
+			data,
 		})
 	);
 };

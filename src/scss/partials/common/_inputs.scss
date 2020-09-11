@@ -57,14 +57,15 @@ textarea:focus {
 	}
 
 	input,
-	textarea {
+	textarea,
+	select {
 		&:focus {
 			border: 0.2px solid #e1e1e1;
 			box-sizing: border-box;
 			box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
 			border-radius: 8px;
 		}
-		background: #ffffff;
+		// background: #ffffff;
 		border: 0.2px solid #e1e1e1;
 		box-sizing: border-box;
 		box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
@@ -74,6 +75,11 @@ textarea:focus {
 		height: fit-content;
 		color: color(textDark);
 		font-weight: 500;
+	}
+
+	select {
+		background: #fff url('../../../icons/generic/down-black.svg') no-repeat
+			right 1.25rem center/12px 10px;
 	}
 
 	.input-group {
@@ -220,17 +226,27 @@ textarea:focus {
 		position: absolute;
 		opacity: 0;
 		cursor: pointer;
-	}
 
-	input.timesInput {
-		position: absolute;
-		left: 1rem;
-		height: 2rem;
-		top: -0.35rem;
-		opacity: 1;
-		width: 3rem;
-		padding: 0 0.8rem;
-		text-align: center;
+		&.timesInput {
+			position: absolute;
+			left: 1rem;
+			height: 2rem;
+			top: -0.35rem;
+			opacity: 1;
+			width: 3rem;
+			padding: 0 0.8rem;
+			text-align: center;
+		}
+		&.othersInput {
+			position: absolute;
+			left: 1rem;
+			height: 3rem;
+			top: -0.9rem;
+			opacity: 1;
+			width: 12rem;
+			padding: 0 0.8rem;
+			// text-align: center;
+		}
 	}
 }
 

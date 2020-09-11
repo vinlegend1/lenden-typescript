@@ -3,6 +3,7 @@ import CommonForm, { ErrorContainer } from './../../common/commonForm';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
+import { Form } from 'react-bootstrap';
 
 export interface NewGamingConsoleProps extends RouteComponentProps {
 	loading: boolean;
@@ -16,6 +17,8 @@ export interface NewGamingConsoleState {
 		// originalCase: number;
 		// scratches: number;
 		checkbox: number[];
+		brand: string | number;
+		model: string | number;
 	};
 	errors: ErrorContainer;
 }
@@ -28,6 +31,8 @@ class NewGamingConsole extends CommonForm<
 		data: {
 			// title: '', deviceCompatible: '', originalCase: 0, scratches: 0
 			checkbox: [] as number[],
+			brand: 0,
+			model: 0,
 		},
 		errors: {
 			// title: '',
@@ -83,10 +88,49 @@ class NewGamingConsole extends CommonForm<
 						</p>
 
 						{/* {this.renderInput(
-						'What is the title of your Video game ?',
-						'title',
-						this.state.errors.title
-					)}
+							'What is the title of your Video game ?',
+							'o',
+							''
+						)} */}
+
+						{this.renderRadioInputWithOthers(
+							'What is the title of your Video game ?',
+							'model',
+							'a',
+							'b',
+							'c'
+						)}
+
+						{typeof this.state.data.model === 'string' &&
+							this.renderInput(
+								'Mention the device your game is compatible with.',
+								'deviceCompatible',
+								''
+							)}
+						{/* 
+						{typeof this.state.data.model === 'number' &&
+							this.renderInput(
+								'Mention the device your game is compatible with.',
+								'deviceCompatible',
+								''
+							)} */}
+
+						{typeof this.state.data.model === 'number' && (
+							<Form.Group controlId='exampleForm.SelectCustom'>
+								<Form.Label>
+									Mention the device your game is compatible with.
+								</Form.Label>
+								<Form.Control as='select' custom>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</Form.Control>
+							</Form.Group>
+						)}
+
+						{/*
 					{this.renderInput(
 						'Mention the device your game is compatible with.',
 						'deviceCompatible',

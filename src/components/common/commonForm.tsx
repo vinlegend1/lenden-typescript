@@ -308,19 +308,19 @@ abstract class CommonForm<
 							key={index}
 							onClick={() => {
 								const data: any = { ...this.state.data };
-								data[name] = index + 1;
+								data[name] = option;
 								this.setState({ data });
 							}}>
 							<input
 								type='radio'
-								checked={this.state.data[name] === index + 1 ? true : false}
+								checked={this.state.data[name] === option ? true : false}
 								readOnly
 							/>
 							<div>
 								<span className='check'></span>
 							</div>
 							<span
-								className={this.state.data[name] === index + 1 ? 'active' : ''}>
+								className={this.state.data[name] === option ? 'active' : ''}>
 								{option}
 							</span>
 						</label>
@@ -490,6 +490,98 @@ abstract class CommonForm<
 			</Form.Group>
 		);
 	};
+
+	renderRadioInputWithOthers = (
+		label: string,
+		name: string,
+		...rest: string[]
+	) => {
+		return (
+			<Form.Group className='radioInput'>
+				<Form.Label>{label}</Form.Label>
+				<div className='radioGroup'>
+					{rest.map((option, index) => (
+						<label
+							className='radio'
+							key={index}
+							onClick={() => {
+								const data: any = { ...this.state.data };
+								data[name] = index + 1;
+								this.setState({ data });
+							}}>
+							<input
+								type='radio'
+								checked={this.state.data[name] === index + 1 ? true : false}
+								readOnly
+							/>
+							<div>
+								<span className='check'></span>
+							</div>
+							<span
+								className={this.state.data[name] === index + 1 ? 'active' : ''}>
+								{option}
+							</span>
+						</label>
+					))}
+					<label
+						className='radio'
+						onClick={() => {
+							const data: any = { ...this.state.data };
+
+							if (typeof data[name] !== 'string') {
+								setTimeout(
+									() =>
+										(this.radioInputField.current! as HTMLInputElement).focus(),
+									50
+								);
+								this.radioInputField.current?.focus();
+								data[name] = '';
+								this.setState({ data });
+							}
+						}}>
+						<input
+							type='radio'
+							checked={typeof this.state.data[name] === 'string' ? true : false}
+							readOnly
+						/>
+						<div>
+							<span className='check'></span>
+						</div>
+						<span
+							className={
+								typeof this.state.data[name] === 'string' ? 'active' : ''
+							}>
+							Others
+						</span>
+						<div>
+							<Form.Control
+								ref={this.radioInputField}
+								className='othersInput'
+								type='text'
+								value={
+									typeof this.state.data[name] === 'number'
+										? ''
+										: this.state.data[name]
+								}
+								onChange={(e: React.ChangeEvent) => {
+									const data: any = { ...this.state.data };
+									data[name] = (e.currentTarget as HTMLInputElement).value;
+									this.setState({ data });
+								}}
+							/>
+						</div>
+					</label>
+				</div>
+				<Form.Text
+					className={this.state.errors[name] ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{this.state.errors[name]}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
+
+	renderDropdownInput = (label: string, name: string, ...rest: string[]) => {};
 }
 
 export default CommonForm;
