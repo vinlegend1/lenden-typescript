@@ -140,58 +140,7 @@ textarea:focus {
 		}
 	}
 }
-
-// .radioInput {
-// 	.radioGroup {
-// 		margin-left: 1rem;
-// 		.pretty {
-// 			width: fit-content;
-// 			font-size: 0px;
-// 			color: #b4b4b4;
-// 			display: block;
-// 			margin: 0.8rem 0;
-// 			position: relative;
-
-// 			input {
-// 				&:checked {
-// 					& ~ .state {
-// 						label {
-// 							color: color(secondary);
-// 							font-weight: 500;
-// 							&:before {
-// 								border: 1px solid color(secondary);
-// 							}
-// 							&:after {
-// 								background-color: color(secondary) !important;
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-
-// 			.state {
-// 				label {
-// 					font-size: 13px;
-// 					color: #535353;
-// 					font-weight: 400;
-// 				}
-// 			}
-// 			input.notPretty {
-// 				display: block;
-// 				position: absolute;
-// 				left: 3.5rem;
-// 				height: 2rem;
-// 				top: -0.5rem;
-// 				opacity: 1;
-// 				width: 3rem;
-// 				padding: 0 0.8rem;
-// 				text-align: center;
-// 			}
-// 		}
-// 	}
-// }
-
-.radioGroup {
+.inputGroup {
 	margin-top: 0.2rem;
 	background-color: white;
 	border: 0.2px solid #e1e1e1;
@@ -199,6 +148,9 @@ textarea:focus {
 	box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
 	border-radius: 8px;
 	padding: 1rem 0;
+}
+.radioGroup {
+	@extend .inputGroup;
 }
 
 .radio {
@@ -247,7 +199,7 @@ textarea:focus {
 				width: 100%;
 				height: 100%;
 				border-radius: 100%;
-				background-color: black;
+				background-color: color(secondary);
 				transform: scale(0.6);
 			}
 		}
@@ -279,5 +231,81 @@ textarea:focus {
 		width: 3rem;
 		padding: 0 0.8rem;
 		text-align: center;
+	}
+}
+
+.checkBoxGroup {
+	@extend .inputGroup;
+}
+
+.checkbox {
+	display: flex;
+	align-content: center;
+	align-items: flex-start;
+	// padding-left: 1rem;
+	cursor: pointer;
+	font-size: 13px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	flex-wrap: nowrap;
+	width: fit-content;
+	margin: 0.5rem 1rem !important;
+
+	span {
+		font-weight: 400;
+		color: #535353;
+	}
+
+	span.active {
+		font-weight: 500;
+		color: color(secondary);
+	}
+
+	div {
+		position: relative;
+
+		.check {
+			display: inline-block;
+			margin-top: 0.2rem;
+			height: 1rem;
+			width: 1rem;
+			background-color: #fff;
+			border-radius: 4px;
+			border: 1px solid #c4c4c4;
+			position: relative;
+
+			margin-right: 0.5rem;
+
+			&:after {
+				content: '';
+				display: none;
+				width: 100%;
+				height: 100%;
+				border-radius: 100%;
+				// background-color: color(secondary);
+				margin-left: 0.2px;
+				background-image: url('./../../../icons/generic/tick.svg');
+				transform: scale(0.75);
+			}
+		}
+	}
+
+	input {
+		&:checked {
+			& ~ div {
+				.check {
+					border: 1px solid color(secondary);
+
+					&:after {
+						display: block !important;
+					}
+				}
+			}
+		}
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
 	}
 }

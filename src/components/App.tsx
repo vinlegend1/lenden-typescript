@@ -20,6 +20,7 @@ import UserProtectedRoute from './common/userProtectedRoute';
 import PostProduct from './postProduct';
 import NewBook from './postProduct/newBook';
 import NewGamingCd from './postProduct/newGamingCd/index';
+import NewGamingConsole from './postProduct/newGamingConsole';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -74,6 +75,10 @@ const App: React.FC = () => {
 					<Redirect exact from='/post-product/book' to='/post-product/book/1' />
 					<Route path='/post-product/book' component={NewBook} />
 					<Route path='/post-product/gaming-cd' component={NewGamingCd} />
+					<Route
+						path='/post-product/gaming-console'
+						component={NewGamingConsole}
+					/>
 
 					<Route path='/post-product' component={PostProduct} />
 

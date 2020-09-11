@@ -443,6 +443,53 @@ abstract class CommonForm<
 				/>
 			);
 	};
+
+	renderCheckBoxInput = (label: string, name: string, ...rest: string[]) => {
+		return (
+			<Form.Group className='checkBoxInput'>
+				<Form.Label>{label}</Form.Label>
+				<div className='checkBoxGroup'>
+					{rest.map((option, index) => (
+						<label
+							className='checkbox'
+							onClick={e => {
+								e.preventDefault();
+								const data: any = { ...this.state.data };
+								if (data[name].includes(index + 1)) {
+									data[name] = data[name].filter(
+										(c: number) => c !== index + 1
+									);
+								} else data[name].push(index + 1);
+
+								this.setState({ data });
+							}}>
+							<input
+								type='checkbox'
+								checked={
+									this.state.data[name].includes(index + 1) ? true : false
+								}
+								readOnly
+							/>
+							<div>
+								<span className='check'></span>
+							</div>
+							<span
+								className={
+									this.state.data[name].includes(index + 1) ? 'active' : ''
+								}>
+								{option}
+							</span>
+						</label>
+					))}
+				</div>
+				<Form.Text
+					className={this.state.errors[name] ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{this.state.errors[name]}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
 }
 
 export default CommonForm;

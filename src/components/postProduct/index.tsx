@@ -37,7 +37,12 @@ const PostProduct: React.FC<PostProductProps> = props => {
 						</div>
 					</div>
 					<div className='row'>
-						<div className='col' style={{ borderBottom: 'none' }}>
+						<div
+							className='col'
+							style={{ borderBottom: 'none' }}
+							onClick={() =>
+								props.history.push('/post-product/gaming-console')
+							}>
 							<CategoryIcons name='console' />
 							<p>Consoles</p>
 						</div>
