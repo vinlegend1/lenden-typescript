@@ -1,5 +1,6 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { ActionWithPayload, RootState } from './../../models/index';
+import { apiCallBegan } from './../../api';
 
 export interface GamingCdFormSliceState {
 	title: string;
@@ -19,10 +20,10 @@ const initialState: GamingCdFormSliceState = {
 
 const mapToViewModal = (data: GamingCdFormSliceState) => ({
 	title: data.title,
-	device_compatible: data.deviceCompatible,
+	devicename: data.deviceCompatible,
 	description: data.description,
-	original_case: data.originalCase,
-	scratches: data.scratches,
+	originalcase: data.originalCase,
+	anyscratches: data.scratches,
 });
 
 const slice = createSlice({
@@ -66,13 +67,11 @@ export const postGamingCdForm = () => (
 	const formState = getState().entities.postProduct.gamingCdForm;
 	const data = mapToViewModal(formState);
 
-	// dispatch(
-	// 	apiCallBegan({
-	// 		method: 'post',
-	// 		url: 'products/gaming-cd',
-	// 		data,
-	// 	})
-	// );
-
-	//TODO API
+	dispatch(
+		apiCallBegan({
+			method: 'post',
+			url: 'products/gamingcd',
+			data,
+		})
+	);
 };
