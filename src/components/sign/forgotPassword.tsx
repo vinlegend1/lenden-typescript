@@ -1,5 +1,5 @@
 import React from 'react';
-import CommonForm from './../common/commonForm';
+import UserForm, { UserFormState } from '../../classes/userForm';
 import Joi from 'joi';
 import GenericNav from '../common/genericNav';
 import { RouteComponentProps } from 'react-router-dom';
@@ -7,23 +7,23 @@ import { Modal } from 'react-bootstrap';
 import GenericIcons from '../../icons/generic';
 import { RootState } from '../../app/models';
 import { forgotPassword } from '../../app/auth/login';
-import { connect } from 'react-redux';
-import { Dispatch, Action } from '@reduxjs/toolkit';
+import { connect, ConnectedProps } from 'react-redux';
+import { Dispatch } from '@reduxjs/toolkit';
 
-export interface ForgotPasswordProps extends RouteComponentProps {
-	loading: boolean;
-	error: string;
-	forgotPassword: (email: string) => Action;
-}
+export interface ForgotPasswordProps extends RouteComponentProps, ReduxProps {}
 
-export interface ForgotPasswordState {
-	data: { email: string };
-	errors: { email: string };
+export interface ForgotPasswordState extends UserFormState {
+	data: {
+		email: string;
+	};
+	errors: {
+		email: string;
+	};
 	showModal: boolean;
 	sentOnce: boolean;
 }
 
-class ForgotPassword extends CommonForm<
+class ForgotPassword extends UserForm<
 	ForgotPasswordProps,
 	ForgotPasswordState
 > {
@@ -65,9 +65,7 @@ class ForgotPassword extends CommonForm<
 						'Email',
 						'email',
 						this.state.errors.email,
-						undefined,
-						undefined,
-						false,
+						'text',
 						true
 					)}
 
@@ -127,4 +125,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 	forgotPassword: (email: string) => dispatch(forgotPassword(email)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(ForgotPassword);

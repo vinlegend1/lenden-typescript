@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import CommonForm, { ErrorContainer } from '../../common/commonForm';
+import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
 import Joi from 'joi';
 import { Dispatch } from '@reduxjs/toolkit';
 import {

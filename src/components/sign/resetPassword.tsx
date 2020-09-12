@@ -1,10 +1,10 @@
 import React from 'react';
-import { RouteComponentProps, Redirect } from 'react-router-dom';
-import CommonForm, { ErrorContainer, PassType } from './../common/commonForm';
+import { RouteComponentProps } from 'react-router-dom';
+import UserForm, { UserFormState } from '../../classes/userForm';
 import Joi from 'joi';
 import GenericNav from '../common/genericNav';
-import { connect } from 'react-redux';
-import { Dispatch, Action } from '@reduxjs/toolkit';
+import { connect, ConnectedProps } from 'react-redux';
+import { Dispatch } from '@reduxjs/toolkit';
 import { RootState } from '../../app/models';
 import PageLoader from '../common/pageLoader';
 import {
@@ -14,32 +14,29 @@ import {
 } from './../../app/auth/login';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
+import { PassType } from '../../app/models/auth';
 
 interface MatchParams {
 	token: string;
 }
 
-export interface ResetPasswordProps extends RouteComponentProps<MatchParams> {
-	loading: boolean;
-	error: string;
-	loadingPage: boolean | undefined;
-	verifyToken: (token: string) => Action;
-	resetPassword: (data: { token: string; password: string }) => Action;
-}
+export interface ResetPasswordProps
+	extends RouteComponentProps<MatchParams>,
+		ReduxProps {}
 
-export interface ResetPasswordState {
+export interface ResetPasswordState extends UserFormState {
 	data: {
 		newPassword: string;
 		confirmPassword: string;
 	};
-	errors: ErrorContainer;
+	errors: { newPassword: string; confirmPassword: string };
 	passType: {
 		newPassword: PassType;
 	};
 	showModal: boolean;
 }
 
-class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
+class ResetPassword extends UserForm<ResetPasswordProps, ResetPasswordState> {
 	state = {
 		data: {
 			newPassword: '',
@@ -110,19 +107,17 @@ class ResetPassword extends CommonForm<ResetPasswordProps, ResetPasswordState> {
 							Just fill in your new password and we'll change it for you !
 						</h2>
 
-						{this.renderInput(
+						{this.renderPassInput(
 							'New Password',
 							'newPassword',
 							this.state.errors.newPassword,
-							'password',
 							undefined,
 							true
 						)}
-						{this.renderInput(
+						{this.renderPassInput(
 							'Confirm Password',
 							'confirmPassword',
 							this.state.errors.confirmPassword,
-							'password',
 							undefined,
 							false,
 							true
@@ -182,4 +177,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 		dispatch(resetPassword(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(ResetPassword);

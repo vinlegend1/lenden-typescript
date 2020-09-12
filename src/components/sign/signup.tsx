@@ -1,5 +1,6 @@
 import React from 'react';
-import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
+import { PassType } from '../../classes/commonForm';
+import UserForm, { UserFormState } from '../../classes/userForm';
 import GenericNav from '../common/genericNav';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
@@ -11,28 +12,29 @@ import {
 	SignUpUserModel,
 } from '../../app/auth/signup';
 
-import { Dispatch, Action } from 'redux';
-import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
 import GenericIcons from '../../icons/generic';
-import { Modal, Button } from 'react-bootstrap';
-
+import { Modal } from 'react-bootstrap';
 Joi.extend(require('joi-phone-number'));
-export interface SignupProps extends RouteComponentProps {
-	loading: boolean;
-	error: string;
-	signUpUser: (data: SignUpUserModel) => Action;
-	updateError: (error: string) => Action;
-	updateSuccess: (error: string) => Action;
-}
 
-export interface SignupState {
+export interface SignupProps extends RouteComponentProps, ReduxProps {}
+
+export interface SignupState extends UserFormState {
 	data: {
 		name: string;
 		email: string;
 		password: string;
 		mobileNumber: string;
 	};
-	errors: ErrorContainer;
+	errors: {
+		name: string;
+		email: string;
+		password: string;
+		mobileNumber: string;
+		termsConditions: string;
+	};
+
 	success: string;
 	passType: {
 		password: PassType;
@@ -41,7 +43,7 @@ export interface SignupState {
 	showModal: boolean;
 }
 
-class Signup extends CommonForm<SignupProps, SignupState> {
+class Signup extends UserForm<SignupProps, SignupState> {
 	state = {
 		data: {
 			name: '',
@@ -111,20 +113,17 @@ class Signup extends CommonForm<SignupProps, SignupState> {
 						<h2>Please register with us to start your barter journey !</h2>
 
 						{this.renderInput('Name *', 'name', this.state.errors.name)}
-						{this.renderInput(
+						{this.renderMobileNumberInput(
 							'Mobile Number *',
-							'mobileNumber',
-							this.state.errors.mobileNumber,
-							'number'
+							this.state.errors.mobileNumber
 						)}
 						{this.renderInput('Email *', 'email', this.state.errors.email)}
-						{this.renderInput(
+						{this.renderPassInput(
 							'Password *',
 							'password',
 							this.state.errors.password,
-							'',
 							'Password must be atleast 6 characters',
-							undefined,
+							true,
 							true
 						)}
 
@@ -208,4 +207,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 	updateSuccess: (message: string) => dispatch(updateSuccess(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxProps = ConnectedProps<typeof connector>;
+export default connector(Signup);

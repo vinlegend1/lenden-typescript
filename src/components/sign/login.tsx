@@ -1,5 +1,5 @@
 import React from 'react';
-import CommonForm, { PassType, ErrorContainer } from './../common/commonForm';
+import UserForm, { UserFormState } from '../../classes/userForm';
 import GenericNav from '../common/genericNav';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
@@ -10,30 +10,20 @@ import {
 	SignInUser,
 	verifyUser,
 } from '../../app/auth/login';
-import { Dispatch, Action } from 'redux';
-import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect, ConnectedProps } from 'react-redux';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
 import {
 	sendVerificationEmail,
 	verifyEmailErrors,
 } from './../../app/auth/login';
+import { PassType } from '../../classes/commonForm';
 
-export interface LoginProps extends RouteComponentProps {
-	error: string;
-	loading: boolean;
-	modalLoading: boolean | undefined;
-	logInUser: (data: SignInUser, location: any) => Action;
-	updateError: (error: string) => Action;
-	verifyUserAccount: (email: string) => Action;
-	sendVerificationEmail: (email: string) => Action;
-}
-export interface LoginState {
-	data: {
-		email: string;
-		password: string;
-	};
-	errors: ErrorContainer;
+export interface LoginProps extends RouteComponentProps, ReduxProps {}
+export interface LoginState extends UserFormState {
+	data: { email: string; password: string };
+	errors: { email: string; password: string };
 	passType: {
 		password: PassType;
 	};
@@ -41,7 +31,7 @@ export interface LoginState {
 	showSuccessModal: boolean;
 }
 
-class Login extends CommonForm<LoginProps, LoginState> {
+class Login extends UserForm<LoginProps, LoginState> {
 	state = {
 		data: { email: '', password: '' },
 		errors: { email: '', password: '' },
@@ -83,13 +73,12 @@ class Login extends CommonForm<LoginProps, LoginState> {
 						<h2>Please login to your account</h2>
 
 						{this.renderInput('Email', 'email', this.state.errors.email)}
-						{this.renderInput(
+						{this.renderPassInput(
 							'Password',
 							'password',
 							this.state.errors.password,
-							'password',
 							undefined,
-							undefined,
+							true,
 							true
 						)}
 
@@ -197,5 +186,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 	sendVerificationEmail: (email: string) =>
 		dispatch(sendVerificationEmail(email)),
 });
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(Login);

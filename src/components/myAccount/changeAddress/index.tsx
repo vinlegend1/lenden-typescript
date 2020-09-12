@@ -1,8 +1,8 @@
 import React from 'react';
 import Joi from 'joi';
-import CommonForm, { ErrorContainer } from './../../common/commonForm';
+import UserForm, { UserFormState } from '../../../classes/userForm';
 import { RootState } from '../../../app/models';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import SubNav from '../../common/subNav';
 import { RouteComponentProps } from 'react-router-dom';
 import _ from 'lodash';
@@ -13,19 +13,22 @@ import { updateAddress } from '../../../app/auth/userDetails';
 import { Action } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
-export interface ChangeAddressProps extends RouteComponentProps {
-	loading: boolean;
-	error: string;
-	address: UserAddress;
-	updateAddress: (address: UserAddress) => any;
-}
+export interface ChangeAddressProps extends RouteComponentProps, ReduxProps {}
 
-export interface ChangeAddressState {
+export interface ChangeAddressState extends UserFormState {
 	data: UserAddress;
-	errors: ErrorContainer;
+	errors: {
+		city: string;
+		country: string;
+		houseNumber: string;
+		area: string;
+		state: string;
+		landmark: string;
+		postalCode: string;
+	};
 }
 
-class ChangeAddress extends CommonForm<ChangeAddressProps, ChangeAddressState> {
+class ChangeAddress extends UserForm<ChangeAddressProps, ChangeAddressState> {
 	state = {
 		data: this.props.address,
 		errors: {
@@ -126,11 +129,15 @@ const mapStateToProps = (state: RootState) => {
 			state: '',
 			landmark: '',
 			postalCode: '',
-		},
+		} as UserAddress,
 	};
 };
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
 	updateAddress: (data: UserAddress) => dispatch(updateAddress(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChangeAddress);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(ChangeAddress);

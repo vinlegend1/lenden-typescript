@@ -1,12 +1,14 @@
+const consoleTypes = ['Sony', 'Microsoft (X-BOX)', 'Nintendo'];
+
 export default {
 	brand: {
 		name: 'Please select your brand',
-		options: ['Sony', 'Microsoft (X-BOX)', 'Nintendo'],
+		options: [...consoleTypes],
 	},
 	model: {
 		name: 'Please select Model of your Console',
 		options: {
-			Sony: [
+			[consoleTypes[0]]: [
 				'PS4 500GB',
 				'PS4 1TB',
 				'PS4 2TB',
@@ -42,7 +44,7 @@ export default {
 				'PS3 Super Slim	White 500GB',
 				'PS3 Super Slim	RED	12GB',
 			],
-			'Microsoft (X-BOX)': [
+			[consoleTypes[1]]: [
 				'XBox One 500GB',
 				'XBox One 1TB',
 				'XBox One S 500GB',
@@ -70,7 +72,7 @@ export default {
 				'Xbox 360 (S) Slim White 4GB',
 				'Xbox 360 (S) Slim Pal Region 4GB',
 			],
-			Nintendo: ['Switch 32GB', 'Switch Lite 32GB'],
+			[consoleTypes[2]]: ['Switch 32GB', 'Switch Lite 32GB'],
 		},
 	},
 	description: {

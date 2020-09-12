@@ -2,8 +2,8 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { RootState } from '../../../app/models';
 import { Dispatch, Action } from 'redux';
-import { connect } from 'react-redux';
-import CommonForm, { ErrorContainer } from '../../common/commonForm';
+import { connect, ConnectedProps } from 'react-redux';
+import UserForm, { UserFormState } from '../../../classes/userForm';
 import Joi from 'joi';
 import EditGravatar from './editGravatar';
 import _ from 'lodash';
@@ -11,30 +11,27 @@ import SubNav from '../../common/subNav';
 import { editProfile } from './../../../app/auth/userDetails';
 import { toast } from 'react-toastify';
 import ToastMessage from '../../common/toastMessage';
-import { UserDetails } from './../../../app/models/auth';
 
 interface EditProfileData {
 	name: string;
 	mobileNumber: string;
 	gravatarId: string;
 }
-export interface EditProfileProps extends RouteComponentProps {
-	error: string;
-	loading: boolean;
-	user: UserDetails;
-	editProfile: (data: EditProfileData) => Action;
-}
+export interface EditProfileProps extends RouteComponentProps, ReduxProps {}
 
-export interface EditProfileState {
-	gravatar: string;
+export interface EditProfileState extends UserFormState {
 	data: {
 		name: string;
 		mobileNumber: string;
 	};
-	errors: ErrorContainer;
+	errors: {
+		name: string;
+		mobileNumber: string;
+	};
+	gravatar: string;
 }
 
-class EditProfile extends CommonForm<EditProfileProps, EditProfileState> {
+class EditProfile extends UserForm<EditProfileProps, EditProfileState> {
 	state = {
 		gravatar: this.props.user.gravatarId,
 		data: {
@@ -103,11 +100,9 @@ class EditProfile extends CommonForm<EditProfileProps, EditProfileState> {
 				/>
 				<div className='container editDetailsContainer'>
 					{this.renderInput('Full Name', 'name', this.state.errors.name)}
-					{this.renderInput(
+					{this.renderMobileNumberInput(
 						'Mobile Number',
-						'mobileNumber',
-						this.state.errors.mobileNumber,
-						'number'
+						this.state.errors.mobileNumber
 					)}
 					{this.renderLoader(this.props.loading)}
 					{this.renderErrorAlert()}
@@ -139,4 +134,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 	editProfile: (data: EditProfileData) => dispatch(editProfile(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(EditProfile);

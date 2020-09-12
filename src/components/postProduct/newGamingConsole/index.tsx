@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CommonForm, { ErrorContainer } from './../../common/commonForm';
+import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';

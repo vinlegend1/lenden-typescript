@@ -5,15 +5,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { BarLoader } from 'react-spinners';
 import { Action } from 'redux';
-import GenericIcons from '../../icons/generic';
-import FileBox from './FileBox';
+import GenericIcons from '../icons/generic';
+import FileBox from '../components/common/FileBox';
+import { ActionWithPayload } from './../app/models/index';
 
 export interface ErrorContainer {
 	[key: string]: string;
 }
 
 export type PassType = 'password' | 'text';
-interface FormState {
+
+export interface CommonFormProps {
+	loading?: boolean;
+	error?: string;
+	success?: string;
+	updateSuccess?: (success: string) => ActionWithPayload<string>;
+	updateError?: (error: string) => ActionWithPayload<string>;
+}
+
+export interface CommonFormState {
 	data: {
 		[key: string]: any;
 	};
@@ -24,24 +34,15 @@ interface FormState {
 	images?: {
 		[key: string]: File;
 	};
-	// images?: File[];
-}
-
-interface FormProps {
-	loading?: boolean;
-	error?: string;
-	success?: string;
-
-	updateSuccess?: (success: string) => Action;
-	updateError?: (success: string) => Action;
 }
 
 abstract class CommonForm<
-	T extends FormProps,
-	U extends FormState
+	T extends CommonFormProps,
+	U extends CommonFormState
 > extends Component<T, U> {
 	abstract schema: {};
 	abstract doSubmit: () => void;
+	// abstract clearMessages?: () => void;
 
 	radioInputField = React.createRef<HTMLInputElement>();
 
@@ -71,6 +72,8 @@ abstract class CommonForm<
 
 	handleSubmit = async (e: React.MouseEvent | React.KeyboardEvent) => {
 		e.preventDefault();
+
+		// if (this.clearMessages) this.clearMessages();
 
 		if (this.props.updateError) this.props.updateError('');
 		if (this.props.updateSuccess) this.props.updateSuccess('');
@@ -126,20 +129,20 @@ abstract class CommonForm<
 		name: string,
 		errorMessage: string,
 		type?: string,
-		placeholder?: string,
-		eyeRequired?: boolean,
+		// placeholder?: string,
+		// eyeRequired?: boolean,
 		submitOnEnter?: boolean
 	) => {
-		if (name === 'password' || eyeRequired)
-			return this.renderPassInput(
-				label,
-				name,
-				errorMessage,
-				placeholder,
-				submitOnEnter
-			);
-		if (name === 'mobileNumber')
-			return this.renderMobileNumberInput(label, errorMessage, submitOnEnter);
+		// if (name === 'password' || eyeRequired)
+		// 	return this.renderPassInput(
+		// 		label,
+		// 		name,
+		// 		errorMessage,
+		// 		placeholder,
+		// 		submitOnEnter
+		// 	);
+		// if (name === 'mobileNumber')
+		// 	return this.renderMobileNumberInput(label, errorMessage, submitOnEnter);
 		return (
 			<Form.Group controlId={name}>
 				<Form.Label>{label}</Form.Label>
@@ -191,111 +194,6 @@ abstract class CommonForm<
 			</Form.Group>
 		);
 	};
-
-	private renderPassInput = (
-		label: string,
-		name: string,
-		errorMessage?: string,
-		placeholder?: string,
-		submitOnEnter?: boolean
-	) => {
-		return (
-			<Form.Group controlId={name}>
-				<Form.Label>{label}</Form.Label>
-				<InputGroup>
-					<Form.Control
-						className='input passwordInput'
-						name={name}
-						type={this.state.passType![name]}
-						value={this.state.data[name]}
-						onChange={this.handleChange}
-						onKeyPress={(event: React.KeyboardEvent) => {
-							if (submitOnEnter && event.key === 'Enter')
-								this.handleSubmit(event);
-						}}
-					/>
-
-					<InputGroup.Append>
-						<InputGroup.Text
-							className='passwordInputText'
-							onClick={() => {
-								if (this.state.passType![name] === 'password') {
-									let passType = { ...this.state.passType }!;
-									passType[name] = 'text';
-									return setTimeout(() => this.setState({ passType }));
-								}
-
-								if (this.state.passType![name] === 'text') {
-									let passType = { ...this.state.passType }!;
-									passType[name] = 'password';
-									return setTimeout(() => this.setState({ passType }));
-								}
-							}}
-							onMouseDown={(e: React.MouseEvent) => e.preventDefault()}>
-							<div>
-								{this.state.passType![name] === 'password' ? (
-									<FontAwesomeIcon icon={faEye} />
-								) : (
-									<FontAwesomeIcon icon={faEyeSlash} />
-								)}
-							</div>
-						</InputGroup.Text>
-					</InputGroup.Append>
-				</InputGroup>
-				<Form.Text
-					className={errorMessage ? 'active' : ''}
-					style={{
-						opacity: placeholder ? 1 : 0,
-						color: errorMessage ? '' : '#b4b4b4',
-					}}>
-					{errorMessage ||
-						(placeholder &&
-							Object.keys(this.state.errors).includes('password') && (
-								<React.Fragment>
-									<GenericIcons name='info' />
-									{placeholder}
-								</React.Fragment>
-							)) ||
-						''}
-				</Form.Text>
-			</Form.Group>
-		);
-	};
-
-	private renderMobileNumberInput = (
-		label: string,
-		errorMessage?: string,
-		submitOnEnter?: boolean
-	) => (
-		<Form.Group controlId='mobileNumber' className='mobileNumberFormGroup'>
-			<Form.Label>{label}</Form.Label>
-
-			<InputGroup>
-				<InputGroup.Prepend>
-					<InputGroup.Text className='mobileNumberInputText'>
-						+91
-					</InputGroup.Text>
-				</InputGroup.Prepend>
-				<Form.Control
-					className='input mobileNumberInput'
-					name='mobileNumber'
-					type='number'
-					value={this.state.data.mobileNumber}
-					onChange={this.handleChange}
-					onKeyPress={(event: React.KeyboardEvent) => {
-						if (submitOnEnter && event.key === 'Enter')
-							this.handleSubmit(event);
-					}}
-				/>
-			</InputGroup>
-
-			<Form.Text
-				className={errorMessage ? 'active' : ''}
-				style={{ marginLeft: '1rem' }}>
-				{errorMessage}
-			</Form.Text>
-		</Form.Group>
-	);
 
 	renderRadioInput = (label: string, name: string, ...rest: string[]) => {
 		return (

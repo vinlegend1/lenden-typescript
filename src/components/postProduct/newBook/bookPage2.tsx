@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import CommonForm, { ErrorContainer } from '../../common/commonForm';
+import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
 import { RootState } from '../../../app/models';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 

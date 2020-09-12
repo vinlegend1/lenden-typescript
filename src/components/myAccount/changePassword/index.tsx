@@ -1,34 +1,24 @@
 import * as React from 'react';
-import CommonForm, {
-	ErrorContainer,
-	PassType,
-} from './../../common/commonForm';
+import UserForm, { UserFormState } from '../../../classes/userForm';
 import SubNav from '../../common/subNav';
 import { RouteComponentProps } from 'react-router-dom';
 import Joi from 'joi';
 import { RootState } from '../../../app/models';
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 import { changeUserPassword } from '../../../app/auth/userDetails';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import GenericIcons from '../../../icons/generic';
+import { PassType } from '../../../app/models/auth';
 
-export interface changePasswordProps extends RouteComponentProps {
-	loading: boolean;
-	error: string;
-	changeUserPassword: (data: {
-		newPassword: string;
-		oldPassword: string;
-	}) => Action;
-}
+export interface changePasswordProps extends RouteComponentProps, ReduxProps {}
 
-export interface changePasswordState {
+export interface changePasswordState extends UserFormState {
 	data: {
 		currentPassword: string;
 		newPassword: string;
 		confirmPassword: string;
 	};
-	errors: ErrorContainer;
 	passType: {
 		currentPassword: PassType;
 		newPassword: PassType;
@@ -36,7 +26,7 @@ export interface changePasswordState {
 	showModal: boolean;
 }
 
-class changePassword extends CommonForm<
+class changePassword extends UserForm<
 	changePasswordProps,
 	changePasswordState
 > {
@@ -84,29 +74,26 @@ class changePassword extends CommonForm<
 						Just fill in your existing and new password and we'll change it for
 						you !
 					</h2>
-					{this.renderInput(
+					{this.renderPassInput(
 						'Current Password',
 						'currentPassword',
 						this.state.errors.currentPassword,
-						'password',
 						undefined,
 						true
 					)}
-					{this.renderInput(
+					{this.renderPassInput(
 						'New Password',
 						'newPassword',
 						this.state.errors.newPassword,
-						'password',
 						undefined,
 						true
 					)}
-					{this.renderInput(
+					{this.renderPassInput(
 						'Confirm Password',
 						'confirmPassword',
 						this.state.errors.confirmPassword,
-						'password',
 						undefined,
-						undefined,
+						false,
 						true
 					)}
 					{this.renderErrorAlert()}
@@ -117,7 +104,7 @@ class changePassword extends CommonForm<
 					</div>
 					<div
 						className='lightButton'
-						onClick={() => this.props.history.push('/my-account')}>
+						onClick={() => this.props.history.goBack()}>
 						Cancel
 					</div>
 				</div>
@@ -157,4 +144,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 		dispatch(changeUserPassword(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(changePassword);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(changePassword);
