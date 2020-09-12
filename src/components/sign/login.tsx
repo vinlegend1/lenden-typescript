@@ -1,5 +1,5 @@
 import React from 'react';
-import UserForm, { UserFormState } from '../../classes/userForm';
+import UserForm, { UserFormState, PassType } from '../../classes/userForm';
 import GenericNav from '../common/genericNav';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
@@ -18,7 +18,6 @@ import {
 	sendVerificationEmail,
 	verifyEmailErrors,
 } from './../../app/auth/login';
-import { PassType } from '../../classes/commonForm';
 
 export interface LoginProps extends RouteComponentProps, ReduxProps {}
 export interface LoginState extends UserFormState {

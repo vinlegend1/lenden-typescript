@@ -5,10 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import GenericIcons from '../icons/generic';
 
+export type PassType = 'password' | 'text';
+
 export interface UserFormProps extends CommonFormProps {}
 
-export interface UserFormState extends CommonFormState {}
-
+export interface UserFormState extends CommonFormState {
+	passType?: {
+		[key: string]: PassType;
+	};
+}
 abstract class UserForm<
 	T extends UserFormProps,
 	U extends UserFormState

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import UserForm, { UserFormState } from '../../../classes/userForm';
+import UserForm, { UserFormState, PassType } from '../../../classes/userForm';
 import SubNav from '../../common/subNav';
 import { RouteComponentProps } from 'react-router-dom';
 import Joi from 'joi';
@@ -9,7 +9,6 @@ import { changeUserPassword } from '../../../app/auth/userDetails';
 import { connect, ConnectedProps } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import GenericIcons from '../../../icons/generic';
-import { PassType } from '../../../app/models/auth';
 
 export interface changePasswordProps extends RouteComponentProps, ReduxProps {}
 

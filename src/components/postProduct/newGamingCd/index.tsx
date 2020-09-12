@@ -1,5 +1,7 @@
 import * as React from 'react';
-import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
+import PostProductForm, {
+	PostProductFormState,
+} from '../../../classes/postProductForm';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
@@ -19,7 +21,7 @@ export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {
 	error: string;
 }
 
-export interface NewGamingCdState {
+export interface NewGamingCdState extends PostProductFormState {
 	data: {
 		title: string;
 		deviceCompatible: string;
@@ -27,10 +29,16 @@ export interface NewGamingCdState {
 		originalCase: string;
 		scratches: string;
 	};
-	errors: ErrorContainer;
+	errors: {
+		title: string;
+		deviceCompatible: string;
+		description: string;
+		originalCase: string;
+		scratches: string;
+	};
 }
 
-class NewGamingCd extends CommonForm<NewGamingCdProps, NewGamingCdState> {
+class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 	state = {
 		data: {
 			title: this.props.data.title,

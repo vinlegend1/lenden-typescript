@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
+import PostProductForm, {
+	PostProductFormState,
+} from '../../../classes/postProductForm';
 import Joi from 'joi';
 import { Dispatch } from '@reduxjs/toolkit';
 import {
@@ -17,7 +19,7 @@ export interface BookPage1Props extends RouteComponentProps, ReduxProps {
 	error: string;
 }
 
-export interface BookPage1State {
+export interface BookPage1State extends PostProductFormState {
 	data: {
 		title: string;
 		description: string;
@@ -25,10 +27,16 @@ export interface BookPage1State {
 		bindingType: string;
 		inkStains: string;
 	};
-	errors: ErrorContainer;
+	errors: {
+		title: string;
+		description: string;
+		mrp: string;
+		bindingType: string;
+		inkStains: string;
+	};
 }
 
-class BookPage1 extends CommonForm<BookPage1Props, BookPage1State> {
+class BookPage1 extends PostProductForm<BookPage1Props, BookPage1State> {
 	state = {
 		data: {
 			title: this.props.data.title,

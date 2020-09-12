@@ -1,5 +1,7 @@
 import * as React from 'react';
-import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
+import PostProductForm, {
+	PostProductFormState,
+} from '../../../classes/postProductForm';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
@@ -11,7 +13,7 @@ export interface NewGamingConsoleProps extends RouteComponentProps {
 	error: string;
 }
 
-export interface NewGamingConsoleState {
+export interface NewGamingConsoleState extends PostProductFormState {
 	data: {
 		// title: string;
 		// deviceCompatible: string;
@@ -21,10 +23,10 @@ export interface NewGamingConsoleState {
 		brand: number | string;
 		model: string;
 	};
-	errors: ErrorContainer;
+	errors: {};
 }
 
-class NewGamingConsole extends CommonForm<
+class NewGamingConsole extends PostProductForm<
 	NewGamingConsoleProps,
 	NewGamingConsoleState
 > {

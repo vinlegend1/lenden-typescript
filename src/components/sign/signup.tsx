@@ -1,6 +1,5 @@
 import React from 'react';
-import { PassType } from '../../classes/commonForm';
-import UserForm, { UserFormState } from '../../classes/userForm';
+import UserForm, { UserFormState, PassType } from '../../classes/userForm';
 import GenericNav from '../common/genericNav';
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
@@ -16,6 +15,7 @@ import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
+
 Joi.extend(require('joi-phone-number'));
 
 export interface SignupProps extends RouteComponentProps, ReduxProps {}

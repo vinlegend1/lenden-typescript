@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import CommonForm, { ErrorContainer } from '../../../classes/commonForm';
+import PostProductForm, {
+	PostProductFormState,
+} from '../../../classes/postProductForm';
 import { RootState } from '../../../app/models';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 
@@ -18,21 +20,26 @@ export interface BookPage2Props extends RouteComponentProps, ReduxProps {
 	error: string;
 }
 
-export interface BookPage2State {
+export interface BookPage2State extends PostProductFormState {
 	data: {
 		bookFoxed: string;
 		bindingCondition: string;
 		coverCondition: string;
 		bookRepaired: number;
 	};
-	errors: ErrorContainer;
+	errors: {
+		bookFoxed: string;
+		bindingCondition: string;
+		coverCondition: string;
+		bookRepaired: string;
+	};
 
 	images: {
 		[key: string]: File;
 	};
 }
 
-class BookPage2 extends CommonForm<BookPage2Props, BookPage2State> {
+class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 	fileInput: any;
 	state = {
 		data: {

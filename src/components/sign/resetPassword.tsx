@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import UserForm, { UserFormState } from '../../classes/userForm';
+import UserForm, { UserFormState, PassType } from '../../classes/userForm';
 import Joi from 'joi';
 import GenericNav from '../common/genericNav';
 import { connect, ConnectedProps } from 'react-redux';
@@ -14,7 +14,6 @@ import {
 } from './../../app/auth/login';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
-import { PassType } from '../../app/models/auth';
 
 interface MatchParams {
 	token: string;
