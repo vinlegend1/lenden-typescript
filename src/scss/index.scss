@@ -10,6 +10,16 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	&:after {
+		position: absolute;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+		z-index: -1;
+		content: url('../icons/generic/cross-black.svg')
+			url('../icons/generic/tick.svg');
+	}
 }
 
 code {
