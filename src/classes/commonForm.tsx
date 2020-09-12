@@ -1,12 +1,7 @@
 import React, { Component, ChangeEvent } from 'react';
-import { Form, InputGroup, Alert, ProgressBar } from 'react-bootstrap';
+import { Form, Alert } from 'react-bootstrap';
 import Joi from 'joi';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { BarLoader } from 'react-spinners';
-import { Action } from 'redux';
-import GenericIcons from '../icons/generic';
-import FileBox from '../components/common/FileBox';
 import { ActionWithPayload } from './../app/models/index';
 
 export interface ErrorContainer {
@@ -152,6 +147,7 @@ abstract class CommonForm<
 			</Form.Group>
 		);
 	};
+
 	renderTextArea = (
 		label: string,
 		name: string,
