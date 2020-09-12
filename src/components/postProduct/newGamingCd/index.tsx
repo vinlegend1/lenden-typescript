@@ -16,10 +16,7 @@ import {
 } from './../../../app/entities/postProduct/gamingCdForm';
 import { connect, ConnectedProps } from 'react-redux';
 
-export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {
-	loading: boolean;
-	error: string;
-}
+export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {}
 
 export interface NewGamingCdState extends PostProductFormState {
 	data: {
@@ -133,7 +130,8 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 							'scratches',
 							...gamingCdForm.scratches.options
 						)}
-
+						{this.renderErrorAlert()}
+						{this.renderLoader(this.props.loading)}
 						{this.renderProgressBar(1, 1)}
 						<div className='darkButton' onClick={this.handleSubmit}>
 							Post Now
@@ -146,9 +144,11 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { data } = state.entities.postProduct.gamingCdForm;
+	const { data, loading, error } = state.entities.postProduct.gamingCdForm;
 	return {
 		data,
+		loading,
+		error,
 	};
 };
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({

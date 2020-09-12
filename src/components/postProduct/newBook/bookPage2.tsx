@@ -15,10 +15,7 @@ import {
 import Joi from 'joi';
 import bookForm from '../../../data/forms/bookFormData';
 
-export interface BookPage2Props extends RouteComponentProps, ReduxProps {
-	loading: boolean;
-	error: string;
-}
+export interface BookPage2Props extends RouteComponentProps, ReduxProps {}
 
 export interface BookPage2State extends PostProductFormState {
 	data: {
@@ -136,6 +133,8 @@ class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 							{this.renderFileBox('image2')}
 						</div>
 					</div>
+					{this.renderErrorAlert()}
+					{this.renderLoader(this.props.loading)}
 					{this.renderProgressBar(2, 2)}
 					<div className='darkButton' onClick={this.handleSubmit}>
 						Post Now
@@ -147,9 +146,11 @@ class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { data } = state.entities.postProduct.bookForm;
+	const { data, loading, error } = state.entities.postProduct.bookForm;
 	return {
 		data,
+		loading,
+		error,
 	};
 };
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({

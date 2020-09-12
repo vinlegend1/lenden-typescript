@@ -1,6 +1,7 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { ActionWithPayload, RootState } from './../../models/index';
 import { apiCallBegan } from './../../api';
+import { ErrorResponsePayload } from '../../models/api';
 
 export interface BookFormSlicePage1 {
 	title: string;
@@ -20,12 +21,14 @@ export interface BookFormSlicePage2 {
 interface InitialState {
 	loading: boolean;
 	error: string;
+	success: string;
 	data: BookFormSlicePage1 & BookFormSlicePage2;
 }
 
 const initialState: InitialState = {
-	loading: true,
+	loading: false,
 	error: '',
+	success: '',
 	data: {
 		title: '',
 		description: '',
@@ -41,13 +44,14 @@ const initialState: InitialState = {
 
 const mapToViewModal = (data: BookFormSlicePage1 & BookFormSlicePage2) => ({
 	title: data.title,
+	mrp: data.mrp,
 	description: data.description,
 	binding_type: data.bindingType,
 	ink_stains: data.inkStains,
 	book_foxed: data.bookFoxed,
 	binding_condition: data.bindingCondition,
 	front_back_condition: data.coverCondition,
-	book_repaired_earlier: data.bookRepaired,
+	number_of_time_book_repaired: data.bookRepaired,
 });
 
 const slice = createSlice({
@@ -90,12 +94,40 @@ const slice = createSlice({
 		},
 
 		formCleared: state => Object.keys(state).forEach(key => (state[key] = '')),
+
+		formSubmitInitiated: state => {
+			state.loading = true;
+			state.error = '';
+			state.success = '';
+		},
+		formSubmitFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			state.loading = false;
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else state.error = action.payload.data.message;
+			state.success = '';
+		},
+
+		formSubmitSuccess: state => {
+			state.loading = false;
+			state.error = '';
+			state.success = 'Successfully Submitted!';
+		},
 	},
 });
 
 export default slice.reducer;
 
-const { page1DetailsUpdated, page2DetailsUpdated, formCleared } = slice.actions;
+const {
+	page1DetailsUpdated,
+	page2DetailsUpdated,
+	formCleared,
+	formSubmitInitiated,
+	formSubmitFailed,
+	formSubmitSuccess,
+} = slice.actions;
 
 export const updateBookFormPage1Details = (data: BookFormSlicePage1) =>
 	page1DetailsUpdated(data);
@@ -114,6 +146,9 @@ export const postBookForm = () => (
 			method: 'post',
 			url: 'products/book',
 			data,
+			onStart: formSubmitInitiated.type,
+			onError: formSubmitFailed.type,
+			onSuccess: formSubmitSuccess.type,
 		})
 	);
 };

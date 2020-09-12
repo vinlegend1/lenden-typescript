@@ -1,6 +1,7 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { ActionWithPayload, RootState } from './../../models/index';
 import { apiCallBegan } from './../../api';
+import { ErrorResponsePayload } from '../../models/api';
 
 export interface GamingCdFormSliceState {
 	title: string;
@@ -13,12 +14,14 @@ export interface GamingCdFormSliceState {
 interface InitialState {
 	loading: boolean;
 	error: string;
+	success: string;
 	data: GamingCdFormSliceState;
 }
 
 const initialState: InitialState = {
 	loading: false,
 	error: '',
+	success: '',
 	data: {
 		title: '',
 		deviceCompatible: '',
@@ -59,12 +62,39 @@ const slice = createSlice({
 			state.data.scratches = scratches;
 		},
 		formCleared: state => Object.keys(state).forEach(key => (state[key] = '')),
+
+		formSubmitInitiated: state => {
+			state.loading = true;
+			state.error = '';
+			state.success = '';
+		},
+		formSubmitFailed: (
+			state,
+			action: ActionWithPayload<ErrorResponsePayload | string>
+		) => {
+			state.loading = false;
+			if (typeof action.payload === 'string') state.error = action.payload;
+			else state.error = action.payload.data.message;
+			state.success = '';
+		},
+
+		formSubmitSuccess: state => {
+			state.loading = false;
+			state.error = '';
+			state.success = 'Successfully Submitted!';
+		},
 	},
 });
 
 export default slice.reducer;
 
-const { formDetailsUpdated, formCleared } = slice.actions;
+const {
+	formDetailsUpdated,
+	formCleared,
+	formSubmitInitiated,
+	formSubmitFailed,
+	formSubmitSuccess,
+} = slice.actions;
 
 export const updateGamingCdFormDetails = (data: GamingCdFormSliceState) =>
 	formDetailsUpdated(data);
@@ -82,6 +112,9 @@ export const postGamingCdForm = () => (
 			method: 'post',
 			url: 'products/gamingcd',
 			data,
+			onStart: formSubmitInitiated.type,
+			onError: formSubmitFailed.type,
+			onSuccess: formSubmitSuccess.type,
 		})
 	);
 };
