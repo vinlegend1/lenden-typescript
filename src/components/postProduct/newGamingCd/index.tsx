@@ -146,7 +146,7 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const data = state.entities.postProduct.gamingCdForm;
+	const { data } = state.entities.postProduct.gamingCdForm;
 	return {
 		data,
 	};

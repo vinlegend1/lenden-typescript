@@ -10,12 +10,22 @@ export interface GamingCdFormSliceState {
 	scratches: string;
 }
 
-const initialState: GamingCdFormSliceState = {
-	title: '',
-	deviceCompatible: '',
-	description: '',
-	originalCase: '',
-	scratches: '',
+interface InitialState {
+	loading: boolean;
+	error: string;
+	data: GamingCdFormSliceState;
+}
+
+const initialState: InitialState = {
+	loading: false,
+	error: '',
+	data: {
+		title: '',
+		deviceCompatible: '',
+		description: '',
+		originalCase: '',
+		scratches: '',
+	},
 };
 
 const mapToViewModal = (data: GamingCdFormSliceState) => ({
@@ -42,11 +52,11 @@ const slice = createSlice({
 				scratches,
 			} = action.payload;
 
-			state.title = title;
-			state.deviceCompatible = deviceCompatible;
-			state.description = description;
-			state.originalCase = originalCase;
-			state.scratches = scratches;
+			state.data.title = title;
+			state.data.deviceCompatible = deviceCompatible;
+			state.data.description = description;
+			state.data.originalCase = originalCase;
+			state.data.scratches = scratches;
 		},
 		formCleared: state => Object.keys(state).forEach(key => (state[key] = '')),
 	},
@@ -64,7 +74,7 @@ export const postGamingCdForm = () => (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const formState = getState().entities.postProduct.gamingCdForm;
+	const formState = getState().entities.postProduct.gamingCdForm.data;
 	const data = mapToViewModal(formState);
 
 	dispatch(

@@ -17,16 +17,26 @@ export interface BookFormSlicePage2 {
 	bookRepaired: number;
 }
 
-const initialState: BookFormSlicePage1 & BookFormSlicePage2 = {
-	title: '',
-	description: '',
-	mrp: -1,
-	bindingType: '',
-	inkStains: '',
-	bookFoxed: '',
-	bindingCondition: '',
-	coverCondition: '',
-	bookRepaired: -1,
+interface InitialState {
+	loading: boolean;
+	error: string;
+	data: BookFormSlicePage1 & BookFormSlicePage2;
+}
+
+const initialState: InitialState = {
+	loading: true,
+	error: '',
+	data: {
+		title: '',
+		description: '',
+		mrp: -1,
+		bindingType: '',
+		inkStains: '',
+		bookFoxed: '',
+		bindingCondition: '',
+		coverCondition: '',
+		bookRepaired: -1,
+	},
 };
 
 const mapToViewModal = (data: BookFormSlicePage1 & BookFormSlicePage2) => ({
@@ -56,11 +66,11 @@ const slice = createSlice({
 				inkStains,
 			} = action.payload;
 
-			state.title = title;
-			state.description = description;
-			state.mrp = mrp;
-			state.bindingType = bindingType;
-			state.inkStains = inkStains;
+			state.data.title = title;
+			state.data.description = description;
+			state.data.mrp = mrp;
+			state.data.bindingType = bindingType;
+			state.data.inkStains = inkStains;
 		},
 		page2DetailsUpdated: (
 			state,
@@ -73,10 +83,10 @@ const slice = createSlice({
 				bookRepaired,
 			} = action.payload;
 
-			state.bookFoxed = bookFoxed;
-			state.bindingCondition = bindingCondition;
-			state.coverCondition = coverCondition;
-			state.bookRepaired = bookRepaired;
+			state.data.bookFoxed = bookFoxed;
+			state.data.bindingCondition = bindingCondition;
+			state.data.coverCondition = coverCondition;
+			state.data.bookRepaired = bookRepaired;
 		},
 
 		formCleared: state => Object.keys(state).forEach(key => (state[key] = '')),
@@ -96,7 +106,7 @@ export const postBookForm = () => (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
-	const formState = getState().entities.postProduct.bookForm;
+	const formState = getState().entities.postProduct.bookForm.data;
 	const data = mapToViewModal(formState);
 
 	dispatch(

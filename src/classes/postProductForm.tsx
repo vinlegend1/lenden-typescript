@@ -20,6 +20,36 @@ abstract class PostProductForm<
 > extends CommonForm<T, U> {
 	radioInputField = React.createRef<HTMLInputElement>();
 
+	renderTextArea = (
+		label: string,
+		name: string,
+		errorMessage: string,
+		placeholder?: string,
+		type?: string
+	) => {
+		const { data } = this.state;
+		return (
+			<Form.Group>
+				<Form.Label>{label}</Form.Label>
+				<Form.Control
+					className='input'
+					as='textarea'
+					rows={5}
+					name={name}
+					onChange={this.handleChange}
+					value={data[name]}
+					placeholder={placeholder}
+					style={{ resize: 'none' }}
+				/>
+				<Form.Text
+					className={errorMessage ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{errorMessage}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
+
 	renderRadioInput = (label: string, name: string, ...rest: string[]) => {
 		return (
 			<Form.Group className='radioInput'>

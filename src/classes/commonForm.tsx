@@ -147,36 +147,6 @@ abstract class CommonForm<
 			</Form.Group>
 		);
 	};
-
-	renderTextArea = (
-		label: string,
-		name: string,
-		errorMessage: string,
-		placeholder?: string,
-		type?: string
-	) => {
-		const { data } = this.state;
-		return (
-			<Form.Group>
-				<Form.Label>{label}</Form.Label>
-				<Form.Control
-					className='input'
-					as='textarea'
-					rows={5}
-					name={name}
-					onChange={this.handleChange}
-					value={data[name]}
-					placeholder={placeholder}
-					style={{ resize: 'none' }}
-				/>
-				<Form.Text
-					className={errorMessage ? 'active' : ''}
-					style={{ marginLeft: '1rem' }}>
-					{errorMessage}
-				</Form.Text>
-			</Form.Group>
-		);
-	};
 }
 
 export default CommonForm;

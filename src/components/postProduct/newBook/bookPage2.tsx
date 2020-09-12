@@ -147,7 +147,7 @@ class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const data = state.entities.postProduct.bookForm;
+	const { data } = state.entities.postProduct.bookForm;
 	return {
 		data,
 	};
