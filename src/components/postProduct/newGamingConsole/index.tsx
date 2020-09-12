@@ -44,6 +44,19 @@ class NewGamingConsole extends PostProductForm<
 			// scratches: '',
 		},
 	};
+
+	componentDidMount() {
+		const preloadImg = [
+			'../../../icons/generic/down-black.svg',
+			'../../../icons/generic/tick.svg',
+		];
+
+		preloadImg.forEach(src => {
+			const img = new Image();
+			img.src = src;
+		});
+	}
+
 	schema = {
 		// title: Joi.string().required().label('Title'),
 		// deviceCompatible: Joi.string().required().label('Compatible Device'),
