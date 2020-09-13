@@ -3,6 +3,7 @@ import { Form, Alert } from 'react-bootstrap';
 import Joi from 'joi';
 import { BarLoader } from 'react-spinners';
 import { ActionWithPayload } from './../app/models/index';
+import { scroller as scroll } from 'react-scroll';
 
 export interface ErrorContainer {
 	[key: string]: string;
@@ -61,7 +62,18 @@ abstract class CommonForm<
 		if (this.props.updateSuccess) this.props.updateSuccess('');
 
 		const errors = this.validate();
-		if (errors) return this.setState({ errors });
+		if (errors) {
+			await this.setState({ errors });
+			console.log(Object.keys(this.state.errors)[0]);
+
+			return scroll.scrollTo(Object.keys(this.state.errors)[0], {
+				duration: 500,
+				delay: 100,
+				smooth: true,
+				// containerId: 'ContainerElementID',
+				offset: -50,
+			});
+		}
 
 		await this.setState({ errors: {} });
 		this.doSubmit();
@@ -126,7 +138,7 @@ abstract class CommonForm<
 		// if (name === 'mobileNumber')
 		// 	return this.renderMobileNumberInput(label, errorMessage, submitOnEnter);
 		return (
-			<Form.Group controlId={name}>
+			<Form.Group controlId={name} id={name}>
 				<Form.Label>{label}</Form.Label>
 				<Form.Control
 					className='input email'

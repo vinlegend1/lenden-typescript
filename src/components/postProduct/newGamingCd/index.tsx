@@ -19,20 +19,7 @@ import { connect, ConnectedProps } from 'react-redux';
 export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {}
 
 export interface NewGamingCdState extends PostProductFormState {
-	data: {
-		title: string;
-		deviceCompatible: string;
-		description: string;
-		originalCase: string;
-		scratches: string;
-	};
-	errors: {
-		title: string;
-		deviceCompatible: string;
-		description: string;
-		originalCase: string;
-		scratches: string;
-	};
+	data: GamingCdFormSliceState;
 }
 
 class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
@@ -114,7 +101,7 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 							'deviceCompatible',
 							this.state.errors.deviceCompatible
 						)}
-						{this.renderInput(
+						{this.renderTextArea(
 							gamingCdForm.description.name,
 							'description',
 							this.state.errors.description

@@ -28,7 +28,7 @@ abstract class UserForm<
 	) => {
 		if (eyeRequired)
 			return (
-				<Form.Group controlId={name}>
+				<Form.Group controlId={name} id={name}>
 					<Form.Label>{label}</Form.Label>
 					<InputGroup>
 						<Form.Control
@@ -97,7 +97,10 @@ abstract class UserForm<
 		submitOnEnter?: boolean
 	) => {
 		return (
-			<Form.Group controlId='mobileNumber' className='mobileNumberFormGroup'>
+			<Form.Group
+				controlId='mobileNumber'
+				className='mobileNumberFormGroup'
+				id='mobileNumber'>
 				<Form.Label>{label}</Form.Label>
 
 				<InputGroup>

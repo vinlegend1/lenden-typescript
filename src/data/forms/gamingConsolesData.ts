@@ -76,7 +76,7 @@ export default {
 		},
 	},
 	description: {
-		name: 'Describe your Condole in few words',
+		name: 'Describe your Console in few words',
 	},
 	workingCondition: {
 		name: 'Is your console in working condition?',

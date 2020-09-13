@@ -29,7 +29,7 @@ abstract class PostProductForm<
 	) => {
 		const { data } = this.state;
 		return (
-			<Form.Group>
+			<Form.Group id={name}>
 				<Form.Label>{label}</Form.Label>
 				<Form.Control
 					className='input'
@@ -52,7 +52,7 @@ abstract class PostProductForm<
 
 	renderRadioInput = (label: string, name: string, ...rest: string[]) => {
 		return (
-			<Form.Group className='radioInput'>
+			<Form.Group className='radioInput' id={name}>
 				<Form.Label>{label}</Form.Label>
 				<div className='radioGroup'>
 					{rest.map((option, index) => (
@@ -101,7 +101,7 @@ abstract class PostProductForm<
 
 	renderRadioInputWithRange = (label: string, name: string) => {
 		return (
-			<Form.Group className='radioInput'>
+			<Form.Group className='radioInput' id={name}>
 				<Form.Label>{label}</Form.Label>
 				<div className='radioGroup'>
 					<label
@@ -176,123 +176,65 @@ abstract class PostProductForm<
 		);
 	};
 
-	renderFileBox = (name: string) => {
-		if (this.state.images)
-			return (
-				<FileBox
-					file={this.state.images[name]}
-					handleFileChange={(event: any) => {
-						const images = { ...this.state.images };
-						if (images) {
-							images[name] = event.target.files[0];
-							this.setState({ images });
-						}
-					}}
-					deleteFile={() => {
-						const images = { ...this.state.images };
-						if (images) {
-							delete images[name];
-							this.setState({ images });
-						}
-					}}
-				/>
-			);
-	};
-
-	renderCheckBoxInput = (label: string, name: string, ...rest: string[]) => {
-		return (
-			<Form.Group className='checkBoxInput'>
-				<Form.Label>{label}</Form.Label>
-				<div className='checkBoxGroup'>
-					{rest.map((option, index) => (
-						<label
-							className='checkbox'
-							onClick={e => {
-								e.preventDefault();
-								const data: any = { ...this.state.data };
-								if (data[name].includes(index + 1)) {
-									data[name] = data[name].filter(
-										(c: number) => c !== index + 1
-									);
-								} else data[name].push(index + 1);
-
-								this.setState({ data });
-							}}>
-							<input
-								type='checkbox'
-								checked={
-									this.state.data[name].includes(index + 1) ? true : false
-								}
-								readOnly
-							/>
-							<div>
-								<span className='check'></span>
-							</div>
-							<span
-								className={
-									this.state.data[name].includes(index + 1) ? 'active' : ''
-								}>
-								{option}
-							</span>
-						</label>
-					))}
-				</div>
-				<Form.Text
-					className={this.state.errors[name] ? 'active' : ''}
-					style={{ marginLeft: '1rem' }}>
-					{this.state.errors[name]}
-				</Form.Text>
-			</Form.Group>
-		);
-	};
-
 	renderRadioInputWithOthers = (
 		label: string,
 		name: string,
+		callbackFn?: () => void,
 		...rest: string[]
 	) => {
 		return (
-			<Form.Group className='radioInput'>
+			<Form.Group className='radioInput' id={name}>
 				<Form.Label>{label}</Form.Label>
 				<div className='radioGroup'>
-					{rest.map((option, index) => (
-						<label
-							className='radio'
-							key={index}
-							onClick={() => {
-								const data: any = { ...this.state.data };
-								data[name] = option;
-								this.setState({ data });
-							}}>
-							<input
-								type='radio'
-								checked={this.state.data[name] === option ? true : false}
-								readOnly
-							/>
-							<div>
-								<span className='check'></span>
-							</div>
-							<span
-								className={this.state.data[name] === option ? 'active' : ''}>
-								{option}
-							</span>
-						</label>
-					))}
+					{rest.map((option, index) => {
+						console.log(rest);
+						return (
+							<label
+								className='radio'
+								key={index}
+								onClick={async e => {
+									e.preventDefault();
+									const data: any = { ...this.state.data };
+									data[name] = option;
+									await this.setState({ data });
+									if (callbackFn) callbackFn();
+								}}>
+								<input
+									type='radio'
+									checked={this.state.data[name] === option ? true : false}
+									readOnly
+								/>
+								<div>
+									<span className='check'></span>
+								</div>
+								<span
+									className={this.state.data[name] === option ? 'active' : ''}>
+									{option}
+								</span>
+							</label>
+						);
+					})}
 					<label
 						className='radio'
-						onClick={() => {
+						onClick={async e => {
+							e.preventDefault();
 							const data: any = { ...this.state.data };
-
-							// if (typeof data[name] !== 'string') {
+							if (rest.includes(data[name]) || data[name] === 0) {
+								data[name] = '';
+								await this.setState({ data });
+							}
 							setTimeout(
 								() =>
 									(this.radioInputField.current! as HTMLInputElement).focus(),
 								50
 							);
 							this.radioInputField.current?.focus();
-							data[name] = '';
-							this.setState({ data });
-							// }
+
+							if (
+								callbackFn &&
+								(rest.includes(data[name]) || data[name] === '')
+							)
+								callbackFn();
 						}}>
 						<input
 							type='radio'
@@ -345,7 +287,99 @@ abstract class PostProductForm<
 		);
 	};
 
-	renderDropdownInput = (label: string, name: string, ...rest: string[]) => {};
+	renderFileBox = (name: string) => {
+		if (this.state.images)
+			return (
+				<FileBox
+					file={this.state.images[name]}
+					handleFileChange={(event: any) => {
+						const images = { ...this.state.images };
+						if (images) {
+							images[name] = event.target.files[0];
+							this.setState({ images });
+						}
+					}}
+					deleteFile={() => {
+						const images = { ...this.state.images };
+						if (images) {
+							delete images[name];
+							this.setState({ images });
+						}
+					}}
+				/>
+			);
+	};
+
+	renderCheckBoxInput = (label: string, name: string, ...rest: string[]) => {
+		return (
+			<Form.Group className='checkBoxInput' id={name}>
+				<Form.Label>{label}</Form.Label>
+				<div className='checkBoxGroup'>
+					{rest.map((option, index) => (
+						<label
+							key={index}
+							className='checkbox'
+							onClick={e => {
+								e.preventDefault();
+								const data: any = { ...this.state.data };
+								if (data[name].includes(option)) {
+									data[name] = data[name].filter((c: string) => c !== option);
+								} else data[name].push(option);
+
+								this.setState({ data });
+							}}>
+							<input
+								type='checkbox'
+								checked={this.state.data[name].includes(option) ? true : false}
+								readOnly
+							/>
+							<div>
+								<span className='check'></span>
+							</div>
+							<span
+								className={
+									this.state.data[name].includes(option) ? 'active' : ''
+								}>
+								{option}
+							</span>
+						</label>
+					))}
+				</div>
+				<Form.Text
+					className={this.state.errors[name] ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{this.state.errors[name]}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
+
+	renderDropdownInput = (
+		label: string,
+		name: string,
+		ref?: React.Ref<HTMLSelectElement>,
+		...rest: string[]
+	) => {
+		return (
+			<Form.Group controlId='' id={name}>
+				<Form.Label>{label}</Form.Label>
+				<Form.Control
+					as='select'
+					custom
+					value={this.state.data[name]}
+					onChange={e => {
+						const data: any = { ...this.state.data };
+						data[name] = e.currentTarget.value;
+						this.setState({ data });
+					}}
+					ref={ref ? ref : null}>
+					{rest.map((opt: string, index: number) => (
+						<option key={index}>{opt}</option>
+					))}
+				</Form.Control>
+			</Form.Group>
+		);
+	};
 }
 
 export default PostProductForm;

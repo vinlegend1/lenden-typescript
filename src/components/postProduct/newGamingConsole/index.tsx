@@ -7,23 +7,22 @@ import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
 import { Form } from 'react-bootstrap';
 import gamingConsolesData from '../../../data/forms/gamingConsolesData';
+import { RootState } from '../../../app/models';
+import { ThunkDispatch, Action } from '@reduxjs/toolkit';
+import { connect, ConnectedProps } from 'react-redux';
+import {
+	clearGamingConsoleForm,
+	GamingConsoleFormSliceState,
+	updateGamingConsoleFormDetails,
+	postGamingConsoleForm,
+} from './../../../app/entities/postProduct/gamingConsoleForm';
 
-export interface NewGamingConsoleProps extends RouteComponentProps {
-	loading: boolean;
-	error: string;
-}
+export interface NewGamingConsoleProps
+	extends RouteComponentProps,
+		ReduxProps {}
 
 export interface NewGamingConsoleState extends PostProductFormState {
-	data: {
-		// title: string;
-		// deviceCompatible: string;
-		// originalCase: number;
-		// scratches: number;
-		checkbox: number[];
-		brand: number | string;
-		model: string;
-	};
-	errors: {};
+	data: GamingConsoleFormSliceState;
 }
 
 class NewGamingConsole extends PostProductForm<
@@ -32,56 +31,74 @@ class NewGamingConsole extends PostProductForm<
 > {
 	state = {
 		data: {
-			// title: '', deviceCompatible: '', originalCase: 0, scratches: 0
-			checkbox: [] as number[],
-			brand: 0,
-			model: '',
+			brand: this.props.data.brand,
+			model: this.props.data.model,
+			description: this.props.data.description,
+			workingCondition: this.props.data.workingCondition,
+			condition: this.props.data.condition,
+			functionalIssues: [...this.props.data.functionalIssues],
+			accessories: [...this.props.data.accessories],
+			consoleAge: this.props.data.consoleAge,
 		},
 		errors: {
-			// title: '',
-			// deviceCompatible: '',
-			// originalCase: '',
-			// scratches: '',
+			brand: '',
+			model: '',
+			description: '',
+			workingCondition: '',
+			condition: '',
+			functionalIssues: '',
+			accessories: '',
+			consoleAge: '',
 		},
 	};
-
-	componentDidMount() {
-		const preloadImg = [
-			'../../../icons/generic/down-black.svg',
-			'../../../icons/generic/tick.svg',
-		];
-
-		preloadImg.forEach(src => {
-			const img = new Image();
-			img.src = src;
-		});
-	}
+	modelRef = React.createRef<HTMLSelectElement>();
 
 	schema = {
-		// title: Joi.string().required().label('Title'),
-		// deviceCompatible: Joi.string().required().label('Compatible Device'),
-		// originalCase: Joi.number()
-		// 	.min(1)
-		// 	.required()
-		// 	.error((errors: any) => {
-		// 		errors.forEach((err: any) => {
-		// 			if (err.code === 'number.min')
-		// 				err.message = 'This question is required';
-		// 		});
-		// 		return errors;
-		// 	}),
-		// scratches: Joi.number()
-		// 	.min(1)
-		// 	.required()
-		// 	.error((errors: any) => {
-		// 		errors.forEach((err: any) => {
-		// 			if (err.code === 'number.min')
-		// 				err.message = 'This question is required';
-		// 		});
-		// 		return errors;
-		// 	}),
+		brand: Joi.string()
+			.required()
+			.label('Brand')
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'string.base') err.message = '"Brand" is required';
+				});
+				return errors;
+			}),
+		model: Joi.string().required().label('Model'),
+		description: Joi.string().required().label('Description'),
+		workingCondition: Joi.string()
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'string.empty')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
+		condition: Joi.string()
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'string.empty')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
+		functionalIssues: Joi.array().min(0).label('Functional Issues'),
+		accessories: Joi.array().min(0).label('Accessories'),
+		consoleAge: Joi.string()
+			.required()
+			.error((errors: any) => {
+				errors.forEach((err: any) => {
+					if (err.code === 'string.empty')
+						err.message = 'This question is required';
+				});
+				return errors;
+			}),
 	};
-	doSubmit = () => {};
+	doSubmit = () => {
+		this.props.updateDetails(this.state.data);
+		this.props.postForm();
+	};
 	render() {
 		return (
 			<React.Fragment>
@@ -106,77 +123,74 @@ class NewGamingConsole extends PostProductForm<
 						{this.renderRadioInputWithOthers(
 							gamingConsolesData.brand.name,
 							'brand',
+							() => {
+								const data = { ...this.state.data };
+								if (
+									gamingConsolesData.brand.options.includes(
+										this.state.data.brand.toString()
+									)
+								)
+									data.model = this.modelRef.current!.value;
+								else data.model = '';
+								this.setState({ data });
+							},
 							...gamingConsolesData.brand.options
 						)}
 
 						{!gamingConsolesData.brand.options.includes(
 							this.state.data.brand.toString()
-						) && this.renderInput(gamingConsolesData.model.name, 'model', '')}
+						) &&
+							this.renderInput(
+								gamingConsolesData.model.name,
+								'model',
+								this.state.errors.model
+							)}
 
 						{gamingConsolesData.brand.options.includes(
 							this.state.data.brand.toString()
-						) && (
-							<Form.Group controlId='exampleForm.SelectCustom'>
-								<Form.Label>{gamingConsolesData.model.name}</Form.Label>
-								<Form.Control as='select' custom>
-									{gamingConsolesData.model.options[this.state.data.brand].map(
-										(model: string) => (
-											<option>{model}</option>
-										)
-									)}
-								</Form.Control>
-							</Form.Group>
-						)}
-						{/* 
-						{typeof this.state.data.model === 'number' &&
-							this.renderInput(
-								'Mention the device your game is compatible with.',
-								'deviceCompatible',
-								''
-							)} */}
-
-						{typeof this.state.data.model === 'number' && (
-							<Form.Group controlId='exampleForm.SelectCustom'>
-								<Form.Label>
-									Mention the device your game is compatible with.
-								</Form.Label>
-								<Form.Control as='select' custom>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-								</Form.Control>
-							</Form.Group>
+						) &&
+							this.renderDropdownInput(
+								gamingConsolesData.model.name,
+								'model',
+								this.modelRef,
+								...gamingConsolesData.model.options[this.state.data.brand]
+							)}
+						{this.renderTextArea(
+							gamingConsolesData.description.name,
+							'description',
+							this.state.errors.description
 						)}
 
-						{/*
-					{this.renderInput(
-						'Mention the device your game is compatible with.',
-						'deviceCompatible',
-						this.state.errors.deviceCompatible
-					)}
-
-					{this.renderRadioInput(
-						'Do you have the original case of the gaming cd?',
-						'originalCase',
-						'No',
-						'Yes'
-					)}
-					{this.renderRadioInput(
-						'Does your video game have any scratches?',
-						'scratches',
-						'No',
-						'Yes'
-					)} */}
+						{this.renderRadioInput(
+							gamingConsolesData.workingCondition.name,
+							'workingCondition',
+							...gamingConsolesData.workingCondition.options
+						)}
 
 						{this.renderCheckBoxInput(
-							'Do you have the original case of the gaming cd?',
-							'checkbox',
-							'No',
-							'Yes'
+							gamingConsolesData.functionalIssues.name,
+							'functionalIssues',
+							...gamingConsolesData.functionalIssues.options
 						)}
 
+						{this.renderCheckBoxInput(
+							gamingConsolesData.accessories.name,
+							'accessories',
+							...gamingConsolesData.accessories.options
+						)}
+
+						{this.renderRadioInput(
+							gamingConsolesData.condition.name,
+							'condition',
+							...gamingConsolesData.condition.options
+						)}
+						{this.renderRadioInput(
+							gamingConsolesData.consoleAge.name,
+							'consoleAge',
+							...gamingConsolesData.consoleAge.options
+						)}
+						{this.renderErrorAlert()}
+						{this.renderLoader(this.props.loading)}
 						{this.renderProgressBar(1, 1)}
 						<div className='darkButton' onClick={this.handleSubmit}>
 							Post Now
@@ -188,4 +202,24 @@ class NewGamingConsole extends PostProductForm<
 	}
 }
 
-export default NewGamingConsole;
+const mapStateToProps = (state: RootState) => {
+	const { data, loading, error } = state.entities.postProduct.gamingConsoleForm;
+	return {
+		data,
+		loading,
+		error,
+	};
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
+	updateDetails: (data: GamingConsoleFormSliceState) =>
+		dispatch(updateGamingConsoleFormDetails(data)),
+	postForm: () => dispatch(postGamingConsoleForm()),
+	clearForm: () => dispatch(clearGamingConsoleForm()),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+export default connector(NewGamingConsole);

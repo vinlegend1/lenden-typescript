@@ -14,26 +14,10 @@ import { RootState } from '../../../app/models';
 import { animateScroll as scroll } from 'react-scroll';
 import bookForm from '../../../data/forms/bookFormData';
 
-export interface BookPage1Props extends RouteComponentProps, ReduxProps {
-	loading: boolean;
-	error: string;
-}
+export interface BookPage1Props extends RouteComponentProps, ReduxProps {}
 
 export interface BookPage1State extends PostProductFormState {
-	data: {
-		title: string;
-		description: string;
-		mrp: number;
-		bindingType: string;
-		inkStains: string;
-	};
-	errors: {
-		title: string;
-		description: string;
-		mrp: string;
-		bindingType: string;
-		inkStains: string;
-	};
+	data: BookFormSlicePage1;
 }
 
 class BookPage1 extends PostProductForm<BookPage1Props, BookPage1State> {
@@ -150,9 +134,11 @@ class BookPage1 extends PostProductForm<BookPage1Props, BookPage1State> {
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { data } = state.entities.postProduct.bookForm;
+	const { data, loading, error } = state.entities.postProduct.bookForm;
 	return {
 		data,
+		loading,
+		error,
 	};
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({

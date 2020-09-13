@@ -18,19 +18,7 @@ import bookForm from '../../../data/forms/bookFormData';
 export interface BookPage2Props extends RouteComponentProps, ReduxProps {}
 
 export interface BookPage2State extends PostProductFormState {
-	data: {
-		bookFoxed: string;
-		bindingCondition: string;
-		coverCondition: string;
-		bookRepaired: number;
-	};
-	errors: {
-		bookFoxed: string;
-		bindingCondition: string;
-		coverCondition: string;
-		bookRepaired: string;
-	};
-
+	data: BookFormSlicePage2;
 	images: {
 		[key: string]: File;
 	};
