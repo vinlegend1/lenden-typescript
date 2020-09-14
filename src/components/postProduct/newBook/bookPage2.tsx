@@ -89,7 +89,7 @@ class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 		if (!this.props.data.title)
 			this.props.history.replace('/post-product/book/1');
 		return (
-			<div className='newBook'>
+			<div className='postProduct newBook'>
 				<div className='container mainContainer'>
 					<p className='foxing'>
 						As a sign of ageing, clean pages of a book tend to develop certain

@@ -19,7 +19,9 @@ const PostProduct: React.FC<PostProductProps> = props => {
 							<CategoryIcons name='book' />
 							<p>Books</p>
 						</div>
-						<div className='col'>
+						<div
+							className='col'
+							onClick={() => props.history.push('/post-product/mobile')}>
 							<CategoryIcons name='mobile' />
 							<p>Mobiles</p>
 						</div>

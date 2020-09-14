@@ -26,20 +26,23 @@ abstract class UserForm<
 		eyeRequired?: boolean,
 		submitOnEnter?: boolean
 	) => {
+		let inputRef = React.createRef<HTMLInputElement>();
 		if (eyeRequired)
 			return (
 				<Form.Group controlId={name} id={name}>
 					<Form.Label>{label}</Form.Label>
 					<InputGroup>
 						<Form.Control
+							ref={inputRef}
 							className='input passwordInput'
 							name={name}
 							type={this.state.passType![name]}
 							value={this.state.data[name]}
 							onChange={this.handleChange}
 							onKeyPress={(event: React.KeyboardEvent) => {
-								if (submitOnEnter && event.key === 'Enter')
-									this.handleSubmit(event);
+								if (event.key === 'Enter')
+									if (submitOnEnter) this.handleSubmit(event);
+									else inputRef.current?.blur();
 							}}
 						/>
 
@@ -96,6 +99,7 @@ abstract class UserForm<
 		errorMessage?: string,
 		submitOnEnter?: boolean
 	) => {
+		let inputRef = React.createRef<HTMLInputElement>();
 		return (
 			<Form.Group
 				controlId='mobileNumber'
@@ -110,14 +114,16 @@ abstract class UserForm<
 						</InputGroup.Text>
 					</InputGroup.Prepend>
 					<Form.Control
+						ref={inputRef}
 						className='input mobileNumberInput'
 						name='mobileNumber'
 						type='number'
 						value={this.state.data.mobileNumber}
 						onChange={this.handleChange}
 						onKeyPress={(event: React.KeyboardEvent) => {
-							if (submitOnEnter && event.key === 'Enter')
-								this.handleSubmit(event);
+							if (event.key === 'Enter')
+								if (submitOnEnter) this.handleSubmit(event);
+								else inputRef.current?.blur();
 						}}
 					/>
 				</InputGroup>

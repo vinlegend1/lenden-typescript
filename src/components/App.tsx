@@ -21,6 +21,7 @@ import PostProduct from './postProduct';
 import NewBook from './postProduct/newBook';
 import NewGamingCd from './postProduct/newGamingCd/index';
 import NewGamingConsole from './postProduct/newGamingConsole';
+import NewMobile from './postProduct/newMobile';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -79,6 +80,12 @@ const App: React.FC = () => {
 						path='/post-product/gaming-console'
 						component={NewGamingConsole}
 					/>
+					<Redirect
+						exact
+						from='/post-product/mobile'
+						to='/post-product/mobile/1'
+					/>
+					<Route path='/post-product/mobile' component={NewMobile} />
 
 					<Route path='/post-product' component={PostProduct} />
 

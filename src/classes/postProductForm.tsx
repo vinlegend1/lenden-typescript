@@ -187,7 +187,6 @@ abstract class PostProductForm<
 				<Form.Label>{label}</Form.Label>
 				<div className='radioGroup'>
 					{rest.map((option, index) => {
-						console.log(rest);
 						return (
 							<label
 								className='radio'
@@ -358,6 +357,7 @@ abstract class PostProductForm<
 		label: string,
 		name: string,
 		ref?: React.Ref<HTMLSelectElement>,
+		callbackFn?: () => void,
 		...rest: string[]
 	) => {
 		return (
@@ -367,10 +367,11 @@ abstract class PostProductForm<
 					as='select'
 					custom
 					value={this.state.data[name]}
-					onChange={e => {
+					onChange={async e => {
 						const data: any = { ...this.state.data };
 						data[name] = e.currentTarget.value;
-						this.setState({ data });
+						await this.setState({ data });
+						if (callbackFn) callbackFn();
 					}}
 					ref={ref ? ref : null}>
 					{rest.map((opt: string, index: number) => (

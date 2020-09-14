@@ -93,7 +93,14 @@ const slice = createSlice({
 			state.data.bookRepaired = bookRepaired;
 		},
 
-		formCleared: state => Object.keys(state).forEach(key => (state[key] = '')),
+		formCleared: state => {
+			const { data } = state;
+			Object.keys(data).forEach(key => {
+				if (typeof data[key] === 'string') data[key] = '';
+				else if (Array.isArray(data[key])) data[key] = [];
+				else if (typeof data[key] === 'object') data[key] = {};
+			});
+		},
 
 		formSubmitInitiated: state => {
 			state.loading = true;

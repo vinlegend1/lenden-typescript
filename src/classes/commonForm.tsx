@@ -1,4 +1,4 @@
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component, ChangeEvent, createRef } from 'react';
 import { Form, Alert } from 'react-bootstrap';
 import Joi from 'joi';
 import { BarLoader } from 'react-spinners';
@@ -64,7 +64,6 @@ abstract class CommonForm<
 		const errors = this.validate();
 		if (errors) {
 			await this.setState({ errors });
-			console.log(Object.keys(this.state.errors)[0]);
 
 			return scroll.scrollTo(Object.keys(this.state.errors)[0], {
 				duration: 500,
@@ -127,28 +126,21 @@ abstract class CommonForm<
 		// eyeRequired?: boolean,
 		submitOnEnter?: boolean
 	) => {
-		// if (name === 'password' || eyeRequired)
-		// 	return this.renderPassInput(
-		// 		label,
-		// 		name,
-		// 		errorMessage,
-		// 		placeholder,
-		// 		submitOnEnter
-		// 	);
-		// if (name === 'mobileNumber')
-		// 	return this.renderMobileNumberInput(label, errorMessage, submitOnEnter);
+		let inputRef = createRef<HTMLInputElement>();
 		return (
 			<Form.Group controlId={name} id={name}>
 				<Form.Label>{label}</Form.Label>
 				<Form.Control
+					ref={inputRef}
 					className='input email'
 					name={name}
 					type={type || name}
 					value={this.state.data[name] === -1 ? '' : this.state.data[name]}
 					onChange={this.handleChange}
 					onKeyPress={(event: React.KeyboardEvent) => {
-						if (submitOnEnter && event.key === 'Enter')
-							this.handleSubmit(event);
+						if (event.key === 'Enter')
+							if (submitOnEnter) this.handleSubmit(event);
+							else inputRef.current?.blur();
 					}}
 				/>
 				<Form.Text
