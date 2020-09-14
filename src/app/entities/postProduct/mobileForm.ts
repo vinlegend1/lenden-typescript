@@ -2,11 +2,13 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import mobileFormData from '../../../data/forms/mobileFormData';
 import { ErrorResponsePayload } from '../../models/api';
 import { ActionWithPayload, RootState } from './../../models/index';
+import { apiCallBegan } from './../../api';
 
 export interface MobileFormSlicePage1 {
 	brand: string;
 	model: string;
 	otherBrandName: string;
+	description: string;
 	workingCondition: string;
 	phoneDamaged: string[];
 	screenIssues: string[];
@@ -36,6 +38,7 @@ const initialState: InitialState = {
 		brand: initialBrand,
 		model: initialModel,
 		otherBrandName: '',
+		description: '',
 		workingCondition: '',
 		phoneDamaged: [],
 		screenIssues: [],
@@ -66,6 +69,7 @@ const mapToViewModal = (data: MobileFormSlicePage1 & MobileFormSlicePage2) => {
 	return {
 		brand: data.brand !== 'Others' ? data.brand : data.otherBrandName,
 		model: data.model,
+		description: data.description,
 		workingcondition: data.workingCondition,
 		bodydamaged: data.phoneDamaged.join(', '),
 		problems: data.screenIssues.join(', '),
@@ -87,6 +91,7 @@ const slice = createSlice({
 				brand,
 				model,
 				otherBrandName,
+				description,
 				workingCondition,
 				phoneDamaged,
 				screenIssues,
@@ -95,6 +100,7 @@ const slice = createSlice({
 			state.data.brand = brand;
 			state.data.model = model;
 			state.data.otherBrandName = otherBrandName;
+			state.data.description = description;
 			state.data.workingCondition = workingCondition;
 			state.data.phoneDamaged = phoneDamaged;
 			state.data.screenIssues = screenIssues;
@@ -174,18 +180,17 @@ export const postMobileForm = () => (
 ) => {
 	const formState = getState().entities.postProduct.mobileForm.data;
 	const data = mapToViewModal(formState);
-	console.log(data);
 
-	// dispatch(
-	//     apiCallBegan({
-	//         method: 'post',
-	//         url: 'products/book',
-	//         data,
-	//         onStart: formSubmitInitiated.type,
-	//         onError: formSubmitFailed.type,
-	//         onSuccess: formSubmitSuccess.type,
-	//     })
-	// );
+	dispatch(
+		apiCallBegan({
+			method: 'post',
+			url: 'products/mobilephone',
+			data,
+			onStart: formSubmitInitiated.type,
+			onError: formSubmitFailed.type,
+			onSuccess: formSubmitSuccess.type,
+		})
+	);
 };
 
 export const clearMobileForm = () => formCleared();

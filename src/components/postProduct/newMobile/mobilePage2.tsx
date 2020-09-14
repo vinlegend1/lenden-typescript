@@ -71,6 +71,8 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 		this.props.postMobileForm();
 	};
 	render() {
+		if (!this.props.data.workingCondition)
+			this.props.history.replace('/post-product/mobile/1');
 		return (
 			<div className='postProduct newBook'>
 				<div className='container mainContainer'>
@@ -205,9 +207,10 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 											}}
 											onChange={(e: React.ChangeEvent) => {
 												const data = { ...this.state.data };
-												data.insurance = parseInt(
-													(e.currentTarget as HTMLInputElement).value
-												);
+												data.insurance =
+													parseInt(
+														(e.currentTarget as HTMLInputElement).value.toString()
+													) || 0;
 												this.setState({ data });
 											}}
 											onKeyPress={(event: React.KeyboardEvent) => {

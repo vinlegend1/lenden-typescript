@@ -1173,6 +1173,9 @@ export default {
 		name: 'Please select/type model and storage of your mobile phone.',
 		options: modelOptions,
 	},
+	description: {
+		name: 'Describe your mobile phone in few words',
+	},
 	workingCondition: {
 		name: 'Is your phone in a working condition to make/receive phone calls?',
 		options: ['No', 'Yes'],

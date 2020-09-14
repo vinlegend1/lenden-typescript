@@ -26,6 +26,7 @@ class MobilePage1 extends PostProductForm<MobilePage1Props, MobilePage1State> {
 			brand: this.props.data.brand,
 			otherBrandName: this.props.data.otherBrandName,
 			model: this.props.data.model,
+			description: this.props.data.description,
 			workingCondition: this.props.data.workingCondition,
 			phoneDamaged: [...this.props.data.phoneDamaged],
 			screenIssues: [...this.props.data.screenIssues],
@@ -34,6 +35,7 @@ class MobilePage1 extends PostProductForm<MobilePage1Props, MobilePage1State> {
 			model: '',
 			brand: '',
 			otherBrandName: '',
+			description: '',
 			workingCondition: '',
 			phoneDamaged: '',
 			screenIssues: '',
@@ -49,6 +51,7 @@ class MobilePage1 extends PostProductForm<MobilePage1Props, MobilePage1State> {
 				else return errors;
 			}),
 		model: Joi.string().required().label('Model'),
+		description: Joi.string().required().label('Description'),
 		workingCondition: Joi.string()
 			.required()
 			.error((errors: any) => {
@@ -143,6 +146,13 @@ class MobilePage1 extends PostProductForm<MobilePage1Props, MobilePage1State> {
 						'workingCondition',
 						...mobileFormData.workingCondition.options
 					)}
+
+					{this.renderTextArea(
+						mobileFormData.description.name,
+						'description',
+						this.state.errors.description
+					)}
+
 					{this.renderCheckBoxInput(
 						mobileFormData.phoneDamaged.name,
 						'phoneDamaged',
