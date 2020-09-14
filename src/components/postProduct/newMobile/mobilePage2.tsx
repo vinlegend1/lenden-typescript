@@ -56,7 +56,6 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 			.min(1)
 			.max(12)
 			.required()
-
 			.error((errors: any) => {
 				if (!this.state.data.accessories.includes(accessoriesLastOption))
 					return [];
@@ -92,14 +91,21 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 										className='checkbox'
 										onClick={e => {
 											e.preventDefault();
-											const data: any = { ...this.state.data };
-											if (data.accessories.includes(option)) {
-												data.accessories = data.accessories.filter(
+
+											let accessories = [...this.state.data.accessories];
+
+											if (accessories.includes(option)) {
+												accessories = accessories.filter(
 													(c: string) => c !== option
 												);
-											} else data.accessories.push(option);
+											} else accessories.push(option);
 
-											this.setState({ data });
+											this.setState({
+												data: {
+													...this.state.data,
+													accessories,
+												},
+											});
 										}}>
 										<input
 											type='checkbox'
@@ -128,18 +134,28 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 								className='checkbox'
 								onClick={e => {
 									e.preventDefault();
-									const data = { ...this.state.data };
-									if (data.accessories.includes(accessoriesLastOption)) {
-										data.accessories = data.accessories.filter(
+									let accessories = [...this.state.data.accessories];
+									if (accessories.includes(accessoriesLastOption)) {
+										accessories = accessories.filter(
 											(c: string) => c !== accessoriesLastOption
 										);
-										data.insurance = 0;
+										this.setState({
+											data: {
+												...this.state.data,
+												insurance: 0,
+												accessories,
+											},
+										});
 									} else {
-										data.accessories.push(accessoriesLastOption);
+										accessories.push(accessoriesLastOption);
 										this.insuranceInputRef.current?.focus();
+										this.setState({
+											data: {
+												...this.state.data,
+												accessories,
+											},
+										});
 									}
-
-									this.setState({ data });
 								}}>
 								<input
 									type='checkbox'
@@ -176,10 +192,15 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 											onClick={(e: any) => {
 												e.stopPropagation();
 
-												const data = { ...this.state.data };
-												if (!data.accessories.includes(accessoriesLastOption)) {
-													data.accessories.push(accessoriesLastOption);
-													this.setState({ data });
+												let accessories = [...this.state.data.accessories];
+												if (!accessories.includes(accessoriesLastOption)) {
+													accessories.push(accessoriesLastOption);
+													this.setState({
+														data: {
+															...this.state.data,
+															accessories,
+														},
+													});
 												}
 											}}
 											onChange={(e: React.ChangeEvent) => {

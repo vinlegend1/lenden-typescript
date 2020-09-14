@@ -320,12 +320,18 @@ abstract class PostProductForm<
 							className='checkbox'
 							onClick={e => {
 								e.preventDefault();
-								const data: any = { ...this.state.data };
-								if (data[name].includes(option)) {
-									data[name] = data[name].filter((c: string) => c !== option);
-								} else data[name].push(option);
-
-								this.setState({ data });
+								let checkboxArray: any = [...this.state.data[name]];
+								if (checkboxArray.includes(option)) {
+									checkboxArray = checkboxArray.filter(
+										(c: string) => c !== option
+									);
+								} else checkboxArray.push(option);
+								this.setState({
+									data: {
+										...this.state.data,
+										[name]: checkboxArray,
+									},
+								});
 							}}>
 							<input
 								type='checkbox'

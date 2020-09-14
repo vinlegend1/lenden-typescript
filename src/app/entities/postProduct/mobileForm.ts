@@ -46,6 +46,35 @@ const initialState: InitialState = {
 	},
 };
 
+const mapToViewModal = (data: MobileFormSlicePage1 & MobileFormSlicePage2) => {
+	let accessories;
+
+	const accessoriesOptions = mobileFormData.accessories.options;
+	const accessoriesOptionsLength =
+		mobileFormData.accessories.options.length - 1;
+	const accessoriesLastOption = accessoriesOptions[accessoriesOptionsLength];
+
+	if (data.accessories.includes(accessoriesLastOption)) {
+		accessories = [
+			...data.accessories.filter(acc => acc !== accessoriesLastOption),
+			`insurance (${data.insurance} months left)`,
+		].join(', ');
+	} else {
+		accessories = [...data.accessories].join(', ');
+	}
+
+	return {
+		brand: data.brand !== 'Others' ? data.brand : data.otherBrandName,
+		model: data.model,
+		workingcondition: data.workingCondition,
+		bodydamaged: data.phoneDamaged.join(', '),
+		problems: data.screenIssues.join(', '),
+		functionalissues: data.functionalIssues.join(', '),
+		accessories,
+		age: data.mobileAge,
+	};
+};
+
 const slice = createSlice({
 	name: 'mobileForm',
 	initialState,
@@ -144,7 +173,8 @@ export const postMobileForm = () => (
 	getState: () => RootState
 ) => {
 	const formState = getState().entities.postProduct.mobileForm.data;
-	// const data = mapToViewModal(formState);
+	const data = mapToViewModal(formState);
+	console.log(data);
 
 	// dispatch(
 	//     apiCallBegan({

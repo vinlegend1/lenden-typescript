@@ -174,7 +174,7 @@ const mapStateToProps = (state: RootState) => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
 	updatePage1Details: (data: MobileFormSlicePage1) =>
-		dispatch(updateMobileFormPage1Details(data)),
+		dispatch(updateMobileFormPage1Details({ ...data })),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

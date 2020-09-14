@@ -153,7 +153,6 @@ class NewGamingConsole extends PostProductForm<
 								gamingConsolesData.model.name,
 								'model',
 								this.modelRef,
-								undefined,
 								...gamingConsolesData.model.options[this.state.data.brand]
 							)}
 						{this.renderTextArea(

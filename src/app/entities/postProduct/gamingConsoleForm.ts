@@ -129,7 +129,6 @@ export const postGamingConsoleForm = () => (
 ) => {
 	const formState = getState().entities.postProduct.gamingConsoleForm.data;
 	const data = mapToViewModal(formState);
-
 	dispatch(
 		apiCallBegan({
 			method: 'post',
