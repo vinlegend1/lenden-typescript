@@ -75,9 +75,12 @@ const App: React.FC = () => {
 				<Route path='/my-products' component={MyProducts} />*/}
 
 					<Redirect exact from='/post-product/book' to='/post-product/book/1' />
-					<Route path='/post-product/book' component={NewBook} />
-					<Route path='/post-product/gaming-cd' component={NewGamingCd} />
-					<Route
+					<ProtectedRoute path='/post-product/book' component={NewBook} />
+					<ProtectedRoute
+						path='/post-product/gaming-cd'
+						component={NewGamingCd}
+					/>
+					<ProtectedRoute
 						path='/post-product/gaming-console'
 						component={NewGamingConsole}
 					/>
@@ -86,10 +89,10 @@ const App: React.FC = () => {
 						from='/post-product/mobile'
 						to='/post-product/mobile/1'
 					/>
-					<Route path='/post-product/mobile' component={NewMobile} />
-					<Route path='/donate-a-book' component={DonateBook} />
+					<ProtectedRoute path='/post-product/mobile' component={NewMobile} />
+					<ProtectedRoute path='/donate-a-book' component={DonateBook} />
 
-					<Route path='/post-product' component={PostProduct} />
+					<ProtectedRoute path='/post-product' component={PostProduct} />
 
 					<ProtectedRoute path='/my-account/edit' component={EditProfile} />
 					<ProtectedRoute
