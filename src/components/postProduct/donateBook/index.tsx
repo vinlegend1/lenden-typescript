@@ -71,6 +71,9 @@ class DonateBook extends PostProductForm<DonateBookProps, DonateBookState> {
 		this.props.updateDetails(this.state.data);
 		this.props.postForm();
 	};
+	componentWillUnmount() {
+		this.props.clearForm();
+	}
 
 	render() {
 		return (

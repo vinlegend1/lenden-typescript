@@ -95,6 +95,11 @@ class NewGamingConsole extends PostProductForm<
 				return errors;
 			}),
 	};
+
+	componentWillUnmount() {
+		this.props.clearForm();
+	}
+
 	doSubmit = () => {
 		this.props.updateDetails(this.state.data);
 		this.props.postForm();
