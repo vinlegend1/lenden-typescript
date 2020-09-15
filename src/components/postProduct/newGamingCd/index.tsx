@@ -20,6 +20,9 @@ export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {}
 
 export interface NewGamingCdState extends PostProductFormState {
 	data: GamingCdFormSliceState;
+	images: {
+		[key: string]: File;
+	};
 }
 
 class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
@@ -38,6 +41,7 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 			originalCase: '',
 			scratches: '',
 		},
+		images: {},
 	};
 	componentWillUnmount() {
 		this.props.clearForm();
@@ -117,6 +121,18 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 							'scratches',
 							...gamingCdForm.scratches.options
 						)}
+						{this.renderImageInput({
+							label:
+								'We are thrilled to see your Mobile Phone. Please attach the images of your Mobile Phone here',
+							note: 'Upload all the pictures according to the specified angles',
+							imagesRequired: [
+								{ name: 'coverFront', label: 'CD Cover Front' },
+								{ name: 'coverBack', label: 'CD Cover Back' },
+								{ name: 'cdFront', label: 'CD Front' },
+								{ name: 'cdBack', label: 'CD Front' },
+							],
+						})}
+
 						{this.renderErrorAlert()}
 						{this.renderLoader(this.props.loading)}
 						{this.renderProgressBar(1, 1)}
@@ -124,6 +140,7 @@ class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
 							Post Now
 						</div>
 					</div>
+					{this.renderSuccessModal(1)}
 				</div>
 			</React.Fragment>
 		);

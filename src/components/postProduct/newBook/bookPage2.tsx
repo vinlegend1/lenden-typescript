@@ -114,13 +114,18 @@ class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 						bookForm.bookRepaired.name,
 						'bookRepaired'
 					)}
-					<div style={{ width: 'fit-content', margin: '0 auto' }}>
-						<div style={{ display: 'flex', justifyContent: '' }}></div>
-						<div style={{ display: 'flex' }}>
-							{this.renderFileBox('image1')}
-							{this.renderFileBox('image2')}
-						</div>
-					</div>
+					{this.renderImageInput({
+						label:
+							'We are thrilled to see your book. Please attach the images of your book here',
+						note: 'Upload all the pictures according to the specified angles',
+						imagesRequired: [
+							{ name: 'coverFront', label: 'Front Cover' },
+							{ name: 'coverBack', label: 'Back Cover' },
+							{ name: 'firstInnerPage', label: 'First Inner Page' },
+							{ name: 'innerPage', label: 'Inner Pages' },
+							{ name: 'spine', label: 'Spine (Binding)' },
+						],
+					})}
 					{this.renderErrorAlert()}
 					{this.renderLoader(this.props.loading)}
 					{this.renderProgressBar(2, 2)}
@@ -128,17 +133,20 @@ class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {
 						Post Now
 					</div>
 				</div>
+
+				{this.renderSuccessModal(2)}
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { data, loading, error } = state.entities.postProduct.bookForm;
+	const { data, loading, error, success } = state.entities.postProduct.bookForm;
 	return {
 		data,
 		loading,
 		error,
+		success,
 	};
 };
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({

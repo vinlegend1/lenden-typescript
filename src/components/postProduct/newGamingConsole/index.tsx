@@ -5,7 +5,7 @@ import PostProductForm, {
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
-import { Form } from 'react-bootstrap';
+import { Form, Modal } from 'react-bootstrap';
 import gamingConsolesData from '../../../data/forms/gamingConsolesData';
 import { RootState } from '../../../app/models';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
@@ -16,6 +16,7 @@ import {
 	updateGamingConsoleFormDetails,
 	postGamingConsoleForm,
 } from './../../../app/entities/postProduct/gamingConsoleForm';
+import GenericIcons from '../../../icons/generic';
 
 export interface NewGamingConsoleProps
 	extends RouteComponentProps,
@@ -23,6 +24,9 @@ export interface NewGamingConsoleProps
 
 export interface NewGamingConsoleState extends PostProductFormState {
 	data: GamingConsoleFormSliceState;
+	images: {
+		[key: string]: File;
+	};
 }
 
 class NewGamingConsole extends PostProductForm<
@@ -50,6 +54,7 @@ class NewGamingConsole extends PostProductForm<
 			accessories: '',
 			consoleAge: '',
 		},
+		images: {},
 	};
 	modelRef = React.createRef<HTMLSelectElement>();
 
@@ -195,6 +200,19 @@ class NewGamingConsole extends PostProductForm<
 							'consoleAge',
 							...gamingConsolesData.consoleAge.options
 						)}
+
+						{this.renderImageInput({
+							label:
+								'We are thrilled to see your Console. Please attach the images of your console here',
+							note: 'Upload all the pictures according to the specified angles',
+							imagesRequired: [
+								{ name: 'frontSide', label: 'Front' },
+								{ name: 'backSide', label: 'Backside' },
+								{ name: 'accessories', label: 'With all accessories' },
+								{ name: 'consoleON', label: 'Console turned ON' },
+							],
+						})}
+
 						{this.renderErrorAlert()}
 						{this.renderLoader(this.props.loading)}
 						{this.renderProgressBar(1, 1)}
@@ -202,6 +220,7 @@ class NewGamingConsole extends PostProductForm<
 							Post Now
 						</div>
 					</div>
+					{this.renderSuccessModal(1)}
 				</div>
 			</React.Fragment>
 		);
@@ -209,11 +228,17 @@ class NewGamingConsole extends PostProductForm<
 }
 
 const mapStateToProps = (state: RootState) => {
-	const { data, loading, error } = state.entities.postProduct.gamingConsoleForm;
+	const {
+		data,
+		loading,
+		error,
+		success,
+	} = state.entities.postProduct.gamingConsoleForm;
 	return {
 		data,
 		loading,
 		error,
+		success,
 	};
 };
 

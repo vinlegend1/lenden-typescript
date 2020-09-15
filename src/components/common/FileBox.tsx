@@ -8,6 +8,7 @@ export interface FileBoxProps {
 	file: File;
 	handleFileChange: (e: React.ChangeEvent) => void;
 	deleteFile: () => void;
+	label?: string;
 }
 
 const FileBox: React.FC<FileBoxProps> = props => {
@@ -20,7 +21,7 @@ const FileBox: React.FC<FileBoxProps> = props => {
 		let compressedFile: any;
 		(async () => {
 			compressedFile = await imageCompression(props.file, {
-				maxSizeMB: 0.1,
+				maxSizeMB: 0.2,
 				maxWidthOrHeight: 1920,
 				useWebWorker: true,
 			});
@@ -52,9 +53,10 @@ const FileBox: React.FC<FileBoxProps> = props => {
 				}}>
 				{!props.file && <GenericIcons name='camera' />}
 				{props.file && !imageSrc && (
-					<ClipLoader size={25} color={'#1a2639'} loading={true} />
+					<ClipLoader size={35} color={'#1a2639'} loading={true} />
 				)}
 			</div>
+			{props.label && <p className='fileBoxLabel'>{props.label}</p>}
 			{props.file && (
 				<div
 					className='cross'

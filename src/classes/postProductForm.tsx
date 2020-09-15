@@ -3,10 +3,14 @@ import CommonForm, {
 	CommonFormProps,
 	CommonFormState,
 } from './../classes/commonForm';
-import { Form, ProgressBar } from 'react-bootstrap';
+import { Form, ProgressBar, Modal } from 'react-bootstrap';
 import FileBox from '../components/common/FileBox';
+import GenericIcons from '../icons/generic';
+import { RouteComponentProps } from 'react-router-dom';
 
-export interface PostProductFormProps extends CommonFormProps {}
+export interface PostProductFormProps
+	extends CommonFormProps,
+		RouteComponentProps {}
 
 export interface PostProductFormState extends CommonFormState {
 	images?: {
@@ -286,7 +290,7 @@ abstract class PostProductForm<
 		);
 	};
 
-	renderFileBox = (name: string) => {
+	renderFileBox = (name: string, angleName?: string) => {
 		if (this.state.images)
 			return (
 				<FileBox
@@ -305,6 +309,7 @@ abstract class PostProductForm<
 							this.setState({ images });
 						}
 					}}
+					label={angleName}
 				/>
 			);
 	};
@@ -385,6 +390,57 @@ abstract class PostProductForm<
 					))}
 				</Form.Control>
 			</Form.Group>
+		);
+	};
+	renderSuccessModal = (formPagesCount: number) => (
+		<Modal
+			className='notificationMessage'
+			size='lg'
+			centered
+			show={this.props.success ? true : false}
+			backdrop='static'
+			onHide={() => console.log('asd')}
+			keyboard={false}>
+			<Modal.Body>
+				<GenericIcons name='success' />
+				Your product has been posted successfully. Continue to my Products or
+				post another product
+				<div
+					onClick={() => this.props.history.push('/my-products')}
+					className='darkButton'>
+					My Products
+				</div>
+				<div
+					onClick={() => this.props.history.go(formPagesCount)}
+					className='lightButton'>
+					Post another Product
+				</div>
+			</Modal.Body>
+		</Modal>
+	);
+
+	renderImageInput = (configObject: {
+		label: string;
+		note?: string;
+		imagesRequired: Array<{
+			name: string;
+			label: string;
+		}>;
+	}) => {
+		const { label, note, imagesRequired } = configObject;
+		return (
+			<div className='imageInput'>
+				<h2>{label}</h2>
+				<p>
+					Note:
+					{note && <span>{note}</span>}
+				</p>
+				<div className='imageInputsContainer'>
+					{imagesRequired.map(image =>
+						this.renderFileBox(image.name, image.label)
+					)}
+				</div>
+			</div>
 		);
 	};
 }

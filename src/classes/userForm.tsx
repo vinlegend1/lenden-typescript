@@ -44,7 +44,7 @@ abstract class UserForm<
 									if (submitOnEnter) this.handleSubmit(event);
 									else inputRef.current?.blur();
 							}}
-							autoComplete='off'
+							autoComplete={'off'}
 						/>
 
 						<InputGroup.Append>

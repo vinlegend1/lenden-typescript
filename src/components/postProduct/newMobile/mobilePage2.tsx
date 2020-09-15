@@ -19,6 +19,9 @@ export interface MobilePage2Props extends RouteComponentProps, ReduxProps {}
 
 export interface MobilePage2State extends PostProductFormState {
 	data: MobileFormSlicePage2;
+	images: {
+		[key: string]: File;
+	};
 }
 
 const accessoriesOptions = mobileFormData.accessories.options;
@@ -39,6 +42,7 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 			mobileAge: '',
 			insurance: '',
 		},
+		images: {},
 	};
 	schema = {
 		functionalIssues: Joi.array().min(0).label('Functional Issues'),
@@ -239,6 +243,20 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 						...mobileFormData.mobileAge.options
 					)}
 
+					{this.renderImageInput({
+						label:
+							'We are thrilled to see your Mobile Phone. Please attach the images of your Mobile Phone here',
+						note: 'Upload all the pictures according to the specified angles',
+						imagesRequired: [
+							{ name: 'frontSide', label: 'Front' },
+							{ name: 'backSide', label: 'Back' },
+							{ name: 'Side1', label: 'First Side' },
+							{ name: 'Side2', label: 'Second Side' },
+							{ name: 'aboutPhone', label: 'Phone info in Phone' },
+							{ name: 'box', label: 'Box' },
+						],
+					})}
+
 					{this.renderLoader(this.props.loading)}
 					{this.renderErrorAlert()}
 					{this.renderProgressBar(2, 2)}
@@ -246,6 +264,7 @@ class MobilePage2 extends PostProductForm<MobilePage2Props, MobilePage2State> {
 						Post Now
 					</div>
 				</div>
+				{this.renderSuccessModal(2)}
 			</div>
 		);
 	}

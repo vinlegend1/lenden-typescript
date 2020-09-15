@@ -1,0 +1,21 @@
+.imageInput {
+	padding: 1rem;
+
+	h2 {
+		font-weight: bold;
+		font-size: 15px;
+		color: #868686;
+	}
+	p {
+		color: #535353;
+		font-weight: 400;
+		span {
+			color: color(error);
+		}
+	}
+	.imageInputsContainer {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+}

@@ -142,7 +142,7 @@ abstract class CommonForm<
 							if (submitOnEnter) this.handleSubmit(event);
 							else inputRef.current?.blur();
 					}}
-					autoComplete='off'
+					autoComplete={'off'}
 				/>
 				<Form.Text
 					className={errorMessage ? 'active' : ''}

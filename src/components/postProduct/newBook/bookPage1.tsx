@@ -13,6 +13,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../../app/models';
 import { animateScroll as scroll } from 'react-scroll';
 import bookForm from '../../../data/forms/bookFormData';
+import { Modal } from 'react-bootstrap';
+import GenericIcons from '../../../icons/generic';
 
 export interface BookPage1Props extends RouteComponentProps, ReduxProps {}
 

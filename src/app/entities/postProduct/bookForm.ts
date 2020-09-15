@@ -95,11 +95,15 @@ const slice = createSlice({
 
 		formCleared: state => {
 			const { data } = state;
-			Object.keys(data).forEach(key => {
-				if (typeof data[key] === 'string') data[key] = '';
-				else if (Array.isArray(data[key])) data[key] = [];
-				else if (typeof data[key] === 'object') data[key] = {};
-			});
+			data.title = '';
+			data.description = '';
+			data.mrp = -1;
+			data.bindingType = '';
+			data.inkStains = '';
+			data.bookFoxed = '';
+			data.bindingCondition = '';
+			data.coverCondition = '';
+			data.bookRepaired = -1;
 		},
 
 		formSubmitInitiated: state => {

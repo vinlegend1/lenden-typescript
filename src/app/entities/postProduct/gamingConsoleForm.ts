@@ -78,11 +78,14 @@ const slice = createSlice({
 		},
 		formCleared: state => {
 			const { data } = state;
-			Object.keys(data).forEach(key => {
-				if (typeof data[key] === 'string') data[key] = '';
-				else if (Array.isArray(data[key])) data[key] = [];
-				else if (typeof data[key] === 'object') data[key] = {};
-			});
+			data.brand = 0;
+			data.model = '';
+			data.description = '';
+			data.workingCondition = '';
+			data.functionalIssues = [];
+			data.accessories = [];
+			data.consoleAge = '';
+			data.condition = '';
 		},
 
 		formSubmitInitiated: state => {
