@@ -49,7 +49,7 @@ const SideNav: React.FC<SideNavProps> = () => {
 		{ to: '/about', name: 'About Us' },
 		{ to: '/contact', name: 'Contact Us' },
 		{ to: '/faq', name: "FAQ's" },
-		// { to: '/donate', name: 'Donate a Book' },
+		{ to: '/donate-a-book', name: 'Donate a Book' },
 	];
 
 	return (

@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent, createRef } from 'react';
-import { Form, Alert } from 'react-bootstrap';
+import { Form, Alert, InputGroup } from 'react-bootstrap';
 import Joi from 'joi';
 import { BarLoader } from 'react-spinners';
 import { ActionWithPayload } from './../app/models/index';
@@ -142,7 +142,50 @@ abstract class CommonForm<
 							if (submitOnEnter) this.handleSubmit(event);
 							else inputRef.current?.blur();
 					}}
+					autoComplete='off'
 				/>
+				<Form.Text
+					className={errorMessage ? 'active' : ''}
+					style={{ marginLeft: '1rem' }}>
+					{errorMessage}
+				</Form.Text>
+			</Form.Group>
+		);
+	};
+	renderMobileNumberInput = (
+		label: string,
+		errorMessage?: string,
+		submitOnEnter?: boolean
+	) => {
+		let inputRef = React.createRef<HTMLInputElement>();
+		return (
+			<Form.Group
+				controlId='mobileNumber'
+				className='mobileNumberFormGroup'
+				id='mobileNumber'>
+				<Form.Label>{label}</Form.Label>
+
+				<InputGroup>
+					<InputGroup.Prepend>
+						<InputGroup.Text className='mobileNumberInputText'>
+							+91
+						</InputGroup.Text>
+					</InputGroup.Prepend>
+					<Form.Control
+						ref={inputRef}
+						className='input mobileNumberInput'
+						name='mobileNumber'
+						type='number'
+						value={this.state.data.mobileNumber}
+						onChange={this.handleChange}
+						onKeyPress={(event: React.KeyboardEvent) => {
+							if (event.key === 'Enter')
+								if (submitOnEnter) this.handleSubmit(event);
+								else inputRef.current?.blur();
+						}}
+					/>
+				</InputGroup>
+
 				<Form.Text
 					className={errorMessage ? 'active' : ''}
 					style={{ marginLeft: '1rem' }}>

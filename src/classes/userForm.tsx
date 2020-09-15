@@ -44,6 +44,7 @@ abstract class UserForm<
 									if (submitOnEnter) this.handleSubmit(event);
 									else inputRef.current?.blur();
 							}}
+							autoComplete='off'
 						/>
 
 						<InputGroup.Append>
@@ -92,49 +93,6 @@ abstract class UserForm<
 				</Form.Group>
 			);
 		else return this.renderInput(label, name, errorMessage, 'password');
-	};
-
-	renderMobileNumberInput = (
-		label: string,
-		errorMessage?: string,
-		submitOnEnter?: boolean
-	) => {
-		let inputRef = React.createRef<HTMLInputElement>();
-		return (
-			<Form.Group
-				controlId='mobileNumber'
-				className='mobileNumberFormGroup'
-				id='mobileNumber'>
-				<Form.Label>{label}</Form.Label>
-
-				<InputGroup>
-					<InputGroup.Prepend>
-						<InputGroup.Text className='mobileNumberInputText'>
-							+91
-						</InputGroup.Text>
-					</InputGroup.Prepend>
-					<Form.Control
-						ref={inputRef}
-						className='input mobileNumberInput'
-						name='mobileNumber'
-						type='number'
-						value={this.state.data.mobileNumber}
-						onChange={this.handleChange}
-						onKeyPress={(event: React.KeyboardEvent) => {
-							if (event.key === 'Enter')
-								if (submitOnEnter) this.handleSubmit(event);
-								else inputRef.current?.blur();
-						}}
-					/>
-				</InputGroup>
-
-				<Form.Text
-					className={errorMessage ? 'active' : ''}
-					style={{ marginLeft: '1rem' }}>
-					{errorMessage}
-				</Form.Text>
-			</Form.Group>
-		);
 	};
 }
 

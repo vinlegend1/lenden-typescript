@@ -22,6 +22,7 @@ import NewBook from './postProduct/newBook';
 import NewGamingCd from './postProduct/newGamingCd/index';
 import NewGamingConsole from './postProduct/newGamingConsole';
 import NewMobile from './postProduct/newMobile';
+import DonateBook from './postProduct/donateBook/index';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const App: React.FC = () => {
 						to='/post-product/mobile/1'
 					/>
 					<Route path='/post-product/mobile' component={NewMobile} />
+					<Route path='/donate-a-book' component={DonateBook} />
 
 					<Route path='/post-product' component={PostProduct} />
 
