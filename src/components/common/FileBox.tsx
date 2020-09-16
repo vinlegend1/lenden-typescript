@@ -2,42 +2,42 @@ import * as React from 'react';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
 import ClipLoader from 'react-spinners/ClipLoader';
-import imageCompression from 'browser-image-compression';
 
 export interface FileBoxProps {
-	file: File;
-	handleFileChange: (e: React.ChangeEvent) => void;
+	file: {
+		name: string;
+		fileData: Blob;
+	};
+	handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	deleteFile: () => void;
 	label?: string;
 }
 
 const FileBox: React.FC<FileBoxProps> = props => {
-	let fileInput: HTMLInputElement;
 	const [modal, showModal] = React.useState(false);
 	const [imageSrc, setImageSrc] = React.useState('');
+	const [imageLoading, setImageLoading] = React.useState(false);
 
-	if (props.file) {
-		const reader = new FileReader();
-		let compressedFile: any;
-		(async () => {
-			compressedFile = await imageCompression(props.file, {
-				maxSizeMB: 0.2,
-				maxWidthOrHeight: 1920,
-				useWebWorker: true,
-			});
-
-			reader.readAsDataURL(compressedFile);
+	React.useEffect(() => {
+		if (props.file) {
+			const reader = new FileReader();
+			reader.readAsDataURL(props.file.fileData);
 			reader.onloadend = () => {
 				setImageSrc(reader.result as string);
 			};
-		})();
-	}
+		} else setImageSrc('');
+	}, [props.file]);
+
+	let fileInput: HTMLInputElement;
+
 	return (
 		<div className='fileBox'>
 			<input
 				type='file'
-				onChange={(event: React.ChangeEvent) => {
-					props.handleFileChange(event);
+				onChange={async event => {
+					setImageLoading(true);
+					await props.handleFileChange(event);
+					setImageLoading(false);
 				}}
 				accept='image/jpeg, image/png'
 				ref={input => (fileInput = input!)}
@@ -51,24 +51,25 @@ const FileBox: React.FC<FileBoxProps> = props => {
 					if (!props.file) fileInput.click();
 					else showModal(true);
 				}}>
-				{!props.file && <GenericIcons name='camera' />}
-				{props.file && !imageSrc && (
+				{!props.file && !imageSrc && !imageLoading && (
+					<GenericIcons name='camera' />
+				)}
+				{!imageSrc && imageLoading && (
 					<ClipLoader size={35} color={'#1a2639'} loading={true} />
 				)}
 			</div>
 			{props.label && <p className='fileBoxLabel'>{props.label}</p>}
-			{props.file && (
+			{imageSrc && (
 				<div
 					className='cross'
 					onClick={() => {
 						fileInput.value = '';
-						setImageSrc('');
 						props.deleteFile();
 					}}>
 					<GenericIcons name='cross' />
 				</div>
 			)}
-			{props.file && (
+			{props.file && imageSrc && (
 				<Modal
 					className='previewImage'
 					size='lg'
@@ -92,7 +93,6 @@ const FileBox: React.FC<FileBoxProps> = props => {
 								onClick={() => {
 									showModal(false);
 									fileInput.value = '';
-									setImageSrc('');
 									props.deleteFile();
 								}}>
 								Delete
@@ -102,7 +102,6 @@ const FileBox: React.FC<FileBoxProps> = props => {
 								onClick={() => {
 									showModal(false);
 									fileInput.value = '';
-									setImageSrc('');
 									props.deleteFile();
 									fileInput.click();
 								}}>

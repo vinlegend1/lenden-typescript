@@ -24,9 +24,6 @@ export interface NewGamingConsoleProps
 
 export interface NewGamingConsoleState extends PostProductFormState {
 	data: GamingConsoleFormSliceState;
-	images: {
-		[key: string]: File;
-	};
 }
 
 class NewGamingConsole extends PostProductForm<

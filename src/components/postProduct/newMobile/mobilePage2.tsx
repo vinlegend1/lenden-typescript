@@ -19,9 +19,6 @@ export interface MobilePage2Props extends RouteComponentProps, ReduxProps {}
 
 export interface MobilePage2State extends PostProductFormState {
 	data: MobileFormSlicePage2;
-	images: {
-		[key: string]: File;
-	};
 }
 
 const accessoriesOptions = mobileFormData.accessories.options;

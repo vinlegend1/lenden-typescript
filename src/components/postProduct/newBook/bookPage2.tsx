@@ -19,9 +19,9 @@ export interface BookPage2Props extends RouteComponentProps, ReduxProps {}
 
 export interface BookPage2State extends PostProductFormState {
 	data: BookFormSlicePage2;
-	images: {
-		[key: string]: File;
-	};
+	// images: {
+	// 	[key: string]: File;
+	// };
 }
 
 class BookPage2 extends PostProductForm<BookPage2Props, BookPage2State> {

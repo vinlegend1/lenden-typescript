@@ -7,6 +7,7 @@ import { Form, ProgressBar, Modal } from 'react-bootstrap';
 import FileBox from '../components/common/FileBox';
 import GenericIcons from '../icons/generic';
 import { RouteComponentProps } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 
 export interface PostProductFormProps
 	extends CommonFormProps,
@@ -14,7 +15,10 @@ export interface PostProductFormProps
 
 export interface PostProductFormState extends CommonFormState {
 	images?: {
-		[key: string]: File;
+		[key: string]: {
+			name: string;
+			fileData: Blob;
+		};
 	};
 }
 
@@ -295,10 +299,19 @@ abstract class PostProductForm<
 			return (
 				<FileBox
 					file={this.state.images[name]}
-					handleFileChange={(event: any) => {
+					handleFileChange={async event => {
 						const images = { ...this.state.images };
 						if (images) {
-							images[name] = event.target.files[0];
+							const image = (event.target as HTMLInputElement).files![0];
+							let compressedFile = await imageCompression(image, {
+								maxSizeMB: 0.2,
+								maxWidthOrHeight: 1920,
+								useWebWorker: true,
+							});
+							images[name] = {
+								name: image.name,
+								fileData: compressedFile,
+							};
 							this.setState({ images });
 						}
 					}}

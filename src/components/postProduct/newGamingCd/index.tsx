@@ -20,9 +20,6 @@ export interface NewGamingCdProps extends RouteComponentProps, ReduxProps {}
 
 export interface NewGamingCdState extends PostProductFormState {
 	data: GamingCdFormSliceState;
-	images: {
-		[key: string]: File;
-	};
 }
 
 class NewGamingCd extends PostProductForm<NewGamingCdProps, NewGamingCdState> {
