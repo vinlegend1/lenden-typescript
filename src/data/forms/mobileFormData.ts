@@ -1199,6 +1199,7 @@ export default {
 			'Select the functional/physical issues which are applicable to your device (if any)',
 		options: [
 			'Faulty front camera',
+			'Faulty rear camera',
 			'Non-functioning Volume buttons',
 			'Non-functioning Power button',
 			'Non-functioning Silent button',

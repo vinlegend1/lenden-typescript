@@ -8,6 +8,8 @@ import { RootState } from '../../app/models';
 import useResizeEventListener from '../../hooks/useResizeEventListener';
 import Navbar from '../navbar';
 import { RouteComponentProps } from 'react-router-dom';
+import GenericIcons from '../../icons/generic';
+import SingleProducts from './singleProducts';
 
 export interface HomeProps extends RouteComponentProps {}
 
@@ -30,14 +32,25 @@ const Home: React.FC<HomeProps> = props => {
 			<div
 				className='darkButton'
 				style={{
+					position: 'fixed',
 					maxWidth: '200px',
-					margin: '2rem auto',
+					// margin: '2rem auto',
 					height: '40px',
-					fontSize: '12px',
+					fontSize: '13px',
+					padding: '1.3rem',
+					bottom: '.5rem',
+					zIndex: 2,
+					right: '.5rem',
+					margin: 0,
+					color: '#1A2639',
+					fontWeight: 500,
+					backgroundColor: 'rgb(255, 188, 54)',
 				}}
 				onClick={() => props.history.push('/post-product')}>
-				Post your Product
+				POST PRODUCT
 			</div>
+
+			<SingleProducts />
 		</React.Fragment>
 	);
 };

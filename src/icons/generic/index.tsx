@@ -20,7 +20,10 @@ import { ReactComponent as Expired } from './expired.svg';
 import { ReactComponent as Camera } from './camera.svg';
 import { ReactComponent as CrossBlack } from './cross-black.svg';
 import { ReactComponent as DownBlack } from './down-black.svg';
-
+import { ReactComponent as Wishlist0 } from './wishlist-0.svg';
+import { ReactComponent as Wishlist1 } from './wishlist-1.svg';
+import { ReactComponent as Star } from './star.svg';
+import { ReactComponent as Wallet } from './wallet.svg';
 export interface GenericIconsProps {
 	name: string;
 	id?: string;
@@ -70,6 +73,14 @@ const GenericIcons: React.FC<GenericIconsProps> = ({ name, ...rest }) => {
 			return <CrossBlack {...rest} />;
 		case 'down-black':
 			return <DownBlack {...rest} />;
+		case 'wishlist-0':
+			return <Wishlist0 {...rest} />;
+		case 'wishlist-1':
+			return <Wishlist1 {...rest} />;
+		case 'star':
+			return <Star {...rest} />;
+		case 'wallet':
+			return <Wallet {...rest} />;
 		default:
 			return null;
 	}
