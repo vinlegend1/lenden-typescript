@@ -20,7 +20,7 @@ const Home: React.FC<HomeProps> = props => {
 
 	useResizeEventListener();
 	const [activeItem, setActiveItem] = React.useState<'single' | 'multiple'>(
-		'multiple'
+		'single'
 	);
 
 	return (

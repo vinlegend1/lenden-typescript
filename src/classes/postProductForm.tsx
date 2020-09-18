@@ -294,10 +294,11 @@ abstract class PostProductForm<
 		);
 	};
 
-	renderFileBox = (name: string, angleName?: string) => {
+	renderFileBox = (name: string, index: number, angleName?: string) => {
 		if (this.state.images)
 			return (
 				<FileBox
+					key={index}
 					file={this.state.images[name]}
 					handleFileChange={async event => {
 						const images = { ...this.state.images };
@@ -449,8 +450,8 @@ abstract class PostProductForm<
 					{note && <span>{note}</span>}
 				</p>
 				<div className='imageInputsContainer'>
-					{imagesRequired.map(image =>
-						this.renderFileBox(image.name, image.label)
+					{imagesRequired.map((image, index) =>
+						this.renderFileBox(image.name, index, image.label)
 					)}
 				</div>
 			</div>

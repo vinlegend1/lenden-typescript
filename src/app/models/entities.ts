@@ -5,7 +5,7 @@ export interface Product {
 	desc: string;
 	ldc: number;
 	rating: number;
-	src: string;
+	// src: string;
 	wishlist: boolean;
 	canBarter: boolean;
 }

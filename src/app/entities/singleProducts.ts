@@ -1,31 +1,67 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from '../api';
-import { ProductsSlice, Product, FetchedProduct } from './../models/entities';
 import { RootState, ActionWithPayload } from '../models';
 import { Dispatch } from 'redux';
 
-const mapToViewModel = (data: FetchedProduct, userId: string): Product => {
+interface FetchedProduct {
+	productid: string;
+	title: string;
+	producttype: string;
+	description: string;
+	ldc: number;
+	rating: number;
+	wishlist: boolean;
+	barternow: boolean;
+	image: string;
+}
+
+const mapToViewModel = (
+	data: FetchedProduct,
+	userId: string
+): SingleProductSlice => {
 	return {
 		id: data.productid,
-		name: data.title,
+		title: data.title,
 		category: data.producttype.toLowerCase(),
-		desc: data.description,
+		description: data.description,
 		ldc: data.ldc,
 		rating: data.rating,
-		src: data.image,
-		wishlist: data.wishlist,
-		canBarter: userId ? data.barternow : true,
+		// src: data.image,
+		isWishlist: data.wishlist,
+		isDisabled: userId ? data.barternow : false,
 	};
 };
 
-const initialState: ProductsSlice = {
+export interface SingleProductSlice {
+	id: string;
+	title: string;
+	category: string;
+	description: string;
+	ldc: number;
+	// src: string;
+	rating: number;
+	isWishlist: boolean;
+	isDisabled: boolean;
+}
+
+interface InitialState {
+	list: Array<SingleProductSlice>;
+	page: number;
+	limit: number;
+	showButton: boolean;
+	loading: boolean;
+	loadingPage: boolean;
+	// category: string;
+}
+
+const initialState: InitialState = {
 	list: [],
 	limit: 5,
 	page: 0,
 	showButton: false,
 	loading: false,
 	loadingPage: false,
-	category: '',
+	// category: '',
 };
 
 const slice = createSlice({
@@ -81,14 +117,14 @@ const {
 	loadingStatusChanged,
 } = slice.actions;
 
-export const getProducts = () => async (
+export const getProducts = (category: string) => async (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
 	const userId = getState().auth.userDetails.user.userId
 		? getState().auth.userDetails.user.userId
 		: '';
-	let { list, page, limit, category } = getState().entities.products;
+	let { list, page, limit } = getState().entities.singleProducts;
 
 	const currPage = Math.ceil(list.length / limit) + 1;
 	if (page !== currPage) await dispatch(pageChanged(currPage));
@@ -96,10 +132,10 @@ export const getProducts = () => async (
 	await dispatch(
 		apiCallBegan({
 			method: 'post',
-			url: `products/product/?page=${currPage}&limit=${limit}`,
+			url: `products/singlelist?page=${currPage}&limit=${limit}`,
 			data: {
 				userid: userId,
-				categorytype: category,
+				producttype: category,
 			},
 			onStart: productsInitiated.type,
 			onSuccess: productsReceived.type,

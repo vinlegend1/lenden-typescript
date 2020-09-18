@@ -1,73 +1,73 @@
 import * as React from 'react';
-import GenericIcons from '../../icons/generic';
+import SingleProductBox from '../common/singleProductBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/models';
+import {
+	changeButtonStatus,
+	getProducts,
+} from '../../app/entities/singleProducts';
+import { ClipLoader, BarLoader } from 'react-spinners';
 
 export interface SingleProductsProps {}
 
 const SingleProducts: React.FC<SingleProductsProps> = () => {
-	const products = [
-		{
-			title:
-				'Iphone 11 - 32 GB , Black Colour, Dual Camera with OG Bill. Iphone 11 - 32 GB , Black Colour, Dual Camera with OG Bill.',
-			ldc: 321,
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque laudantium veniam ex alias atque! Itaque dolore quas cupiditate a est!',
-			rating: 4.5,
-			wishlist: false,
-			disabled: false,
-		},
-		{
-			title:
-				'Iphone 11 - 32 GB , Black Colour, Dual Camera with OG Bill. Iphone 11 - 32 GB , Black Colour, Dual Camera with OG Bill.',
-			ldc: 654,
-			description:
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique magnam voluptatum odio quas doloribus eius!',
-			rating: 3.4,
-			wishlist: true,
-			disabled: false,
-		},
-		{
-			title: 'Iphone 11 - 32 GB , Black Colour',
-			ldc: 654,
-			description:
-				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique magnam voluptatum odio quas doloribus eius!',
-			rating: 2.4,
-			wishlist: false,
-			disabled: false,
-		},
-	];
+	const dispatch = useDispatch();
+	const { list, showButton, loading, loadingPage, page } = useSelector(
+		(state: RootState) => state.entities.singleProducts
+	);
 
-	const getProductCondition = (rating: number) => {
-		if (rating > 4) return 'good';
-		else if (rating > 3) return 'average';
-		else if (rating > 2) return 'bad';
-	};
+	React.useState(() => {
+		if (page === 0) dispatch(getProducts(''));
+		else dispatch(changeButtonStatus(true));
+	});
+
+	if (loadingPage)
+		return (
+			<div style={{ textAlign: 'center', marginTop: '3rem' }}>
+				<ClipLoader size={35} color={'#1a2639'} loading={true} />
+			</div>
+		);
 
 	return (
 		<div className='singleProductsContainer'>
-			{products.map(product => (
-				<div className={`singleProduct ${product.disabled ? 'disabled' : ''}`}>
-					<div className='imgContainer'>
-						<img src='https://placekitten.com/800/300' alt='' />
-					</div>
-					<div className='infoContainer'>
-						<div className='label-wishlistContainer'>
-							<div className='label'>{product.title}</div>
-							<div className='wishlist'>
-								<GenericIcons name={`wishlist-${product.wishlist ? 1 : 0}`} />
-							</div>
-						</div>
-						<div className={`rating ${getProductCondition(product.rating)}`}>
-							{product.rating}
-							<GenericIcons name='star' />
-						</div>
-						<div className='ldc'>
-							{product.ldc}
-							<GenericIcons name='wallet' />
-						</div>
-						<div className='description'>{product.description}</div>
-					</div>
+			{list.length === 0 && (
+				<div
+					style={{
+						fontFamily: 'Cera Pro',
+						textAlign: 'center',
+						marginTop: '3rem',
+					}}>
+					There are no products to show!
 				</div>
-			))}
+			)}
+			{list.length !== 0 &&
+				list.map((product, index) => (
+					<SingleProductBox productInfo={product} key={index} />
+				))}
+
+			<div style={{ textAlign: 'center' }}>
+				<BarLoader
+					height={3}
+					css='display:block;margin:2vh auto'
+					color={'#1a2639'}
+					loading={loading}
+				/>
+			</div>
+
+			{list.length !== 0 && showButton && (
+				<div
+					className='darkButton'
+					style={{
+						fontFamily: 'Cera Pro',
+						margin: '1rem auto',
+						width: '10rem',
+						padding: 0,
+						height: '2.2rem',
+					}}
+					onClick={() => dispatch(getProducts(''))}>
+					Load More
+				</div>
+			)}
 		</div>
 	);
 };
