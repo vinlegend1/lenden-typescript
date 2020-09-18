@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export interface ToggleButtonProps {}
+export interface ToggleButtonProps {
+	activeItem: 'single' | 'multiple';
+	handleActiveItemChange: (item: 'single' | 'multiple') => void;
+}
 
-const ToggleButton: React.FC<ToggleButtonProps> = () => {
-	const [activeItem, setActiveItem] = useState<'single' | 'multiple'>('single');
-
+const ToggleButton: React.FC<ToggleButtonProps> = props => {
+	const { activeItem, handleActiveItemChange } = props;
 	return (
 		<div id='toggleButton'>
 			<div
 				id='single'
 				onClick={() => {
-					if (activeItem === 'multiple') setActiveItem('single');
+					if (activeItem === 'multiple') handleActiveItemChange('single');
 				}}
 				className={`${activeItem === 'single' ? 'active' : ''}`}>
 				Single
@@ -18,7 +20,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = () => {
 			<div
 				id='multiple'
 				onClick={() => {
-					if (activeItem === 'single') setActiveItem('multiple');
+					if (activeItem === 'single') handleActiveItemChange('multiple');
 				}}
 				className={`${activeItem === 'multiple' ? 'active' : ''}`}>
 				Multiple

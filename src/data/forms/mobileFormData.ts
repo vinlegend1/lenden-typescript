@@ -884,7 +884,7 @@ const modelOptions = {
 		'J7 Pro 64GB',
 		'J7 Max 4GB/32GB',
 		'J7 Prime 16GB',
-		'J7 Prime_39 32GB',
+		'J7 Prime 32GB',
 		'J7 2016 2GB/16GB',
 		'J7 Prime 2 3GB/32GB',
 		'J6 3GB/32GB',

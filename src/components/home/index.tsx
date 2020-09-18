@@ -8,8 +8,8 @@ import { RootState } from '../../app/models';
 import useResizeEventListener from '../../hooks/useResizeEventListener';
 import Navbar from '../navbar';
 import { RouteComponentProps } from 'react-router-dom';
-import GenericIcons from '../../icons/generic';
 import SingleProducts from './singleProducts';
+import MultipleProducts from './multipleProducts';
 
 export interface HomeProps extends RouteComponentProps {}
 
@@ -19,6 +19,9 @@ const Home: React.FC<HomeProps> = props => {
 	);
 
 	useResizeEventListener();
+	const [activeItem, setActiveItem] = React.useState<'single' | 'multiple'>(
+		'multiple'
+	);
 
 	return (
 		<React.Fragment>
@@ -26,7 +29,10 @@ const Home: React.FC<HomeProps> = props => {
 			<InfoBanner />
 			{isMobile && <Categories />}
 			<MainBanner />
-			<ToggleButton />
+			<ToggleButton
+				activeItem={activeItem}
+				handleActiveItemChange={item => setActiveItem(item)}
+			/>
 
 			{/* Temporary button */}
 			<div
@@ -34,7 +40,6 @@ const Home: React.FC<HomeProps> = props => {
 				style={{
 					position: 'fixed',
 					maxWidth: '200px',
-					// margin: '2rem auto',
 					height: '40px',
 					fontSize: '13px',
 					padding: '1.3rem',
@@ -50,7 +55,8 @@ const Home: React.FC<HomeProps> = props => {
 				POST PRODUCT
 			</div>
 
-			<SingleProducts />
+			{activeItem === 'single' && <SingleProducts />}
+			{activeItem === 'multiple' && <MultipleProducts />}
 		</React.Fragment>
 	);
 };
