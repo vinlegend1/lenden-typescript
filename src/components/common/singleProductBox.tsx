@@ -37,8 +37,8 @@ const SingleProductBox: React.FC<SingleProductBoxProps> = props => {
 					{rating}
 					<GenericIcons name='star' />
 				</div>
-				<div className='ldc'>
-					{ldc}
+				<div className='ldcContainer'>
+					<div className='ldc'>{ldc}</div>
 					<GenericIcons name='wallet' />
 				</div>
 				<div className='description'>{description}</div>

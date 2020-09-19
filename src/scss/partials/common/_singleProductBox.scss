@@ -28,25 +28,27 @@
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
-			align-items: center;
+			position: relative;
+			// align-items: center;
 			// height: 2.5rem;
 
 			.label {
-				font-size: 13px;
+				font-size: 16px;
 				flex-basis: 80%;
 				overflow: hidden;
 				font-weight: 500;
 				// height: 2.5rem;
 				display: -webkit-box;
-				line-height: 1.2rem;
-				-webkit-line-clamp: 2;
+				// line-height: 1.2rem;
+				-webkit-line-clamp: 1;
 				-webkit-box-orient: vertical;
 			}
 
 			.wishlist {
-				position: relative;
+				position: absolute;
 				// width: 7rem;
 				// flex-basis: 20%;
+				right: 0;
 				margin: 0 0.3rem;
 				border-radius: 50%;
 				box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
@@ -64,18 +66,20 @@
 		}
 
 		.rating {
-			margin: 0.2rem 0 0 0;
-			width: 3rem;
-			padding: 0.1rem 0.4rem;
+			margin: 0.5rem 0 0.9rem 0;
+			width: 3.2rem;
+			// padding: 0.05rem 0.35rem;
+			padding: 0.1rem;
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: space-evenly;
 			color: white;
-			font-size: 13px;
-			border-radius: 5px;
+			font-size: 15px;
+			border-radius: 2px;
+			font-weight: 500;
 
 			svg {
-				width: 0.8rem;
+				width: 1rem;
 			}
 
 			&.good {
@@ -89,16 +93,21 @@
 			}
 		}
 
-		.ldc {
-			font-size: 22px;
+		.ldcContainer {
+			font-size: 25px;
 			display: flex;
-			align-items: center;
+			align-items: flex-start;
 			font-weight: 500;
 			color: #535353;
+			margin-bottom: 0.1rem;
+
+			.ldc {
+				margin-top: -0.7rem;
+			}
 
 			svg {
-				margin-left: 0.5rem;
-				width: 1.5rem;
+				margin-left: 0.3rem;
+				width: 1.2rem;
 			}
 		}
 

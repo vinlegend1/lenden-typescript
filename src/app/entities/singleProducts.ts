@@ -117,7 +117,32 @@ const {
 	loadingStatusChanged,
 } = slice.actions;
 
-export const getProducts = (category: string) => async (
+const returnRequestData = (userId: string, category?: string) => {
+	let type: string;
+	switch (category) {
+		case 'books':
+			type = 'books';
+			break;
+		case 'mobiles':
+			type = 'mobilephones';
+			break;
+		case 'consoles':
+			type = 'gamingconsoles';
+			break;
+		case 'cd':
+			type = 'gamingcd';
+			break;
+		default:
+			type = '';
+	}
+
+	return {
+		userid: userId,
+		categorytype: type,
+	};
+};
+
+export const getProducts = (category?: string) => async (
 	dispatch: Dispatch,
 	getState: () => RootState
 ) => {
@@ -129,14 +154,13 @@ export const getProducts = (category: string) => async (
 	const currPage = Math.ceil(list.length / limit) + 1;
 	if (page !== currPage) await dispatch(pageChanged(currPage));
 
+	const data = returnRequestData(userId, category);
+
 	await dispatch(
 		apiCallBegan({
 			method: 'post',
 			url: `products/singlelist?page=${currPage}&limit=${limit}`,
-			data: {
-				userid: userId,
-				producttype: category,
-			},
+			data,
 			onStart: productsInitiated.type,
 			onSuccess: productsReceived.type,
 		})
