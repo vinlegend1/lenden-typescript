@@ -7,15 +7,15 @@ export interface CategoriesProps {}
 
 const Categories: React.FC<CategoriesProps> = () => {
 	const categoryList = [
-		{ name: 'Books', src: 'book', to: '/categories/books' },
-		{ name: 'Mobiles', src: 'mobile', to: '/categories/mobiles' },
-		{ name: 'Gaming CD', src: 'cd', to: '/categories/gaming-cd' },
+		{ name: 'Books', src: 'book', to: '/products/books' },
+		{ name: 'Mobiles', src: 'mobile', to: '/products/mobiles' },
+		{ name: 'Gaming CD', src: 'cd', to: '/products/gaming-cd' },
 		{
 			name: 'Accessories',
 			src: 'accessory',
-			to: '/categories/gaming-accessories',
+			to: '/products/gaming-accessories',
 		},
-		{ name: 'Consoles', src: 'console', to: '/categories/gaming-consoles' },
+		{ name: 'Consoles', src: 'console', to: '/products/gaming-consoles' },
 	];
 
 	return (

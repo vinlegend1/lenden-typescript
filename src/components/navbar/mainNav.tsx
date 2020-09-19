@@ -1,7 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { action as toggleMenu } from 'redux-burger-menu';
-import { NavLink, useHistory } from 'react-router-dom';
+import {
+	NavLink,
+	useHistory,
+	RouteComponentProps,
+	withRouter,
+} from 'react-router-dom';
 import { Navbar, Nav, Image, Form, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from '../../app/models';
@@ -9,9 +14,9 @@ import GenericIcons from '../../icons/generic';
 import LendenIcons from '../../icons/lenden';
 import GravatarIcons from '../../icons/gravatar';
 
-export interface MainNavProps {}
+export interface MainNavProps extends RouteComponentProps {}
 
-const MainNav: React.FC<MainNavProps> = () => {
+const MainNav: React.FC<MainNavProps> = props => {
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.auth.userDetails.user);
 	const history = useHistory();
@@ -29,7 +34,9 @@ const MainNav: React.FC<MainNavProps> = () => {
 					style={{ cursor: 'pointer' }}>
 					<GenericIcons className='icon' name='menu' />
 				</Navbar.Brand>
-				<LendenIcons id='logo' name='nav-logo' />
+				<div onClick={() => props.history.push('/')} className='logoContainer'>
+					<LendenIcons id='logo' name='nav-logo' />
+				</div>
 
 				<NavLink className='nav-link category' to='/categories/books'>
 					Books
@@ -125,4 +132,4 @@ const MainNav: React.FC<MainNavProps> = () => {
 	);
 };
 
-export default MainNav;
+export default withRouter(MainNav);

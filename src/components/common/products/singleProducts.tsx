@@ -1,25 +1,36 @@
 import * as React from 'react';
-import SingleProductBox from '../common/singleProductBox';
+import SingleProductBox from './singleProductBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/models';
 import {
 	changeButtonStatus,
 	getProducts,
-} from '../../app/entities/singleProducts';
+	resetProductList,
+} from '../../../app/entities/products/singleProducts';
 import { ClipLoader, BarLoader } from 'react-spinners';
+import { RootState } from '../../../app/models';
 
-export interface SingleProductsProps {}
+export interface SingleProductsProps {
+	category?: string;
+}
 
-const SingleProducts: React.FC<SingleProductsProps> = () => {
+const SingleProducts: React.FC<SingleProductsProps> = props => {
 	const dispatch = useDispatch();
-	const { list, showButton, loading, loadingPage, page } = useSelector(
-		(state: RootState) => state.entities.singleProducts
-	);
+	const {
+		list,
+		showButton,
+		loading,
+		loadingPage,
+		productsReceived,
+	} = useSelector((state: RootState) => state.entities.products.singleProducts);
 
-	React.useState(() => {
-		if (page === 0) dispatch(getProducts(''));
-		else dispatch(changeButtonStatus(true));
-	});
+	React.useEffect(() => {
+		// if (page === 0)
+		dispatch(getProducts(props.category));
+		// else dispatch(changeButtonStatus(true));
+		return () => {
+			dispatch(resetProductList());
+		};
+	}, []);
 
 	if (loadingPage)
 		return (
@@ -30,7 +41,7 @@ const SingleProducts: React.FC<SingleProductsProps> = () => {
 
 	return (
 		<div className='singleProductsContainer'>
-			{list.length === 0 && (
+			{productsReceived && list.length === 0 && (
 				<div
 					style={{
 						fontFamily: 'Cera Pro',
@@ -64,7 +75,7 @@ const SingleProducts: React.FC<SingleProductsProps> = () => {
 						padding: 0,
 						height: '2.2rem',
 					}}
-					onClick={() => dispatch(getProducts(''))}>
+					onClick={() => dispatch(getProducts(props.category))}>
 					Load More
 				</div>
 			)}

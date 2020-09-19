@@ -1,6 +1,6 @@
 import * as React from 'react';
-import GenericIcons from '../../icons/generic';
-import { SingleProductSlice } from '../../app/entities/singleProducts';
+import GenericIcons from '../../../icons/generic';
+import { SingleProductSlice } from '../../../app/entities/products/singleProducts';
 
 export interface SingleProductBoxProps {
 	productInfo: SingleProductSlice;

@@ -5,7 +5,6 @@ import { ToastContainer, Flip, Slide } from 'react-toastify';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUser, getUserInfo } from '../app/auth/userDetails';
-
 import Home from './home';
 import ProtectedRoute from './common/protectedRoute';
 import MyAccount from './myAccount';
@@ -23,6 +22,7 @@ import NewGamingCd from './postProduct/newGamingCd/index';
 import NewGamingConsole from './postProduct/newGamingConsole';
 import NewMobile from './postProduct/newMobile';
 import DonateBook from './postProduct/donateBook/index';
+import CategoryWiseProducts from './categoryWiseProducts';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -53,7 +53,6 @@ const App: React.FC = () => {
 				<Switch>
 					<UserProtectedRoute path='/login' component={Login} />
 					<UserProtectedRoute path='/signup' component={Signup} />
-
 					<UserProtectedRoute
 						path='/user/verify/:token'
 						component={VerifyEmail}
@@ -90,9 +89,16 @@ const App: React.FC = () => {
 						to='/post-product/mobile/1'
 					/>
 					<ProtectedRoute path='/post-product/mobile' component={NewMobile} />
+					<ProtectedRoute path='/post-product' component={PostProduct} />
 					<ProtectedRoute path='/donate-a-book' component={DonateBook} />
 
-					<ProtectedRoute path='/post-product' component={PostProduct} />
+					<Route path='/products/books' component={CategoryWiseProducts} />
+					<Route path='/products/mobiles' component={CategoryWiseProducts} />
+					<Route path='/products/gaming-cd' component={CategoryWiseProducts} />
+					<Route
+						path='/products/gaming-consoles'
+						component={CategoryWiseProducts}
+					/>
 
 					<ProtectedRoute path='/my-account/edit' component={EditProfile} />
 					<ProtectedRoute

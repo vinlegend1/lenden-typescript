@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { apiCallBegan } from '../api';
-import { RootState, ActionWithPayload } from '../models';
+import { apiCallBegan } from '../../api';
+import { RootState, ActionWithPayload } from '../../models';
 import { Dispatch } from 'redux';
 
 interface FetchedProduct {
@@ -51,6 +51,7 @@ interface InitialState {
 	showButton: boolean;
 	loading: boolean;
 	loadingPage: boolean;
+	productsReceived: boolean;
 	// category: string;
 }
 
@@ -61,6 +62,7 @@ const initialState: InitialState = {
 	showButton: false,
 	loading: false,
 	loadingPage: false,
+	productsReceived: false,
 	// category: '',
 };
 
@@ -96,6 +98,7 @@ const slice = createSlice({
 			if (action.payload.data.length < products.limit)
 				products.showButton = false;
 			else products.showButton = true;
+			products.productsReceived = true;
 		},
 		buttonStatusChanged: (products, action: ActionWithPayload<boolean>) => {
 			products.showButton = action.payload;
@@ -103,6 +106,14 @@ const slice = createSlice({
 		loadingStatusChanged: (products, action: ActionWithPayload<boolean>) => {
 			products.loading = action.payload;
 			products.loadingPage = action.payload;
+		},
+		listReset: products => {
+			products.page = 0;
+			products.list = [];
+			products.productsReceived = false;
+			products.showButton = false;
+			products.loading = false;
+			products.loadingPage = false;
 		},
 	},
 });
@@ -115,6 +126,7 @@ const {
 	pageChanged,
 	buttonStatusChanged,
 	loadingStatusChanged,
+	listReset,
 } = slice.actions;
 
 const returnRequestData = (userId: string, category?: string) => {
@@ -124,13 +136,13 @@ const returnRequestData = (userId: string, category?: string) => {
 			type = 'books';
 			break;
 		case 'mobiles':
-			type = 'mobilephones';
+			type = 'mobile_phone';
 			break;
-		case 'consoles':
-			type = 'gamingconsoles';
+		case 'gaming-consoles':
+			type = 'gaming_console';
 			break;
-		case 'cd':
-			type = 'gamingcd';
+		case 'gaming-cd':
+			type = 'gaming_cd';
 			break;
 		default:
 			type = '';
@@ -138,7 +150,7 @@ const returnRequestData = (userId: string, category?: string) => {
 
 	return {
 		userid: userId,
-		categorytype: type,
+		producttype: type,
 	};
 };
 
@@ -149,7 +161,7 @@ export const getProducts = (category?: string) => async (
 	const userId = getState().auth.userDetails.user.userId
 		? getState().auth.userDetails.user.userId
 		: '';
-	let { list, page, limit } = getState().entities.singleProducts;
+	let { list, page, limit } = getState().entities.products.singleProducts;
 
 	const currPage = Math.ceil(list.length / limit) + 1;
 	if (page !== currPage) await dispatch(pageChanged(currPage));
@@ -170,3 +182,5 @@ export const getProducts = (category?: string) => async (
 
 export const changeButtonStatus = (value: boolean) =>
 	buttonStatusChanged(value);
+
+export const resetProductList = () => listReset();

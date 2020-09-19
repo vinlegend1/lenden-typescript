@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import InfoBanner from './infoBanner';
 import Categories from './categories';
 import MainBanner from './mainBanner';
-import ToggleButton from './toggleButton';
+import ToggleButton from '../common/products/singleMultipleToggle';
 import { RootState } from '../../app/models';
 import useResizeEventListener from '../../hooks/useResizeEventListener';
 import Navbar from '../navbar';
 import { RouteComponentProps } from 'react-router-dom';
-import SingleProducts from './singleProducts';
+import SingleProducts from '../common/products/singleProducts';
 import MultipleProducts from './multipleProducts';
 
 export interface HomeProps extends RouteComponentProps {}

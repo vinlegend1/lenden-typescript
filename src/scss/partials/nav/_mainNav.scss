@@ -18,18 +18,21 @@
 		// 	padding: 0.2rem 1rem;
 		// }
 
-		#logo {
-			width: 2.5em;
-			margin: auto 1.5rem;
-			cursor: pointer;
+		.logoContainer {
+			display: inherit;
+			#logo {
+				width: 2.5em;
+				margin: auto 1.5rem;
+				cursor: pointer;
 
-			// @media screen and (max-width: 870px) {
-			// 	margin: auto 1rem;
-			// }
+				// @media screen and (max-width: 870px) {
+				// 	margin: auto 1rem;
+				// }
 
-			@media screen and (max-width: breakpoint(mobileS)) {
-				width: 2em;
-				// margin: auto 5px;
+				@media screen and (max-width: breakpoint(mobileS)) {
+					width: 2em;
+					// margin: auto 5px;
+				}
 			}
 		}
 

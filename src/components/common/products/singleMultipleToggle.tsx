@@ -1,14 +1,14 @@
 import React from 'react';
 
-export interface ToggleButtonProps {
+export interface SingleMultipleToggleProps {
 	activeItem: 'single' | 'multiple';
 	handleActiveItemChange: (item: 'single' | 'multiple') => void;
 }
 
-const ToggleButton: React.FC<ToggleButtonProps> = props => {
+const SingleMultipleToggle: React.FC<SingleMultipleToggleProps> = props => {
 	const { activeItem, handleActiveItemChange } = props;
 	return (
-		<div id='toggleButton'>
+		<div id='singleMultipleToggle'>
 			<div
 				id='single'
 				onClick={() => {
@@ -29,4 +29,4 @@ const ToggleButton: React.FC<ToggleButtonProps> = props => {
 	);
 };
 
-export default ToggleButton;
+export default SingleMultipleToggle;
