@@ -1,11 +1,11 @@
 import * as React from 'react';
 import SingleMultipleToggle from '../common/products/singleMultipleToggle';
-import MainNav from '../navbar/mainNav';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import SingleProducts from '../common/products/singleProducts';
-import SideNav from '../navbar/sideNav';
+import Navbar from '../navbar';
 import { Breadcrumb } from 'react-bootstrap';
 import _ from 'lodash';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export interface CategoryWiseProductsProps extends RouteComponentProps {}
 
@@ -20,15 +20,15 @@ const CategoryWiseProducts: React.FC<CategoryWiseProductsProps> = props => {
 		.join(' ');
 	return (
 		<div className='categoryWiseProducts'>
-			<MainNav />
-			<SideNav />
+			<Navbar />
 			<Breadcrumb>
-				<Breadcrumb.Item>
-					<Link to='/'>Home</Link>
-				</Breadcrumb.Item>
-				<Breadcrumb.Item>
-					<Link to='/'>Categories</Link>
-				</Breadcrumb.Item>
+				<LinkContainer to='/'>
+					<Breadcrumb.Item>Home</Breadcrumb.Item>
+				</LinkContainer>
+				<LinkContainer to='/'>
+					<Breadcrumb.Item>Categories</Breadcrumb.Item>
+				</LinkContainer>
+
 				<Breadcrumb.Item active>{categoryLabel}</Breadcrumb.Item>
 			</Breadcrumb>
 			<SingleMultipleToggle

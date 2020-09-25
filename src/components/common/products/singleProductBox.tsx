@@ -9,7 +9,7 @@ export interface SingleProductBoxProps {
 const getProductCondition = (rating: number) => {
 	if (rating > 4) return 'good';
 	else if (rating > 3) return 'average';
-	else if (rating > 2) return 'bad';
+	else if (rating >= 0) return 'bad';
 };
 
 const SingleProductBox: React.FC<SingleProductBoxProps> = props => {

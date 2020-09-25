@@ -28,7 +28,7 @@ const mapToViewModel = (
 		rating: data.rating,
 		// src: data.image,
 		isWishlist: data.wishlist,
-		isDisabled: userId ? data.barternow : false,
+		isDisabled: userId ? !data.barternow : false,
 	};
 };
 

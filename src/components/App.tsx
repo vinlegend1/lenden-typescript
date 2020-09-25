@@ -23,6 +23,7 @@ import NewGamingConsole from './postProduct/newGamingConsole';
 import NewMobile from './postProduct/newMobile';
 import DonateBook from './postProduct/donateBook/index';
 import CategoryWiseProducts from './categoryWiseProducts';
+import SingleMobileProductPage from './productPage/mobile/singleProductPage';
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -91,6 +92,11 @@ const App: React.FC = () => {
 					<ProtectedRoute path='/post-product/mobile' component={NewMobile} />
 					<ProtectedRoute path='/post-product' component={PostProduct} />
 					<ProtectedRoute path='/donate-a-book' component={DonateBook} />
+
+					<Route
+						path='/products/mobiles/single/:id'
+						component={SingleMobileProductPage}
+					/>
 
 					<Route path='/products/books' component={CategoryWiseProducts} />
 					<Route path='/products/mobiles' component={CategoryWiseProducts} />
