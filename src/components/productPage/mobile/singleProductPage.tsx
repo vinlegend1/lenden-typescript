@@ -5,10 +5,12 @@ import GenericIcons from '../../../icons/generic';
 import { LinkContainer } from 'react-router-bootstrap';
 import { scroller as scroll } from 'react-scroll';
 import mobileFormData from '../../../data/forms/mobileFormData';
+import { RouteComponentProps } from 'react-router-dom';
+import ShareSocial from '../../common/shareSocial';
 
-export interface SingleMobileProductPageProps {}
+export interface SingleMobileProductPageProps extends RouteComponentProps {}
 
-const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = () => {
+const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = props => {
 	const images = [
 		'https://placekitten.com/1080/1500',
 		'https://placekitten.com/1080/800',
@@ -18,7 +20,6 @@ const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = () => {
 	let problems = 'Faulty Touch, Scratches and cracks, Visible white lines';
 	let bodyDamage = 'Scratches, Dents, Broken back Panel';
 
-	// problems.split(', ')
 	const { screenIssues, phoneDamaged, functionalIssues } = mobileFormData;
 
 	const accordionCards = [
@@ -76,11 +77,10 @@ const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = () => {
 				<Breadcrumb.Item active>Iphone 11</Breadcrumb.Item>
 			</Breadcrumb>
 			<div className='carouselContainer'>
-				<div className='shareButton'>
-					<div>
-						<GenericIcons name='share' />
-					</div>
-				</div>
+				<ShareSocial
+					url={window.location.href}
+					title='Iphone 11 - 32 GB , Black Colour, Dual Camera with OG Bill'
+				/>
 
 				<Carousel
 					activeIndex={activeIndex}
@@ -161,7 +161,7 @@ const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = () => {
 				}}
 				activeKey={accordionIndex}>
 				{accordionCards.map((acc, i) => (
-					<Card>
+					<Card key={i}>
 						<Card.Header>
 							<Accordion.Toggle as={'div'} eventKey={i.toString()} id={acc.id}>
 								{acc.header}

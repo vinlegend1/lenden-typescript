@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^1.2.30",
+		"@fortawesome/free-brands-svg-icons": "^5.14.0",
 		"@fortawesome/free-regular-svg-icons": "^5.14.0",
 		"@fortawesome/free-solid-svg-icons": "^5.14.0",
 		"@fortawesome/react-fontawesome": "^0.1.11",
@@ -55,6 +56,7 @@
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.3",
 		"react-scroll": "^1.8.1",
+		"react-share": "^4.3.0",
 		"react-spinners": "^0.9.0",
 		"react-star-rating-component-new": "^1.0.6",
 		"react-swipeable": "^5.5.1",
