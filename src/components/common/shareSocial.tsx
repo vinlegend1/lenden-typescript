@@ -28,19 +28,18 @@ const ShareSocial: React.FC<ShareSocialProps> = props => {
 	const [modal, showModal] = React.useState(false);
 
 	return (
-		<div
-			className={`shareSocial ${props.className}`}
-			onClick={async () => {
-				try {
-					await navigator.share({
-						title: props.title,
-						url: props.url,
-					});
-				} catch (ex) {
-					showModal(true);
-				}
-			}}>
-			<div>
+		<div className={`shareSocial ${props.className ? props.className : ''}`}>
+			<div
+				onClick={async () => {
+					try {
+						await navigator.share({
+							title: props.title,
+							url: props.url,
+						});
+					} catch (ex) {
+						showModal(true);
+					}
+				}}>
 				<GenericIcons name='share' />
 			</div>
 			<Modal
@@ -48,7 +47,9 @@ const ShareSocial: React.FC<ShareSocialProps> = props => {
 				centered
 				show={modal}
 				keyboard={false}
-				onHide={() => showModal(false)}>
+				onHide={() => {
+					showModal(false);
+				}}>
 				<Modal.Body
 					style={{
 						fontFamily: 'Cera Pro',

@@ -28,8 +28,8 @@ const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = props =>
 			header: 'Phone Body Condition',
 			body: (
 				<React.Fragment>
-					{phoneDamaged.options.map(issue => (
-						<div>
+					{phoneDamaged.options.map((issue, i) => (
+						<div key={i}>
 							{issue} : {bodyDamage.includes(issue) ? 'YES' : 'NO'}
 						</div>
 					))}
@@ -40,8 +40,8 @@ const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = props =>
 			header: 'Mobile Screen Condition',
 			body: (
 				<React.Fragment>
-					{screenIssues.options.map(issue => (
-						<div>
+					{screenIssues.options.map((issue, i) => (
+						<div key={i}>
 							{issue} : {problems.includes(issue) ? 'YES' : 'NO'}
 						</div>
 					))}
@@ -53,8 +53,8 @@ const SingleMobileProductPage: React.FC<SingleMobileProductPageProps> = props =>
 			header: 'Functional / Physical issues',
 			body: (
 				<React.Fragment>
-					{functionalIssues.options.map(issue => (
-						<div>{issue}</div>
+					{functionalIssues.options.map((issue, i) => (
+						<div key={i}>{issue}</div>
 					))}
 				</React.Fragment>
 			),
