@@ -25,6 +25,7 @@ import { ReactComponent as Wishlist1 } from './wishlist-1.svg';
 import { ReactComponent as Star } from './star.svg';
 import { ReactComponent as Wallet } from './wallet.svg';
 import { ReactComponent as Plus } from './plus.svg';
+import { ReactComponent as Minus } from './minus.svg';
 import { ReactComponent as Share } from './share.svg';
 export interface GenericIconsProps {
 	name: string;
@@ -85,6 +86,8 @@ const GenericIcons: React.FC<GenericIconsProps> = ({ name, ...rest }) => {
 			return <Wallet {...rest} />;
 		case 'plus':
 			return <Plus {...rest} />;
+		case 'minus':
+			return <Minus {...rest} />;
 		case 'share':
 			return <Share {...rest} />;
 		default:
