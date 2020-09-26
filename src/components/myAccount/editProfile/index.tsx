@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { RootState } from '../../../app/models';
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import UserForm, { UserFormState } from '../../../classes/userForm';
 import Joi from 'joi';

@@ -6,7 +6,7 @@ import PostProductForm, {
 } from './../../../classes/postProductForm';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../../app/models';
-import { Dispatch, ThunkDispatch, Action } from '@reduxjs/toolkit';
+import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 import Joi from 'joi';
 import {
 	MobileFormSlicePage2,

@@ -5,7 +5,6 @@ import PostProductForm, {
 import Joi from 'joi';
 import { RouteComponentProps } from 'react-router-dom';
 import SubNav from '../../common/subNav';
-import { Form, Modal } from 'react-bootstrap';
 import gamingConsolesData from '../../../data/forms/gamingConsolesData';
 import { RootState } from '../../../app/models';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
@@ -16,7 +15,6 @@ import {
 	updateGamingConsoleFormDetails,
 	postGamingConsoleForm,
 } from './../../../app/entities/postProduct/gamingConsoleForm';
-import GenericIcons from '../../../icons/generic';
 
 export interface NewGamingConsoleProps
 	extends RouteComponentProps,

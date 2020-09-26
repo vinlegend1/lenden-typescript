@@ -10,52 +10,6 @@
 	// 	}
 	// }
 
-	.carouselContainer {
-		margin: 1rem;
-
-		.productCarousel {
-			// height: 25rem;
-			// position: relative;
-			.carousel-inner {
-				border-radius: 4px;
-				// position: absolute;
-				// top: 50%;
-				// -ms-transform: translateY(-50%);
-				// transform: translateY(-50%);
-				.carousel-item {
-					height: 20rem;
-					img {
-						border-radius: 4px;
-						margin: auto;
-						height: 100%;
-						object-fit: cover;
-						object-position: 50% 50%;
-
-						max-width: 100%;
-					}
-				}
-			}
-		}
-
-		.carousel-indicator {
-			display: flex;
-			justify-content: center;
-			margin: 1.5rem 0;
-
-			.dots {
-				width: 0.6rem;
-				height: 0.6rem;
-				background-color: #dfdfdf;
-				border-radius: 50%;
-				margin: 0 0.3rem;
-			}
-
-			.active {
-				background-color: #1a2639;
-			}
-		}
-	}
-
 	.pageActions {
 		z-index: 2;
 		font-family: font(secondary);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import GenericIcons from '../../icons/generic';
+import GenericIcons from '../../../icons/generic';
 import { Modal } from 'react-bootstrap';
 import {
 	EmailShareButton,
@@ -37,7 +37,7 @@ const ShareSocial: React.FC<ShareSocialProps> = props => {
 							url: props.url,
 						});
 					} catch (ex) {
-						showModal(true);
+						if (ex.name === 'TypeError') showModal(true);
 					}
 				}}>
 				<GenericIcons name='share' />

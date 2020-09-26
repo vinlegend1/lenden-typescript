@@ -2,7 +2,6 @@ import * as React from 'react';
 import SingleProductBox from './singleProductBox';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	changeButtonStatus,
 	getProducts,
 	resetProductList,
 } from '../../../app/entities/products/singleProducts';

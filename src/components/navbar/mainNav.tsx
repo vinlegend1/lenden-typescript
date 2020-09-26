@@ -7,7 +7,7 @@ import {
 	RouteComponentProps,
 	withRouter,
 } from 'react-router-dom';
-import { Navbar, Nav, Image, Form, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { RootState } from '../../app/models';
 import GenericIcons from '../../icons/generic';

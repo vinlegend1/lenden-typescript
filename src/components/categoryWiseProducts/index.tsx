@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SingleMultipleToggle from '../common/products/singleMultipleToggle';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import SingleProducts from '../common/products/singleProducts';
 import Navbar from '../navbar';
 import { Breadcrumb } from 'react-bootstrap';

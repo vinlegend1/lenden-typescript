@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { scroller as scroll } from 'react-scroll';
 import mobileFormData from '../../../data/forms/mobileFormData';
 import { RouteComponentProps } from 'react-router-dom';
-import ShareSocial from '../../common/shareSocial';
+import ShareSocial from '../../common/productPage/shareSocial';
 
 export interface SingleMobileProductPageProps extends RouteComponentProps {}
 
