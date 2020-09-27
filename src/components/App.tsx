@@ -1,31 +1,14 @@
 import React, { useEffect } from 'react';
-// import Login from './sign/login';
-// import Signup from './sign/signup';
 import { ToastContainer, Flip, Slide } from 'react-toastify';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUser, getUserInfo } from '../app/auth/userDetails';
-import Home from './home';
+// import Home from './home';
 import PageLoader from './common/pageLoader';
 import Navbar from './navbar';
-// import ProtectedRoute from './common/protectedRoute';
-// import MyAccount from './myAccount';
-// import EditProfile from './myAccount/editProfile';
-// import changeAddress from './myAccount/changeAddress';
-// import changePassword from './myAccount/changePassword/index';
-// import VerifyEmail from './sign/verifyEmail';
-// import NotFound from './common/notFound';
-// import ForgotPassword from './sign/forgotPassword';
-// import ResetPassword from './sign/resetPassword';
-// import UserProtectedRoute from './common/userProtectedRoute';
-// import PostProduct from './postProduct';
-// import NewBook from './postProduct/newBook';
-// import NewGamingCd from './postProduct/newGamingCd/index';
-// import NewGamingConsole from './postProduct/newGamingConsole';
-// import NewMobile from './postProduct/newMobile';
-// import DonateBook from './postProduct/donateBook/index';
-// import CategoryWiseProducts from './categoryWiseProducts';
-// import SingleMobileProductPage from './productPage/mobile/singleProductPage';
+
+const Home = React.lazy(() => import('./home'));
+// const PageLoader = React.lazy(() => import('./common/pageLoader'));
 
 const Login = React.lazy(() => import('./sign/login'));
 const Signup = React.lazy(() => import('./sign/signup'));
@@ -85,7 +68,7 @@ const App: React.FC = () => {
 				<React.Suspense
 					fallback={
 						<React.Fragment>
-							<Navbar />
+							{/* <Navbar /> */}
 							<PageLoader />
 						</React.Fragment>
 					}>
