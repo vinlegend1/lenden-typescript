@@ -19,10 +19,30 @@ const mapToViewModel = (
 	data: FetchedProduct,
 	userId: string
 ): SingleProductSlice => {
+	let category = '';
+
+	switch (data.producttype.toLowerCase()) {
+		case 'books':
+			category = 'books';
+			break;
+		case 'mobile_phone':
+			category = 'mobiles';
+			break;
+		case 'gaming_console':
+			category = 'gaming-consoles';
+			break;
+		case 'gaming_cd':
+			category = 'gaming-cd';
+			break;
+		case 'accessories':
+			category = 'accessories';
+			break;
+	}
+
 	return {
 		id: data.productid,
 		title: data.title,
-		category: data.producttype.toLowerCase(),
+		category: category,
 		description: data.description,
 		ldc: data.ldc,
 		rating: data.rating,

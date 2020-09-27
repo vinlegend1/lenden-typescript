@@ -2,21 +2,26 @@ import * as React from 'react';
 import GenericIcons from '../../../icons/generic';
 import { SingleProductSlice } from '../../../app/entities/products/singleProducts';
 import Product from './../../../classes/productPageForm';
-export interface SingleProductBoxProps {
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+export interface SingleProductBoxProps extends RouteComponentProps {
 	productInfo: SingleProductSlice;
 }
 
 const SingleProductBox: React.FC<SingleProductBoxProps> = props => {
 	const {
+		id,
 		title,
 		isDisabled,
 		isWishlist,
 		rating,
 		ldc,
 		description,
+		category,
 	} = props.productInfo;
 	return (
-		<div className={`singleProductBox ${isDisabled ? 'disabled' : ''}`}>
+		<div
+			className={`singleProductBox ${isDisabled ? 'disabled' : ''}`}
+			onClick={() => props.history.push(`/products/${category}/single/${id}`)}>
 			<div className='imgContainer'>
 				<img src='https://placekitten.com/800/300' alt='' />
 			</div>
@@ -41,4 +46,4 @@ const SingleProductBox: React.FC<SingleProductBoxProps> = props => {
 	);
 };
 
-export default SingleProductBox;
+export default withRouter(SingleProductBox);

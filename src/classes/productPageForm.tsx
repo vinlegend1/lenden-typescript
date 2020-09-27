@@ -109,7 +109,11 @@ abstract class ProductPageForm<
 		</div>
 	);
 
-	renderProductDetails = (config: {
+	renderProductDetails = ({
+		description,
+		details,
+		title = 'Details',
+	}: {
 		description: string;
 		title?: string;
 		details: Array<{
@@ -118,15 +122,15 @@ abstract class ProductPageForm<
 		}>;
 	}) => (
 		<div className='productDetails'>
-			<div className='title'>{config.title}</div>
-			{config.details.map((detail, i) => (
+			<div className='title'>{title}</div>
+			{details.map((detail, i) => (
 				<div className='detail' key={i}>
 					<div className='name'>{detail.name}</div>
 					<div className='value'>{detail.value}</div>
 				</div>
 			))}
 
-			<div className='description'>{config.description}</div>
+			<div className='description'>{description}</div>
 		</div>
 	);
 

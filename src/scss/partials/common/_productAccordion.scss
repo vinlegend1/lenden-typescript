@@ -13,9 +13,10 @@
 			background-color: white;
 			border: none;
 			margin-bottom: 0;
+			padding: 1rem;
 
 			div {
-				padding: 0.5rem 0;
+				// padding: 0.5rem 0;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -26,6 +27,14 @@
 					width: 1rem;
 				}
 			}
+		}
+
+		.card-body {
+			color: #535353;
+			font-size: 14px;
+			font-weight: 500;
+			padding: 0 1rem 1rem 1rem;
+			line-height: 1.7rem;
 		}
 	}
 }
