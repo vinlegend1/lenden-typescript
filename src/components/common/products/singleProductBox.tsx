@@ -1,16 +1,10 @@
 import * as React from 'react';
 import GenericIcons from '../../../icons/generic';
 import { SingleProductSlice } from '../../../app/entities/products/singleProducts';
-
+import Product from './../../../classes/productPageForm';
 export interface SingleProductBoxProps {
 	productInfo: SingleProductSlice;
 }
-
-const getProductCondition = (rating: number) => {
-	if (rating > 4) return 'good';
-	else if (rating > 3) return 'average';
-	else if (rating >= 0) return 'bad';
-};
 
 const SingleProductBox: React.FC<SingleProductBoxProps> = props => {
 	const {
@@ -33,7 +27,7 @@ const SingleProductBox: React.FC<SingleProductBoxProps> = props => {
 						<GenericIcons name={`wishlist-${isWishlist ? 1 : 0}`} />
 					</div>
 				</div>
-				<div className={`rating ${getProductCondition(rating)}`}>
+				<div className={`rating ${Product.getProductCondition(rating)}`}>
 					{rating}
 					<GenericIcons name='star' />
 				</div>

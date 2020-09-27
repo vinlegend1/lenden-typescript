@@ -1,0 +1,31 @@
+.productAccordion {
+	margin: 1rem;
+	.card {
+		font-family: font(secondary);
+		margin: 1rem 0;
+		border: 0.2px solid #e1e1e1;
+		background-color: white;
+		box-sizing: border-box;
+		box-shadow: 0px 1px 8px rgba(146, 146, 146, 0.25);
+		border-radius: 8px;
+
+		.card-header {
+			background-color: white;
+			border: none;
+			margin-bottom: 0;
+
+			div {
+				padding: 0.5rem 0;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-size: 14px;
+				font-weight: 500;
+				color: #535353;
+				svg {
+					width: 1rem;
+				}
+			}
+		}
+	}
+}
