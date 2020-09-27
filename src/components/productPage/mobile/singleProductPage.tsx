@@ -6,7 +6,7 @@ import { RootState } from '../../../app/models';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 import { getMobileProduct } from './../../../app/entities/productPage/mobiles/singleProductPage';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
 
 interface MatchParams {
@@ -68,6 +68,8 @@ class SingleMobileProductPage extends ProductPageForm<
 
 				{this.props.loading ? (
 					<PageLoader />
+				) : !this.props.productFound ? (
+					<Redirect to='/not-found' />
 				) : (
 					<React.Fragment>
 						{this.renderProductCarousel({
@@ -152,10 +154,12 @@ const mapStateToProps = (state: RootState) => {
 	const {
 		loading,
 		product,
+		productFound,
 	} = state.entities.productPage.mobiles.singleProductPage;
 	return {
 		loading,
 		product,
+		productFound,
 	};
 };
 

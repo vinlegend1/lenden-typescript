@@ -14,11 +14,11 @@ import MultipleProducts from './multipleProducts';
 export interface HomeProps extends RouteComponentProps {}
 
 const Home: React.FC<HomeProps> = props => {
-	const isMobile = useSelector(
-		(state: RootState) => state.entities.common.isMobile
-	);
+	// const isMobile = useSelector(
+	// 	(state: RootState) => state.entities.common.isMobile
+	// );
 
-	useResizeEventListener();
+	// useResizeEventListener();
 	const [activeItem, setActiveItem] = React.useState<'single' | 'multiple'>(
 		'single'
 	);
@@ -27,7 +27,8 @@ const Home: React.FC<HomeProps> = props => {
 		<React.Fragment>
 			<Navbar />
 			<InfoBanner />
-			{isMobile && <Categories />}
+			{/* {isMobile && <Categories />} */}
+			<Categories />
 			<MainBanner />
 			<ToggleButton
 				activeItem={activeItem}

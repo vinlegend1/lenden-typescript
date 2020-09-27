@@ -67,10 +67,11 @@ const mapToViewModel = (
 interface InitialState {
 	loading: boolean;
 	product: SingleProductPageSlice;
+	productFound: boolean;
 }
 
 const initialState: InitialState = {
-	loading: false,
+	loading: true,
 	product: {
 		id: '',
 		title: '',
@@ -88,6 +89,7 @@ const initialState: InitialState = {
 		isWishlist: false,
 		isDisabled: false,
 	},
+	productFound: false,
 };
 
 const slice = createSlice({
@@ -109,9 +111,11 @@ const slice = createSlice({
 				action.payload.userId
 			);
 			state.loading = false;
+			state.productFound = true;
 		},
 		productFailed: state => {
 			state.loading = false;
+			state.productFound = false;
 		},
 	},
 });
