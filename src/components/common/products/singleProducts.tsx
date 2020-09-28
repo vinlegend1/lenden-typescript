@@ -7,6 +7,7 @@ import {
 } from '../../../app/entities/products/singleProducts';
 import { ClipLoader, BarLoader } from 'react-spinners';
 import { RootState } from '../../../app/models';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export interface SingleProductsProps {
 	category?: string;
@@ -50,33 +51,33 @@ const SingleProducts: React.FC<SingleProductsProps> = props => {
 					There are no products to show!
 				</div>
 			)}
-			{list.length !== 0 &&
-				list.map((product, index) => (
-					<SingleProductBox productInfo={product} key={index} />
-				))}
 
-			<div style={{ textAlign: 'center' }}>
-				<BarLoader
-					height={3}
-					css='display:block;margin:2vh auto'
-					color={'#1a2639'}
-					loading={loading}
-				/>
-			</div>
-
-			{list.length !== 0 && showButton && (
-				<div
-					className='darkButton'
-					style={{
-						fontFamily: 'Cera Pro',
-						margin: '1rem auto',
-						width: '10rem',
-						padding: 0,
-						height: '2.2rem',
-					}}
-					onClick={() => dispatch(getProducts(props.category))}>
-					Load More
-				</div>
+			{list.length !== 0 && (
+				<InfiniteScroll
+					dataLength={list.length} //This is important field to render the next data
+					next={() => dispatch(getProducts(props.category))}
+					hasMore={showButton}
+					loader={<p>Wait</p>}
+					endMessage={
+						!loading && (
+							<div style={{ fontFamily: 'Cera Pro', textAlign: 'center' }}>
+								<p>Yay! You have seen it all</p>
+							</div>
+						)
+					}>
+					{list.length !== 0 &&
+						list.map((product, index) => (
+							<SingleProductBox productInfo={product} key={index} />
+						))}
+					<div style={{ textAlign: 'center' }}>
+						<ClipLoader
+							size={35}
+							color={'#1a2639'}
+							loading={loading}
+							css='display:block;margin:2vh auto'
+						/>
+					</div>
+				</InfiniteScroll>
 			)}
 		</div>
 	);
