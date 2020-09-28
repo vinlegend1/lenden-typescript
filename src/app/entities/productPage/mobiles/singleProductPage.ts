@@ -136,7 +136,7 @@ export const getMobileProduct = (id: string) => async (
 		apiCallBegan({
 			method: 'post',
 			url: `products/single`,
-			data: { productid: id, userid: userId },
+			data: { productid: id, userid: userId, producttype: 'mobile_phone' },
 			onStart: productInitiated.type,
 			onSuccess: productReceived.type,
 			onError: productFailed.type,
