@@ -1,4 +1,6 @@
-const consoleModels = {
+const consoleModels: {
+	[key: string]: string[];
+} = {
 	Sony: [
 		'PS4 500GB',
 		'PS4 1TB',

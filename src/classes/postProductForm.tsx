@@ -301,7 +301,10 @@ abstract class PostProductForm<
 					key={index}
 					file={this.state.images[name]}
 					handleFileChange={async event => {
-						const images = { ...this.state.images };
+						const images = this.state.images
+							? { ...this.state.images }
+							: undefined;
+
 						if (images) {
 							const image = (event.target as HTMLInputElement).files![0];
 							let compressedFile = await imageCompression(image, {
@@ -317,7 +320,9 @@ abstract class PostProductForm<
 						}
 					}}
 					deleteFile={() => {
-						const images = { ...this.state.images };
+						const images = this.state.images
+							? { ...this.state.images }
+							: undefined;
 						if (images) {
 							delete images[name];
 							this.setState({ images });

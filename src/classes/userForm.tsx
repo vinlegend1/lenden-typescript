@@ -52,15 +52,23 @@ abstract class UserForm<
 								className='passwordInputText'
 								onClick={() => {
 									if (this.state.passType![name] === 'password') {
-										let passType = { ...this.state.passType }!;
-										passType[name] = 'text';
-										return setTimeout(() => this.setState({ passType }));
+										let passType = this.state.passType
+											? { ...this.state.passType }
+											: undefined;
+										if (passType) {
+											passType[name] = 'text';
+											return setTimeout(() => this.setState({ passType }));
+										}
 									}
 
 									if (this.state.passType![name] === 'text') {
-										let passType = { ...this.state.passType }!;
-										passType[name] = 'password';
-										return setTimeout(() => this.setState({ passType }));
+										let passType = this.state.passType
+											? { ...this.state.passType }
+											: undefined;
+										if (passType) {
+											passType[name] = 'password';
+											return setTimeout(() => this.setState({ passType }));
+										}
 									}
 								}}
 								onMouseDown={(e: React.MouseEvent) => e.preventDefault()}>

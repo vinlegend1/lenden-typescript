@@ -46,7 +46,9 @@ const slice = createSlice({
 
 		formCleared: state => {
 			const { data } = state;
-			Object.keys(data).forEach(key => (data[key] = ''));
+			data.confirmation = '';
+			data.mobileNumber = '';
+			data.title = '';
 		},
 
 		formSubmitInitiated: state => {

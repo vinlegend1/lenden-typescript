@@ -16,8 +16,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import GenericIcons from '../../icons/generic';
 import { Modal } from 'react-bootstrap';
 
-Joi.extend(require('joi-phone-number'));
-
 export interface SignupProps extends RouteComponentProps, ReduxProps {}
 
 export interface SignupState extends UserFormState {

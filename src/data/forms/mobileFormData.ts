@@ -1,4 +1,6 @@
-const modelOptions = {
+const modelOptions: {
+	[key: string]: string[];
+} = {
 	Apple: [
 		'iPhone 11 Pro Max 512GB',
 		'iPhone 11 Pro Max 256GB',

@@ -5,7 +5,7 @@ import {
 	getProducts,
 	resetProductList,
 } from '../../../app/entities/products/singleProducts';
-import { ClipLoader, BarLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 import { RootState } from '../../../app/models';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
