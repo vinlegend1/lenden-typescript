@@ -1,26 +1,26 @@
 import * as React from 'react';
 import Navbar from '../../navbar';
 import ProductPageForm from '../../../classes/productPage';
-import mobileFormData from '../../../data/forms/mobileFormData';
 import { RootState } from '../../../app/models';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
-import {
-	getMobileProduct,
-	resetMobilesProduct,
-} from '../../../app/entities/productPage/mobiles/singleProductPage';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
+import {
+	getGamingConsoleProduct,
+	resetGamingConsoleProduct,
+} from './../../../app/entities/productPage/gamingConsoles/singleProductPage';
+import gamingConsolesData from '../../../data/forms/gamingConsolesData';
 
 interface MatchParams {
 	id: string;
 }
 
-export interface SingleMobileProductPageProps
+export interface SingleGamingConsoleProductPageProps
 	extends ReduxProps,
 		RouteComponentProps<MatchParams> {}
 
-export interface SingleMobileProductPageState {}
+export interface SingleGamingConsoleProductPageState {}
 
 const images = [
 	'https://placekitten.com/1080/1500',
@@ -28,11 +28,9 @@ const images = [
 	'https://placekitten.com/1920/1080',
 ];
 
-// const { phoneDamaged, screenIssues, functionalIssues } = mobileFormData;
-
-class SingleMobileProductPage extends ProductPageForm<
-	SingleMobileProductPageProps,
-	SingleMobileProductPageState
+class SingleGamingConsoleProductPage extends ProductPageForm<
+	SingleGamingConsoleProductPageProps,
+	SingleGamingConsoleProductPageState
 > {
 	componentDidMount = () => {
 		this.props.getProduct(this.props.match.params.id);
@@ -44,17 +42,18 @@ class SingleMobileProductPage extends ProductPageForm<
 	render() {
 		const {
 			title,
-			brand,
-			model,
+			description,
 			ldc,
 			rating,
-			description,
-			mobileAge,
-			workingCondition,
-			phoneDamaged,
-			screenIssues,
-			functionalIssues,
+			isWishlist,
+			isDisabled,
 			accessories,
+			brand,
+			condition,
+			consoleAge,
+			functionalIssues,
+			model,
+			workingCondition,
 		} = this.props.product;
 
 		return (
@@ -64,14 +63,13 @@ class SingleMobileProductPage extends ProductPageForm<
 				{this.renderBreadCrumb([
 					{ title: 'Home', url: '/' },
 					{
-						title: 'Mobiles',
-						url: '/products/mobiles',
+						title: 'Gaming Console',
+						url: '/products/gaming-consoles',
 					},
 					{
-						title: model,
+						title: `${title.substring(0, 20)}...`,
 					},
 				])}
-
 				{this.props.loading ? (
 					<PageLoader />
 				) : !this.props.productFound ? (
@@ -103,57 +101,43 @@ class SingleMobileProductPage extends ProductPageForm<
 									value: model,
 								},
 								{
-									name: 'Screen Condition',
+									name: 'Console Condition',
 									value: workingCondition,
 								},
 								{
-									name: 'Mobile Age',
-									value: mobileAge,
+									name: 'Overall Condition',
+									value: condition,
+								},
+								{
+									name: 'Age',
+									value: consoleAge,
 								},
 							],
 						})}
+
 						{this.renderProductAccordion([
-							// {
-							// 	type: 'yesNo',
-							// 	header: 'Phone Body Condition',
-							// 	data: {
-							// 		givenOptions: phoneDamaged,
-							// 		totalOptions: mobileFormData.phoneDamaged.options,
-							// 	},
-							// },
 							{
 								params: {
-									true: { title: 'Yes' },
-									false: { title: 'No' },
+									true: { title: 'Not Working', color: 'red' },
+									false: { title: 'Working', color: 'green' },
 								},
-								header: 'Mobile Screen Condition',
-								data: {
-									givenOptions: screenIssues,
-									totalOptions: mobileFormData.screenIssues.options,
-								},
-							},
-							{
-								params: {
-									true: { title: 'Yes' },
-									false: { title: 'No' },
-								},
-								header: 'Functional / Physical issues',
+								header: 'Functional conditions',
 								data: {
 									givenOptions: functionalIssues,
-									totalOptions: mobileFormData.functionalIssues.options,
+									totalOptions: gamingConsolesData.functionalIssues.options,
 								},
 							},
-							// {
-							// 	type: 'yesNo',
-							// 	header: 'Accessories available',
-							// 	data: {
-							// 		givenOptions: accessories,
-							// 		totalOptions: mobileFormData.accessories.options.map(acc => {
-							// 			if (acc.includes('Insurance')) return 'Insurance';
-							// 			else return acc;
-							// 		}),
-							// 	},
-							// },
+							{
+								params: {
+									true: { title: 'Available', color: 'green' },
+									false: { title: 'Not Available', color: 'red' },
+								},
+								header: 'Accessories Available',
+								data: {
+									givenOptions: accessories,
+									totalOptions: gamingConsolesData.accessories.options,
+								},
+							},
 						])}
 					</React.Fragment>
 				)}
@@ -167,7 +151,7 @@ const mapStateToProps = (state: RootState) => {
 		loading,
 		product,
 		productFound,
-	} = state.entities.productPage.mobiles.singleProductPage;
+	} = state.entities.productPage.gamingConsoles.singleProductPage;
 	return {
 		loading,
 		product,
@@ -176,11 +160,11 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
-	getProduct: (id: string) => dispatch(getMobileProduct(id)),
-	clearProduct: () => dispatch(resetMobilesProduct()),
+	getProduct: (id: string) => dispatch(getGamingConsoleProduct(id)),
+	clearProduct: () => dispatch(resetGamingConsoleProduct()),
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type ReduxProps = ConnectedProps<typeof connector>;
 
-export default connector(SingleMobileProductPage);
+export default connector(SingleGamingConsoleProductPage);

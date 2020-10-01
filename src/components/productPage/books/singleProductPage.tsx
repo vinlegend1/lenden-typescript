@@ -106,7 +106,7 @@ class SingleBookProductPage extends ProductPageForm<
 												value: bindingType,
 											},
 											{
-												name: 'If repaired earlier',
+												name: 'Repaired Earlier',
 												value: `${bookRepaired} times`,
 											},
 									  ],
@@ -116,7 +116,7 @@ class SingleBookProductPage extends ProductPageForm<
 								{
 									header: 'Inner Condition',
 									body: (
-										<div>
+										<React.Fragment>
 											<div
 												style={{
 													display: 'flex',
@@ -135,7 +135,7 @@ class SingleBookProductPage extends ProductPageForm<
 												</div>
 												<div>{bookFoxed}</div>
 											</div>
-										</div>
+										</React.Fragment>
 									),
 								},
 								{

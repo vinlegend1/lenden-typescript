@@ -116,8 +116,12 @@
 			font-size: 14px;
 			color: #b4b4b4;
 			font-weight: 500;
-			line-height: 1.6rem;
+			// line-height: 1.6rem;
+			margin: 0.8rem 0;
+
 			.value {
+				flex-basis: 50%;
+				text-align: right;
 				color: #535353;
 				font-size: 15px;
 			}
@@ -130,6 +134,23 @@
 			margin-top: 0.5rem;
 			font-weight: 500;
 			font-size: 15px;
+		}
+	}
+
+	.cardDetails {
+		display: flex;
+		justify-content: space-between;
+
+		.value {
+			text-align: right;
+			text-transform: uppercase;
+			font-size: 13px;
+			&.green {
+				color: #569315;
+			}
+			&.red {
+				color: #ff556e;
+			}
 		}
 	}
 }

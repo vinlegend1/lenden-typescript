@@ -7,6 +7,7 @@ import PageLoader from './common/pageLoader';
 import ErrorBoundary from './common/errorBoundary';
 import SingleBookProductPage from './productPage/books/singleProductPage';
 import SingleGamingCdProductPage from './productPage/gamingCd/singleProductPage';
+import SingleGamingConsoleProductPage from './productPage/gamingConsole/singleProductPage';
 
 const Home = React.lazy(() => import('./home'));
 const Login = React.lazy(() => import('./sign/login'));
@@ -126,6 +127,10 @@ const App: React.FC = () => {
 							<Route
 								path='/products/gaming-cd/single/:id'
 								component={SingleGamingCdProductPage}
+							/>
+							<Route
+								path='/products/gaming-consoles/single/:id'
+								component={SingleGamingConsoleProductPage}
 							/>
 
 							<Route path='/products/books' component={CategoryWiseProducts} />

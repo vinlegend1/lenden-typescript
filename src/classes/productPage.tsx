@@ -36,7 +36,10 @@ abstract class ProductPageForm<
 				givenOptions: string;
 				totalOptions: string[];
 			};
-			type: 'damagedWorking' | 'yesNo';
+			params: {
+				true: { title: string; color?: string };
+				false: { title: string; color?: string };
+			};
 		}>
 	) => {
 		let accordionProps: Array<{
@@ -45,21 +48,35 @@ abstract class ProductPageForm<
 		}> = [];
 
 		cards.forEach(card => {
-			if (card.type === 'yesNo') {
-				const body = (
-					<React.Fragment>
-						{card.data.totalOptions.map((option, i) => (
-							<div key={i}>
-								{`${option} : ${
-									card.data.givenOptions.includes(option) ? 'YES' : 'NO'
-								}`}
+			const body = (
+				<React.Fragment>
+					{card.data.totalOptions.map((option, i) => {
+						const isPresent = card.data.givenOptions.includes(option);
+						return (
+							<div className='cardDetails' key={i}>
+								{/* {`${option} : ${
+								card.data.givenOptions.includes(option)
+									? card.params.true
+									: card.params.false
+							}`} */}
+								<div className='name'>{option}</div>
+								<div
+									className={`value ${
+										card.params.true.color &&
+										card.params.false.color &&
+										isPresent
+											? card.params.true.color
+											: card.params.false.color
+									}`}>
+									{isPresent ? card.params.true.title : card.params.false.title}
+								</div>
 							</div>
-						))}
-					</React.Fragment>
-				);
+						);
+					})}
+				</React.Fragment>
+			);
 
-				accordionProps.push({ body, header: card.header });
-			}
+			accordionProps.push({ body, header: card.header });
 		});
 
 		return <ProductAccordion cards={accordionProps} />;
