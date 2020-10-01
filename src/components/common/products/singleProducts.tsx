@@ -25,6 +25,7 @@ const SingleProducts: React.FC<SingleProductsProps> = props => {
 
 	React.useEffect(() => {
 		// if (page === 0)
+		// (async () => await dispatch(resetProductList()))();
 		dispatch(getProducts(props.category));
 		// else dispatch(changeButtonStatus(true));
 		return () => {

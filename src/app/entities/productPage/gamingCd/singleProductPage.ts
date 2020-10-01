@@ -96,10 +96,20 @@ const slice = createSlice({
 			state.loading = false;
 			state.productFound = false;
 		},
+		clearProduct: state => {
+			state.loading = true;
+			state.productFound = false;
+			state.product = { ...initialState.product };
+		},
 	},
 });
 
-const { productFailed, productInitiated, productReceived } = slice.actions;
+const {
+	productFailed,
+	productInitiated,
+	productReceived,
+	clearProduct,
+} = slice.actions;
 
 export default slice.reducer;
 
@@ -122,3 +132,5 @@ export const getGamingCdProduct = (id: string) => async (
 		})
 	);
 };
+
+export const resetGamingCdProduct = () => clearProduct();

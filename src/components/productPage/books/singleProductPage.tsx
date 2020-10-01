@@ -6,7 +6,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
-import { getBookProduct } from './../../../app/entities/productPage/books/singleProductPage';
+import {
+	getBookProduct,
+	resetBookProduct,
+} from './../../../app/entities/productPage/books/singleProductPage';
 import ProductAccordion from '../../common/productPage/productAccordion';
 
 interface MatchParams {
@@ -31,6 +34,10 @@ class SingleBookProductPage extends ProductPageForm<
 > {
 	componentDidMount = () => {
 		this.props.getProduct(this.props.match.params.id);
+	};
+
+	componentWillUnmount = () => {
+		this.props.clearProduct();
 	};
 
 	render() {
@@ -184,6 +191,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
 	getProduct: (id: string) => dispatch(getBookProduct(id)),
+	clearProduct: () => dispatch(resetBookProduct()),
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

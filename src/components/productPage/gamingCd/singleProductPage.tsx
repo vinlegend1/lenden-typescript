@@ -6,7 +6,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
-import { getGamingCdProduct } from './../../../app/entities/productPage/gamingCd/singleProductPage';
+import {
+	getGamingCdProduct,
+	resetGamingCdProduct,
+} from './../../../app/entities/productPage/gamingCd/singleProductPage';
 
 interface MatchParams {
 	id: string;
@@ -31,6 +34,9 @@ class SingleGamingCdProductPage extends ProductPageForm<
 	componentDidMount = () => {
 		this.props.getProduct(this.props.match.params.id);
 	};
+	componentWillUnmount = () => {
+		this.props.clearProduct();
+	};
 
 	render() {
 		const {
@@ -52,14 +58,13 @@ class SingleGamingCdProductPage extends ProductPageForm<
 				{this.renderBreadCrumb([
 					{ title: 'Home', url: '/' },
 					{
-						title: 'Books',
-						url: '/products/books',
+						title: 'Gaming Cd',
+						url: '/products/gaming-cd',
 					},
 					{
 						title: `${title.substring(0, 20)}...`,
 					},
 				])}
-
 				{this.props.loading ? (
 					<PageLoader />
 				) : !this.props.productFound ? (
@@ -118,6 +123,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
 	getProduct: (id: string) => dispatch(getGamingCdProduct(id)),
+	clearProduct: () => dispatch(resetGamingCdProduct()),
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

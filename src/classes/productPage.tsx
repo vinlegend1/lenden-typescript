@@ -6,13 +6,13 @@ import { Breadcrumb } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import GenericIcons from '../icons/generic';
 
-export interface ProductPageProps {}
+export interface ProductPageFormProps {}
 
-export interface ProductPageState {}
+export interface ProductPageFormState {}
 
-abstract class ProductPage<
-	T extends ProductPageProps,
-	U extends ProductPageState
+abstract class ProductPageForm<
+	T extends ProductPageFormProps,
+	U extends ProductPageFormState
 > extends React.Component<T, U> {
 	renderProductCarousel = (configObject: {
 		images: string[];
@@ -95,7 +95,7 @@ abstract class ProductPage<
 			<div className='productName'>{config.name}</div>
 
 			<div
-				className={`productRating ${ProductPage.getProductCondition(
+				className={`productRating ${ProductPageForm.getProductCondition(
 					config.rating
 				)}`}>
 				{config.rating}
@@ -148,4 +148,4 @@ abstract class ProductPage<
 	};
 }
 
-export default ProductPage;
+export default ProductPageForm;

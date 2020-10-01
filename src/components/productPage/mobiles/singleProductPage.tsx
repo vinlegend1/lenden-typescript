@@ -5,7 +5,10 @@ import mobileFormData from '../../../data/forms/mobileFormData';
 import { RootState } from '../../../app/models';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
-import { getMobileProduct } from '../../../app/entities/productPage/mobiles/singleProductPage';
+import {
+	getMobileProduct,
+	resetMobilesProduct,
+} from '../../../app/entities/productPage/mobiles/singleProductPage';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
 
@@ -33,6 +36,9 @@ class SingleMobileProductPage extends ProductPageForm<
 > {
 	componentDidMount = () => {
 		this.props.getProduct(this.props.match.params.id);
+	};
+	componentWillUnmount = () => {
+		this.props.clearProduct();
 	};
 
 	render() {
@@ -165,6 +171,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => ({
 	getProduct: (id: string) => dispatch(getMobileProduct(id)),
+	clearProduct: () => dispatch(resetMobilesProduct()),
 });
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
