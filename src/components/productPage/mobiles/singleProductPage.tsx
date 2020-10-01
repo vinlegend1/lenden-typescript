@@ -11,6 +11,7 @@ import {
 } from '../../../app/entities/productPage/mobiles/singleProductPage';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
+import ProductAccordion from '../../common/productPage/productAccordion';
 
 interface MatchParams {
 	id: string;
@@ -39,6 +40,101 @@ class SingleMobileProductPage extends ProductPageForm<
 	};
 	componentWillUnmount = () => {
 		this.props.clearProduct();
+	};
+
+	renderProductAccordion = (
+		cards: Array<{
+			header: string;
+			data: {
+				givenOptions: string;
+				totalOptions: string[];
+			};
+			params: {
+				true: { title: string; color?: 'red' | 'green' };
+				false: { title: string; color?: 'red' | 'green' };
+			};
+		}>
+	) => {
+		let accordionProps: Array<{
+			header: string;
+			body: JSX.Element;
+		}> = [];
+
+		cards.forEach(card => {
+			if (card.header.match(/.*accessories.*/i)) {
+				const givenOptions = card.data.givenOptions.split(', ');
+				let insuranceLeft;
+				givenOptions.forEach(option => {
+					if (option.match(/insurance/i)) {
+						insuranceLeft = option
+							.split('insurance ')[1]
+							.replace(/[{()}]/g, '');
+					}
+				});
+
+				const body = (
+					<React.Fragment>
+						{card.data.totalOptions
+							.filter(op => !op.match(/.*insurance.*/i))
+							.map((option, i) => {
+								const isPresent = card.data.givenOptions.includes(option);
+								return (
+									<div className='cardDetails' key={i}>
+										<div className='name'>{option}</div>
+										<div
+											className={`value ${
+												card.params.true.color &&
+												card.params.false.color &&
+												isPresent
+													? card.params.true.color
+													: card.params.false.color
+											}`}>
+											{isPresent
+												? card.params.true.title
+												: card.params.false.title}
+										</div>
+									</div>
+								);
+							})}
+						<div className='cardDetails'>
+							<div className='name'>Insurance</div>
+							<div className={`value ${insuranceLeft ? 'green' : 'red'}`}>
+								{insuranceLeft ? `yes, ${insuranceLeft}` : 'Not Available'}
+							</div>
+						</div>
+					</React.Fragment>
+				);
+				accordionProps.push({ body, header: card.header });
+			} else {
+				const body = (
+					<React.Fragment>
+						{card.data.totalOptions.map((option, i) => {
+							const isPresent = card.data.givenOptions.includes(option);
+							return (
+								<div className='cardDetails' key={i}>
+									<div className='name'>{option}</div>
+									<div
+										className={`value ${
+											card.params.true.color &&
+											card.params.false.color &&
+											isPresent
+												? card.params.true.color
+												: card.params.false.color
+										}`}>
+										{isPresent
+											? card.params.true.title
+											: card.params.false.title}
+									</div>
+								</div>
+							);
+						})}
+					</React.Fragment>
+				);
+				accordionProps.push({ body, header: card.header });
+			}
+		});
+
+		return <ProductAccordion cards={accordionProps} />;
 	};
 
 	render() {
@@ -123,8 +219,8 @@ class SingleMobileProductPage extends ProductPageForm<
 							// },
 							{
 								params: {
-									true: { title: 'Yes' },
-									false: { title: 'No' },
+									true: { title: 'Yes', color: 'red' },
+									false: { title: 'No', color: 'green' },
 								},
 								header: 'Mobile Screen Condition',
 								data: {
@@ -134,8 +230,8 @@ class SingleMobileProductPage extends ProductPageForm<
 							},
 							{
 								params: {
-									true: { title: 'Yes' },
-									false: { title: 'No' },
+									true: { title: 'Not Working', color: 'red' },
+									false: { title: 'Working', color: 'green' },
 								},
 								header: 'Functional / Physical issues',
 								data: {
@@ -143,17 +239,17 @@ class SingleMobileProductPage extends ProductPageForm<
 									totalOptions: mobileFormData.functionalIssues.options,
 								},
 							},
-							// {
-							// 	type: 'yesNo',
-							// 	header: 'Accessories available',
-							// 	data: {
-							// 		givenOptions: accessories,
-							// 		totalOptions: mobileFormData.accessories.options.map(acc => {
-							// 			if (acc.includes('Insurance')) return 'Insurance';
-							// 			else return acc;
-							// 		}),
-							// 	},
-							// },
+							{
+								params: {
+									true: { title: 'Available', color: 'green' },
+									false: { title: 'Not Available', color: 'red' },
+								},
+								header: 'Accessories Available',
+								data: {
+									givenOptions: accessories,
+									totalOptions: mobileFormData.accessories.options,
+								},
+							},
 						])}
 					</React.Fragment>
 				)}

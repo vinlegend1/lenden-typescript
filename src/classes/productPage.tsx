@@ -37,8 +37,8 @@ abstract class ProductPageForm<
 				totalOptions: string[];
 			};
 			params: {
-				true: { title: string; color?: string };
-				false: { title: string; color?: string };
+				true: { title: string; color?: 'red' | 'green' };
+				false: { title: string; color?: 'red' | 'green' };
 			};
 		}>
 	) => {
@@ -54,11 +54,6 @@ abstract class ProductPageForm<
 						const isPresent = card.data.givenOptions.includes(option);
 						return (
 							<div className='cardDetails' key={i}>
-								{/* {`${option} : ${
-								card.data.givenOptions.includes(option)
-									? card.params.true
-									: card.params.false
-							}`} */}
 								<div className='name'>{option}</div>
 								<div
 									className={`value ${

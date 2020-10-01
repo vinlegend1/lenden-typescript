@@ -117,23 +117,21 @@ class SingleBookProductPage extends ProductPageForm<
 									header: 'Inner Condition',
 									body: (
 										<React.Fragment>
-											<div
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}>
-												<div style={{ color: '#b4b4b4' }}>Ink Stains</div>
-												<div>{inkStains}</div>
-											</div>
-											<div
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}>
-												<div style={{ color: '#b4b4b4' }}>
-													Spots and Browning
+											<div className='cardDetails'>
+												<div className='name'>Ink Stains</div>
+												<div
+													className='value'
+													style={{ textTransform: 'none', fontSize: 14 }}>
+													{inkStains}
 												</div>
-												<div>{bookFoxed}</div>
+											</div>
+											<div className='cardDetails'>
+												<div className='name'>Spots and Browning</div>
+												<div
+													className='value'
+													style={{ textTransform: 'none', fontSize: 14 }}>
+													{bookFoxed}
+												</div>
 											</div>
 										</React.Fragment>
 									),
@@ -142,25 +140,23 @@ class SingleBookProductPage extends ProductPageForm<
 									header: 'Outer Condition',
 									body: (
 										<div>
-											<div
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}>
-												<div style={{ color: '#b4b4b4' }}>
-													Binding Condition
+											<div className='cardDetails'>
+												<div className='name'>Binding Condition</div>
+												<div
+													className='value'
+													style={{ textTransform: 'none', fontSize: 14 }}>
+													{bindingCondition}
 												</div>
-												<div>{bindingCondition}</div>
 											</div>
-											<div
-												style={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}>
-												<div style={{ flexBasis: '60%', color: '#b4b4b4' }}>
-													Front and Back Sides
-												</div>
-												<div style={{ textAlign: 'right' }}>
+											<div className='cardDetails'>
+												<div className='name'>Front and Back Sides</div>
+												<div
+													className='value'
+													style={{
+														textTransform: 'none',
+														fontSize: 14,
+														flexBasis: '50%',
+													}}>
 													{coverCondition}
 												</div>
 											</div>
