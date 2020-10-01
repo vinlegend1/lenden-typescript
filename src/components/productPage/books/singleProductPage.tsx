@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Navbar from '../../navbar';
 import ProductPageForm from '../../../classes/productPage';
-import bookFormData from '../../../data/forms/bookFormData';
 import { RootState } from '../../../app/models';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
@@ -25,8 +24,6 @@ const images = [
 	'https://placekitten.com/1080/800',
 	'https://placekitten.com/1920/1080',
 ];
-
-// const { phoneDamaged, screenIssues, functionalIssues } = mobileFormData;
 
 class SingleBookProductPage extends ProductPageForm<
 	SingleBookProductPageProps,

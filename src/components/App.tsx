@@ -6,6 +6,7 @@ import { getUser, getUserInfo } from '../app/auth/userDetails';
 import PageLoader from './common/pageLoader';
 import ErrorBoundary from './common/errorBoundary';
 import SingleBookProductPage from './productPage/books/singleProductPage';
+import SingleGamingCdProductPage from './productPage/gamingCd/singleProductPage';
 
 const Home = React.lazy(() => import('./home'));
 const Login = React.lazy(() => import('./sign/login'));
@@ -36,7 +37,6 @@ const CategoryWiseProducts = React.lazy(() => import('./categoryWiseProducts'));
 const SingleMobileProductPage = React.lazy(
 	() => import('./productPage/mobiles/singleProductPage')
 );
-
 const App: React.FC = () => {
 	const dispatch = useDispatch();
 	dispatch(getUser());
@@ -89,11 +89,6 @@ const App: React.FC = () => {
 
 							<Route path='/not-found' component={NotFound} />
 
-							{/*<ProtectedRoute path='/new' exact component={NewProduct} />
-				<Route path='/books' exact component={Products} />
-				<Route path='/books/:id' component={ProductPage} />
-				<Route path='/my-products' component={MyProducts} />*/}
-
 							<Redirect
 								exact
 								from='/post-product/book'
@@ -127,6 +122,10 @@ const App: React.FC = () => {
 							<Route
 								path='/products/books/single/:id'
 								component={SingleBookProductPage}
+							/>
+							<Route
+								path='/products/gaming-cd/single/:id'
+								component={SingleGamingCdProductPage}
 							/>
 
 							<Route path='/products/books' component={CategoryWiseProducts} />
