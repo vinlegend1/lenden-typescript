@@ -1,7 +1,7 @@
 import * as React from 'react';
 import GenericIcons from '../../../icons/generic';
 import { SingleProductSlice } from '../../../app/entities/products/singleProducts';
-import Product from './../../../classes/productPageForm';
+import Product from '../../../classes/productPage';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 export interface SingleProductBoxProps extends RouteComponentProps {
 	productInfo: SingleProductSlice;

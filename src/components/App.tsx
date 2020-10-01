@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { getUser, getUserInfo } from '../app/auth/userDetails';
 import PageLoader from './common/pageLoader';
 import ErrorBoundary from './common/errorBoundary';
+import SingleBookProductPage from './productPage/books/singleProductPage';
 
 const Home = React.lazy(() => import('./home'));
 const Login = React.lazy(() => import('./sign/login'));
@@ -33,7 +34,7 @@ const NewMobile = React.lazy(() => import('./postProduct/newMobile'));
 const DonateBook = React.lazy(() => import('./postProduct/donateBook/index'));
 const CategoryWiseProducts = React.lazy(() => import('./categoryWiseProducts'));
 const SingleMobileProductPage = React.lazy(
-	() => import('./productPage/mobile/singleProductPage')
+	() => import('./productPage/mobiles/singleProductPage')
 );
 
 const App: React.FC = () => {
@@ -122,6 +123,10 @@ const App: React.FC = () => {
 							<Route
 								path='/products/mobiles/single/:id'
 								component={SingleMobileProductPage}
+							/>
+							<Route
+								path='/products/books/single/:id'
+								component={SingleBookProductPage}
 							/>
 
 							<Route path='/products/books' component={CategoryWiseProducts} />

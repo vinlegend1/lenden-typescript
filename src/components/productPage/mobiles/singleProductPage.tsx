@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Navbar from '../../navbar';
-import ProductPageForm from '../../../classes/productPageForm';
+import ProductPageForm from '../../../classes/productPage';
 import mobileFormData from '../../../data/forms/mobileFormData';
 import { RootState } from '../../../app/models';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch, Action } from '@reduxjs/toolkit';
-import { getMobileProduct } from './../../../app/entities/productPage/mobiles/singleProductPage';
+import { getMobileProduct } from '../../../app/entities/productPage/mobiles/singleProductPage';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import PageLoader from '../../common/pageLoader';
 
