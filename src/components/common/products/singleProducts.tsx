@@ -24,14 +24,11 @@ const SingleProducts: React.FC<SingleProductsProps> = props => {
 	} = useSelector((state: RootState) => state.entities.products.singleProducts);
 
 	React.useEffect(() => {
-		// if (page === 0)
-		// (async () => await dispatch(resetProductList()))();
 		dispatch(getProducts(props.category));
-		// else dispatch(changeButtonStatus(true));
 		return () => {
 			dispatch(resetProductList());
 		};
-	}, []);
+	}, [props.category]);
 
 	if (loadingPage)
 		return (
@@ -61,7 +58,12 @@ const SingleProducts: React.FC<SingleProductsProps> = props => {
 					loader={<p>Wait</p>}
 					endMessage={
 						!loading && (
-							<div style={{ fontFamily: 'Cera Pro', textAlign: 'center' }}>
+							<div
+								style={{
+									fontFamily: 'Cera Pro',
+									textAlign: 'center',
+									margin: '1rem 0',
+								}}>
 								<p>Yay! You have seen it all</p>
 							</div>
 						)

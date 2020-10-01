@@ -14,10 +14,6 @@ const CategoryWiseProducts: React.FC<CategoryWiseProductsProps> = props => {
 		'single'
 	);
 	const categoryName = props.location.pathname.split('/')[2];
-	const categoryLabel = categoryName
-		.split('-')
-		.map(n => _.capitalize(n))
-		.join(' ');
 	return (
 		<div className='categoryWiseProducts'>
 			<Navbar />
@@ -29,7 +25,12 @@ const CategoryWiseProducts: React.FC<CategoryWiseProductsProps> = props => {
 					<Breadcrumb.Item>Categories</Breadcrumb.Item>
 				</LinkContainer>
 
-				<Breadcrumb.Item active>{categoryLabel}</Breadcrumb.Item>
+				<Breadcrumb.Item active>
+					{categoryName
+						.split('-')
+						.map(n => _.capitalize(n))
+						.join(' ')}
+				</Breadcrumb.Item>
 			</Breadcrumb>
 			<SingleMultipleToggle
 				activeItem={activeItem}

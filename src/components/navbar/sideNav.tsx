@@ -39,11 +39,11 @@ const SideNav: React.FC<SideNavProps> = () => {
 		{
 			name: 'Categories',
 			list: [
-				{ name: 'Books', to: '/categories/books' },
-				{ name: 'Mobiles', to: '/categories/mobiles' },
-				{ name: "Gaming CD's", to: '/categories/gaming-cd' },
-				{ name: 'Gaming Accessories', to: '/categories/gaming-accessories' },
-				{ name: 'Gaming Consoles', to: '/categories/gaming-consoles' },
+				{ name: 'Books', to: '/products/books' },
+				{ name: 'Mobiles', to: '/products/mobiles' },
+				{ name: "Gaming CD's", to: '/products/gaming-cd' },
+				{ name: 'Gaming Accessories', to: '/products/gaming-accessories' },
+				{ name: 'Gaming Consoles', to: '/products/gaming-consoles' },
 			],
 		},
 		{ to: '/about', name: 'About Us' },
